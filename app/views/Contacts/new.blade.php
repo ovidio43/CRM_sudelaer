@@ -39,28 +39,32 @@ NEW CONTACT
                 {{ Form::select('salutation',$salutation, null,['class'=>'form-control']) }}                
                 {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                
                 {{ Form::text('first_name','',['class'=>'form-control'])}}
-
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}
-
-                {{Form::label('title', 'Title')}}
-                {{ Form::text('title','',['class'=>'form-control'])}}
-            </div>  
-            <div class="col-sm-4">
-                {{Form::label('department', 'Departament')}}
-                {{ Form::text('department','',['class'=>'form-control'])}}
+                {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
+                {{ Form::text('email_address','',['class'=>'form-control'])}}  
                 {{Form::label('account_name', 'Account Name')}}
                 {{ Form::text('account_name','',['class'=>'form-control'])}}
+                <!--                {{Form::label('title', 'Title')}}
+                                {{ Form::text('title','',['class'=>'form-control'])}}-->
+            </div>  
+            <div class="col-sm-4">
+                <!--                {{Form::label('department', 'Departament')}}
+                                {{ Form::text('department','',['class'=>'form-control'])}}-->
+
+                {{Form::label('home_phone', 'Home Phone')}}
+                {{ Form::text('home_phone','',['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
                 {{ Form::text('office_phone','',['class'=>'form-control'])}}
-            </div> 
-            <div class="col-sm-4">               
                 {{Form::label('mobile', 'Mobile')}}
                 {{ Form::text('mobile','',['class'=>'form-control'])}}
                 {{Form::label('fax', 'Fax')}}
                 {{ Form::text('fax','',['class'=>'form-control'])}}
-                {{Form::label('website', 'Website')}}
-                {{ Form::text('website','',['class'=>'form-control'])}}                
+            </div> 
+            <div class="col-sm-4">               
+
+                <!--                {{Form::label('website', 'Website')}}
+                                {{ Form::text('website','',['class'=>'form-control'])}}                -->
             </div> 
         </div>
     </div>    
@@ -73,10 +77,10 @@ NEW CONTACT
                 {{ Form::text('primary_address_city','',['class'=>'form-control'])}}
                 {{Form::label('primary_address_state', 'Primary Address State')}}
                 {{ Form::text('primary_address_state','',['class'=>'form-control'])}}
-                {{Form::label('primary_address_postalcode', 'Primary Address Postalcode')}}
-                {{ Form::text('primary_address_postalcode','',['class'=>'form-control'])}}
-                {{Form::label('primary_address_country', 'Primary Address Country')}}
-                {{ Form::text('primary_address_country','',['class'=>'form-control'])}}
+                {{Form::label('primary_address_zipcode', 'Primary Address Zip Code')}}
+                {{ Form::text('primary_address_zipcode','',['class'=>'form-control'])}}
+                <!--                {{Form::label('primary_address_country', 'Primary Address Country')}}
+                                {{ Form::text('primary_address_country','',['class'=>'form-control'])}}-->
             </div>
             <div class="col-sm-6">
                 {{Form::label('alt_address_street', 'Alt Address Street')}}
@@ -85,10 +89,10 @@ NEW CONTACT
                 {{ Form::text('alt_address_city','',['class'=>'form-control'])}}
                 {{Form::label('alt_address_state', 'Alt  Address State')}}
                 {{ Form::text('alt_address_state','',['class'=>'form-control'])}}
-                {{Form::label('alt_address_postalcode', 'Alt Address Postalcode')}}
-                {{ Form::text('alt_address_postalcode','',['class'=>'form-control'])}}
-                {{Form::label('alt_address_country', 'Alt Address Country')}}
-                {{ Form::text('alt_address_country','',['class'=>'form-control'])}}
+                {{Form::label('alt_address_zipcode', 'Alt Address Zip Code')}}
+                {{ Form::text('alt_address_zipcode','',['class'=>'form-control'])}}
+                <!--                {{Form::label('alt_address_country', 'Alt Address Country')}}
+                                {{ Form::text('alt_address_country','',['class'=>'form-control'])}}-->
                 {{Form::label('copy', 'Copy address from left')}}
                 {{ Form::checkbox('copy') }}
             </div>
@@ -96,10 +100,9 @@ NEW CONTACT
         <hr>
         <div class="form-group">
             <div class="col-sm-4">
-                {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
-                {{ Form::text('email_address','',['class'=>'form-control'])}}                 
-                {{Form::label('description', 'Description')}}
-                {{ Form::textarea('description','',['class'=>'form-control'])}}                 
+
+                {{Form::label('note', 'Note')}}
+                {{ Form::textarea('note','',['class'=>'form-control'])}}                 
             </div>
         </div>
     </div>    
@@ -118,11 +121,18 @@ NEW CONTACT
                     'Periodicos' => 'Periodicos',
                     'Revistas' => 'Revistas',
                     'Otros' => 'Otros'
-                        ]
+                ];
+                $leadType = [
+                    'Phone in' => 'Phone in',
+                    'Walk in' => 'Walk in',
+                    'Web' => 'Web'
+                ];
                 ?>
 
                 {{Form::label('reports_to', 'Reports to')}}
-                {{ Form::text('reports_to','',['class'=>'form-control'])}}
+                {{ Form::text('reports_to','',['class'=>'form-control'])}}                
+                {{Form::label('lead_type', 'Lead Type')}}
+                {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
                 {{Form::label('lead_source', 'Lead source')}}
                 {{ Form::select('lead_source', $leadSource, null,['class'=>'form-control']) }}  
                 {{Form::label('id_campaign', 'Campaign')}}

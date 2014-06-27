@@ -40,7 +40,7 @@
                                 <li><a href="#">My Profile</a></li>                                
                             </ul>
                         </li>
-                        <li><a href="{{URL::to('login/logout')}}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                        <li><a href="{{URL::to('logout')}}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
                     </ul>
                 </div>
             </div><!-- /container -->
