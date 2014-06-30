@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
-        <title>C&G IMPORTS</title>
+        <title>CRM-C&G IMPORTS</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         {{ HTML::style('css/bootstrap-3.1.1/css/bootstrap.min.css') }} 
@@ -26,7 +26,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{URL::to('dashboard')}}">C&G IMPORTS</a>
+                    <a class="navbar-brand" href="{{URL::to('dashboard')}}"><img src="{{ URL::asset('img/logo-mobile.png')}}"> DASHBOARD</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
