@@ -33,6 +33,11 @@ $(document).ready(function() {
             $.post(currentObj.attr('href'), function(data) {
                 if (data === 'ok') {
                     currentObj.parent().parent().remove();
+                } else {
+                    
+console.log('Es posible que este Item tenga dependencias de otros objetos.');
+
+//                   alert('Es posible que este Item tenga dependencias de otros objetos.'); 
                 }
             }).complete(function() {
 

@@ -26,7 +26,7 @@ List Employee
     </thead>
     <tbody>
         <?php
-        $objemployee = Employee:: where('active', '=', '1')->get();
+        $objemployee = Employee:: where('active', '=', '1')->where('id', '!=', '1')->get();
         foreach ($objemployee as $rowE) {
             ?>        
             <tr>

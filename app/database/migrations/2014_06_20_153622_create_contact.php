@@ -12,7 +12,7 @@ class CreateContact extends Migration {
             $table->char('sync_to_outlook', 1);
             $table->char('active', 1);
             $table->integer('id_leads')->unsigned();
-            $table->foreign('id_leads')->references('id')->on('leads');
+            $table->foreign('id_leads')->references('id')->on('leads')->onDelete('cascade');
             $table->timestamps();
         });
     }

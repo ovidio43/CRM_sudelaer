@@ -67,7 +67,7 @@ class UserController extends BaseController {
             $ObjUser = User::find($id);
 //            $ObjUser->user = $input['user'];
             if (isset($input['password'])) {
-                $ObjUser->password = $input['password'];
+                $ObjUser->password = Hash::make ($input['password']);
             }
             $ObjUser->id_employee = $input['id_employee'];
             $ObjUser->id_type_user = $input['id_type_user'];

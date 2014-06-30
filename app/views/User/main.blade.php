@@ -24,7 +24,7 @@ List User
     </thead>
     <tbody>
         <?php
-        $objUser = User:: where('active', '=', '1')->get();
+        $objUser = User:: where('active', '=', '1')->where('id', '!=', '1')->get();
         foreach ($objUser as $rowU) {
             ?>        
             <tr>

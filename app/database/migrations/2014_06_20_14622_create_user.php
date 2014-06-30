@@ -13,9 +13,9 @@ class CreateUser extends Migration {
             $table->string('remember_token', 100);
             $table->string('active', 1);
             $table->integer('id_employee')->unsigned();
-            $table->foreign('id_employee')->references('id')->on('employee');
+            $table->foreign('id_employee')->references('id')->on('employee')->onDelete('cascade');
             $table->integer('id_type_user')->unsigned();
-            $table->foreign('id_type_user')->references('id')->on('type_user');
+            $table->foreign('id_type_user')->references('id')->on('type_user')->onDelete('cascade');
             $table->timestamps();
         });
     }

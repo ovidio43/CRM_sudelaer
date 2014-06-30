@@ -22,7 +22,7 @@ List Type User
     </thead>
     <tbody>
         <?php
-        $objTypeUser = TypeUser:: all();
+        $objTypeUser = TypeUser:: where('id', '!=', '1')->get();
         foreach ($objTypeUser as $rowTU) {
             ?>        
             <tr>
