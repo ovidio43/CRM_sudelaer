@@ -32,3 +32,47 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth'), function() {
     });
     Route::post('new/save', 'ContactsController@save');
 });
+Route::group(array('prefix' => 'system', 'before' => 'auth'), function() {
+    /*     * *****employee********* */
+    Route::get('employee', function() {
+        return View::make('Employee.main');
+    });
+    Route::get('employee/new', function() {
+        return View::make('Employee.new');
+    });
+    Route::get('employee/edit/{id}', function($id) {
+        return View::make('Employee.edit')->with('id', $id);
+    });
+    Route::post('employee/save', 'EmployeeController@save');
+    Route::post('employee/edit-save/{id}', 'EmployeeController@edit_save');
+    Route::post('employee/delete/{id}', 'EmployeeController@delete');
+
+    /*     * *****type user********* */
+    Route::get('type-user', function() {
+        return View::make('TypeUser.main');
+    });
+    Route::get('type-user/new', function() {
+        return View::make('TypeUser.new');
+    });
+    Route::get('type-user/edit/{id}', function($id) {
+        return View::make('TypeUser.edit')->with('id', $id);
+    });
+    Route::post('type-user/save', 'TypeUserController@save');
+    Route::post('type-user/edit-save/{id}', 'TypeUserController@edit_save');
+    Route::post('type-user/delete/{id}', 'TypeUserController@delete');
+
+    /*     * *****user********* */
+    Route::get('user', function() {
+        return View::make('User.main');
+    });
+    Route::get('user/new', function() {
+        return View::make('User.new');
+    });
+    Route::post('user/save', 'UserController@save');
+
+    Route::get('user/edit/{id}', function($id) {
+        return View::make('User.edit')->with('id', $id);
+    });
+    Route::post('user/edit-save/{id}', 'UserController@edit_save');
+    Route::post('user/delete/{id}', 'UserController@delete');
+});

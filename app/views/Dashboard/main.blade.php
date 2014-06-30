@@ -68,15 +68,7 @@ DASHBOARD
         <div class="panel panel-default">
             <div class="panel-heading"><h4>Notices</h4></div>
             <div class="panel-body">
-
-                <div class="alert alert-info in" style="display: none;">
-                    <button data-dismiss="alert" class="close" type="button">×</button>
-                    This is a dismissable alert.. just sayin'.
-                </div>
-
-                This is a dashboard-style layout that uses Bootstrap 3. You can use this template as a starting point to create something more unique.
-                <br><br>
-                Visit the Bootstrap Playground at <a href="http://bootply.com">Bootply</a> to tweak this layout or discover more useful code snippets.
+                Bienvenido al CRM de C&G Imports
             </div>
         </div>
         <table class="table table-striped">
