@@ -268,12 +268,17 @@ NEW LEADS
     <div class="tab-pane " id="tab-pane-4">
         <div class="form-group">
             <div class="col-sm-4">
+                <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
                 {{Form::label('id_employee', 'Assigned to')}}
-                {{ Form::text('id_employee','',['class'=>'form-control'])}}  
-                <hr>
-                {{ Form::submit('Save',['class'=>'btn btn-default'])}}
+                {{Form::select('id_employee',[''=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
+                <!--{{ Form::text('id_employee','',['class'=>'form-control'])}}-->  
+
             </div>
         </div>
+        <div class="form-group">
+            <hr>
+            {{ Form::submit('Save',['class'=>'btn btn-default'])}}
+        </div>        
     </div> 
     <div class="tab-pane " id="tab-pane-5">
         <div class="form-group">

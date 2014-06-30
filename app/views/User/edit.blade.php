@@ -16,7 +16,7 @@ $objUser = User::find($id);
 <hr>
 <?php
 $selectTypeUser = TypeUser::lists('name', 'id');
-$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id')
+$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
 ?>
 {{ Form::open(array('url' => 'system/user/edit-save/'.$objUser->id,'class'=>'form-horizontal')) }}
 <div class="row">

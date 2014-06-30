@@ -3,7 +3,7 @@
 class UserController extends BaseController {
 
     private $rules = array(
-        'user' => 'required',
+        'user' => 'required|unique:user',
         'password' => 'required|alphaNum|min:3',
         'id_employee' => 'required',
         'id_type_user' => 'required'

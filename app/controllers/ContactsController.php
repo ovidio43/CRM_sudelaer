@@ -5,6 +5,7 @@ class ContactsController extends BaseController {
     private $rules = array(
         'first_name' => 'Required',
         'last_name' => 'Required',
+        'id_employee' => 'Required',
         'email_address' => 'Required|email|unique:leads'
     );
 
