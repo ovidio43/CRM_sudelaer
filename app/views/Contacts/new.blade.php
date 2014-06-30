@@ -19,6 +19,7 @@ NEW CONTACT
     <li><a href="#" id="2">Address Information</a></li>    
     <li><a href="#" id="3">More Information</a></li>    
     <li><a href="#" id="4">Other</a></li>    
+    <li><a href="#" id="5">Car Type</a></li>    
 </ul> 
 {{ Form::open(array('url' => 'contacts/new/save','class'=>'form-horizontal')) }}
 <div class="tab-content">
@@ -157,6 +158,10 @@ NEW CONTACT
             </div>
         </div>
     </div> 
+    <div class="tab-pane active" id="tab-pane-5">
+        <div class="form-group"> 
+        </div>
+    </div>
 </div>
 {{ Form::close() }}
 @stop
