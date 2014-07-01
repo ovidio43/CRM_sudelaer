@@ -19,7 +19,7 @@
                     <div class="modal-header">
                         <!--<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>-->
                         <h1 class="text-center">Login</h1>
-                    </div>
+                    </div>                    
                     <div class="modal-body">
                         {{ Form::open(array('url' => 'singin','class'=>'form col-md-12 center-block')) }}
                         <div class="form-group">

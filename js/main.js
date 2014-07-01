@@ -45,17 +45,17 @@ $(document).ready(function() {
     /******************modal *************************/
     $('body').on('click', '#link-get-car-type', function(e) {
         e.preventDefault();
-//        $("#myModal").modal('show');
-        $.post($(this).attr('href'), function(data) {
-            console.log(data);
-            $('#modal-body').empty().append($(data).find('.twelve').children());
-        })
+        $("#myModal").modal('show');
     });
     $("#myModal").on('show.bs.modal', function() {
         var url = $('#link-get-car-type').attr('href');
-
+        $('#modal-body').text('Loading..')
+        $.post(url, function(data) {
+            $('#modal-body').empty().append($(data).find('.twelve').children());
+        });
     });
     $("#myModal").on('hidden.bs.modal', function() {
+        $(this).empty();
 //        alert("End");
     });
 
