@@ -33,17 +33,32 @@ $(document).ready(function() {
             $.post(currentObj.attr('href'), function(data) {
                 if (data === 'ok') {
                     currentObj.parent().parent().remove();
-                } else {
-                    
-console.log('Es posible que este Item tenga dependencias de otros objetos.');
-
-//                   alert('Es posible que este Item tenga dependencias de otros objetos.'); 
                 }
             }).complete(function() {
 
             });
         }
     });
+
+
+
+    /******************modal *************************/
+    $('body').on('click', '#link-get-car-type', function(e) {
+        e.preventDefault();
+//        $("#myModal").modal('show');
+        $.post($(this).attr('href'), function(data) {
+            console.log(data);
+            $('#modal-body').empty().append($(data).find('.twelve').children());
+        })
+    });
+    $("#myModal").on('show.bs.modal', function() {
+        var url = $('#link-get-car-type').attr('href');
+
+    });
+    $("#myModal").on('hidden.bs.modal', function() {
+//        alert("End");
+    });
+
 });
 
 
