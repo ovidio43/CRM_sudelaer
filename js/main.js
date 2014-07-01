@@ -43,21 +43,46 @@ $(document).ready(function() {
 
 
     /******************modal *************************/
-    $('body').on('click', '#link-get-car-type', function(e) {
+    $('body').on('click', '.listingblock > .four > .vignette > a', function(e) {
         e.preventDefault();
+    });
+
+    $('body').on('click', 'a.link-get-car-type', function(e) {
+        e.preventDefault();
+        $('#aux').val($(this).attr('rel'));
         $("#myModal").modal('show');
     });
+    ;
     $("#myModal").on('show.bs.modal', function() {
-        var url = $('#link-get-car-type').attr('href');
-        $('#modal-body').text('Loading..')
+        var url = 'http://www.sudealeramigo.com/search-results-app/';
+        $('#modal-body').text('Loading..');
         $.post(url, function(data) {
             $('#modal-body').empty().append($(data).find('.twelve').children());
         });
     });
-    $("#myModal").on('hidden.bs.modal', function() {
-        $(this).empty();
-//        alert("End");
+    $('body').on('click', 'a.page,a.nextpostslink,a.last,a.first,a.previouspostslink', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#modal-body').text('Loading..');
+        $.post(url, function(data) {
+            $('#modal-body').empty().append($(data).find('.twelve').children());
+        });
+    })
+    $('body').on('click', '.listingblock', function(e) {
+        var row = $('#aux').val();
+        var args1 = $(this).find('p.twofeatures').text().split('|');
+        var args2 = $(this).find('h4.address').text().split('#');
+        $('#year' + row).val(args1[1].trim());
+        $('#make' + row).val(args1[2].trim());
+        $('#stock' + row).val(args2[1].trim());
+        $("#myModal").modal('hide');
     });
+
+//    $("#myModal").on('hidden.bs.modal', function() {
+//        alert($(this).attr('id'));
+////        $('p.twofeatures')
+////        alert("End");
+//    });
 
 });
 
