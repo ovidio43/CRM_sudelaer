@@ -80,11 +80,10 @@ $(document).ready(function() {
     })
     $('body').on('click', '.listingblock', function(e) {
         var row = $('#aux').val();
-        var args1 = $(this).find('p.twofeatures').text().split('|');
-        var args2 = $(this).find('h4.address').text().split('#');
-        $('#year' + row).val(args1[1].trim());
-        $('#make' + row).val(args1[2].trim());
-        $('#stock' + row).val(args2[1].trim());
+        var args = $(this).find('h4.address').text().split('#');
+        $('#year' + row).val($(this).find('span.model-year-crm').text());
+        $('#make' + row).val($(this).find('span.make-crm').text());
+        $('#stock' + row).val(args[1].trim());
         $("#myModal").modal('hide');
     });
 });

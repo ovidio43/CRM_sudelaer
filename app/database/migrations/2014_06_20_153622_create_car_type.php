@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CarTypeteLeads extends Migration {
+class CreateCarType extends Migration {
 
     public function up() {
         Schema::create('car_type', function($table) {
