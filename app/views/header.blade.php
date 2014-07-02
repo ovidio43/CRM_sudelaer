@@ -11,6 +11,7 @@
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->                   
         {{ HTML::style('css/custom.css') }}       
+        {{ HTML::style('css/invetary.css') }}       
     </head>
 
     <!-- HTML code from Bootply.com editor -->
