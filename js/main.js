@@ -90,16 +90,7 @@ $(document).ready(function() {
 
 
 function getUrl() {
-    var url = 'http://www.sudealeramigo.com/search-results-crm/?';
     var input = $('#aux').val();//0-1-2
-    if ($('#make' + input).val().length > 1) {
-        url += 'make=' + $('#make' + input).val();
-    }
-    if ($('#year' + input).val().length > 1) {
-        url += 'model-year=' + $('#year' + input).val();
-    }
-    if ($('#stock' + input).val().length > 1) {
-        url += 'stock-number=' + $('#stock' + input).val();
-    }
+    var url = 'http://www.sudealeramigo.com/search-results-crm/?' + 'make=' + $('#make' + input).val() + '&model-year=' + $('#year' + input).val() + '&stock-number=' + $('#stock' + input).val();
     return url;
 }
