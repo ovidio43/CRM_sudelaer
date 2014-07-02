@@ -8,7 +8,7 @@ class CreateLeads extends Migration {
     public function up() {
         Schema::create('leads', function($table) {
             $table->increments('id');
-            $table->char('salutation', 10); //ojo
+            $table->char('salutation', 10);
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('account_name', 255);
@@ -39,6 +39,8 @@ class CreateLeads extends Migration {
             $table->integer('id_employee');
             $table->string('type', 20);
             $table->char('active', 1);
+//            $table->integer('id_emlpoyee')->unsigned();
+//            $table->foreign('id_emlpoyee')->references('id')->on('employee')->onDelete('cascade');
             $table->timestamps();
         });
     }

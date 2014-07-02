@@ -54,11 +54,21 @@ $(document).ready(function() {
     });
     ;
     $("#myModal").on('show.bs.modal', function() {
-        var url = 'http://www.sudealeramigo.com/search-results-app/';
-        $('#modal-body').text('Loading..');
-        $.post(url, function(data) {
-            $('#modal-body').empty().append($(data).find('.twelve').children());
+        $.ajax({
+            type: 'GET',
+            url: getUrl(),
+            cache: false,
+            beforeSend: function() {
+                $('#modal-body').text('Loading..');
+            },
+            success: function(data) {
+                $('#modal-body').empty().append($(data).find('.twelve').children());
+            }
         });
+//         $('#modal-body').text('Loading..');
+//        $.get(getUrl(), function(data) {
+//            $('#modal-body').empty().append($(data).find('.twelve').children());
+//        });
     });
     $('body').on('click', 'a.page,a.nextpostslink,a.last,a.first,a.previouspostslink', function(e) {
         e.preventDefault();
@@ -77,13 +87,20 @@ $(document).ready(function() {
         $('#stock' + row).val(args2[1].trim());
         $("#myModal").modal('hide');
     });
-
-//    $("#myModal").on('hidden.bs.modal', function() {
-//        alert($(this).attr('id'));
-////        $('p.twofeatures')
-////        alert("End");
-//    });
-
 });
 
 
+function getUrl() {
+    var url = 'http://www.sudealeramigo.com/search-results-crm/?';
+    var input = $('#aux').val();//0-1-2
+    if ($('#make' + input).val().length > 1) {
+        url += 'make=' + $('#make' + input).val();
+    }
+    if ($('#year' + input).val().length > 1) {
+        url += 'model-year=' + $('#year' + input).val();
+    }
+    if ($('#stock' + input).val().length > 1) {
+        url += 'stock-number=' + $('#stock' + input).val();
+    }
+    return url;
+}

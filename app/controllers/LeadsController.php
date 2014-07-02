@@ -8,12 +8,16 @@ class LeadsController extends BaseController {
         'id_employee' => 'Required',
         'email_address' => 'Required|email|unique:leads'
     );
+    private $id;
 
     public function save() {
         $input = Input::all();
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
-            $this->insert($input);
+            DB::transaction(function() use ($input) {
+                $this->insert($input);
+                $this->insertCarType($input);
+            });
             return Redirect::to('leads/list');
         } else {
             return Redirect::back()->withErrors($validation)->withInput();
@@ -25,24 +29,19 @@ class LeadsController extends BaseController {
         $ObjLeads->salutation = $input['salutation'];
         $ObjLeads->first_name = $input['first_name'];
         $ObjLeads->last_name = $input['last_name'];
-//        $ObjLeads->title = $input['title'];
-//        $ObjLeads->department = $input['department'];
         $ObjLeads->account_name = $input['account_name'];
         $ObjLeads->home_phone = $input['home_phone'];
         $ObjLeads->office_phone = $input['office_phone'];
         $ObjLeads->mobile = $input['mobile'];
         $ObjLeads->fax = $input['fax'];
-//        $ObjLeads->website = $input['website'];
         $ObjLeads->primary_address_street = $input['primary_address_street'];
         $ObjLeads->primary_address_city = $input['primary_address_city'];
         $ObjLeads->primary_address_state = $input['primary_address_state'];
         $ObjLeads->primary_address_zipcode = $input['primary_address_zipcode'];
-//        $ObjLeads->primary_address_country = $input['primary_address_country'];
         $ObjLeads->alt_address_street = $input['alt_address_street'];
         $ObjLeads->alt_address_city = $input['alt_address_city'];
         $ObjLeads->alt_address_state = $input['alt_address_state'];
         $ObjLeads->alt_address_zipcode = $input['alt_address_zipcode'];
-//        $ObjLeads->alt_address_country = $input['alt_address_country'];
         $ObjLeads->date_entered = date('Y-m-d H:i:s');
         $ObjLeads->email_address = $input['email_address'];
         $ObjLeads->note = $input['note'];
@@ -59,6 +58,7 @@ class LeadsController extends BaseController {
         $ObjLeads->type = 'leads';
         $ObjLeads->active = 1;
         $ObjLeads->save();
+        $this->id = $ObjLeads->id;
     }
 
     public function migrate_to_contact($id_leads) {
@@ -71,6 +71,31 @@ class LeadsController extends BaseController {
                     $objContact->save();
                 });
         return is_null($exception) ? 'ok' : 'error';
+    }
+
+    private function insertCarType($input) {
+        for ($i = 0; $i <= 2; $i++) {
+            if ($input['make' . $i] || $input['year' . $i] || $input['stock' . $i] || $input['budget' . $i] !== '') {
+                $args = [
+                    'make' => $input['make' . $i],
+                    'year' => $input['year' . $i],
+                    'stock' => $input['stock' . $i],
+                    'budget' => $input['budget' . $i],
+                    'id_leads' => $this->id
+                ];
+                $this->newCarType($args);
+            }
+        }
+    }
+
+    private function newCarType($args) {
+        $ObjCarType = new CarType();
+        $ObjCarType->make = $args['make'];
+        $ObjCarType->year = $args['year'];
+        $ObjCarType->stock = $args['stock'];
+        $ObjCarType->budget = $args['budget'];
+        $ObjCarType->id_leads = $args['id_leads'];
+        $ObjCarType->save();
     }
 
 }
