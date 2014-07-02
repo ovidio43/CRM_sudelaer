@@ -21,7 +21,12 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth'), function() {
     Route::get('list', function() {
         return View::make('Leads.list');
     });
+    Route::get('edit/{id}', function($id) {
+        return View::make('Leads.edit')->with('id', $id);
+    });
     Route::post('new/save', 'LeadsController@save');
+    Route::post('edit-save/{id}', 'LeadsController@edit_save');
+     Route::post('delete/{id}', 'LeadsController@delete');
 });
 Route::group(array('prefix' => 'contacts', 'before' => 'auth'), function() {
     Route::get('new', function() {

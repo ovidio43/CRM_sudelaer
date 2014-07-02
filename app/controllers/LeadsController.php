@@ -9,6 +9,7 @@ class LeadsController extends BaseController {
         'email_address' => 'Required|email|unique:leads'
     );
     private $id;
+    private $action;
 
     public function save() {
         $input = Input::all();
@@ -24,8 +25,37 @@ class LeadsController extends BaseController {
         }
     }
 
+    public function edit_save($id) {
+        $input = Input::all();
+        $this->id = $id;
+        $this->action = $input['action'];
+        $this->rules['email_address'] = '';
+        $input = Input::all();
+        $validation = Validator::make($input, $this->rules);
+        if (!$validation->fails()) {
+            $this->insert($input);
+            return Redirect::to('leads/list');
+        } else {
+            return Redirect::back()->withErrors($validation)->withInput();
+        }
+    }
+
+    public function delete($id) {
+        $ObjLeads = Leads::find($id);
+        if ($ObjLeads->delete()) {
+            return 'ok';
+        } else {
+            return 'error';
+        }
+    }
+
     private function insert($input) {
-        $ObjLeads = new Leads();
+        if (isset($this->action)) {
+            $ObjLeads = Leads::find($this->id);
+        } else {
+            $ObjLeads = new Leads();
+        }
+
         $ObjLeads->salutation = $input['salutation'];
         $ObjLeads->first_name = $input['first_name'];
         $ObjLeads->last_name = $input['last_name'];
@@ -58,7 +88,9 @@ class LeadsController extends BaseController {
         $ObjLeads->type = 'leads';
         $ObjLeads->active = 1;
         $ObjLeads->save();
-        $this->id = $ObjLeads->id;
+        if (!isset($this->action)) {
+            $this->id = $ObjLeads->id;
+        }
     }
 
     public function migrate_to_contact($id_leads) {

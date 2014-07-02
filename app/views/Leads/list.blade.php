@@ -31,8 +31,8 @@ MY LEADS
                 <td>{{$rowL->email_address}}</td>                
                 <td>Empty</td>                
                 <td>{{$rowL->date_entered}}</td>                
-                <td><a href="#" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="#" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="{{URL::to('leads/delete/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a></td>
                 <td><a href="{{URL::to('migrate-to-contacts/'.$rowL->id)}}" title="MIGRATE TO CONTACTS" class="migrate-link"><span class=" glyphicon glyphicon-random"></span></a></td>                
             </tr>        
             <?php
