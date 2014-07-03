@@ -227,7 +227,6 @@ $objLeads = Leads::find($id);
             <div class="form-group">
                 <div class="row">                
                     <div class="col-sm-2">
-                        <input type="hidden" name="id_carType{{$i}}" value="{{$rowCT->id}}">
                         {{Form::label('make'.$i, 'Make')}}
                         {{ Form::text('make'.$i,$rowCT->make,['class'=>'form-control'])}}
                     </div>

@@ -40,17 +40,14 @@ NEW LEADS
                 {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                
                 {{ Form::text('first_name','',['class'=>'form-control'])}}
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
-                {{ Form::text('last_name','',['class'=>'form-control'])}}
-                <!--                {{Form::label('title', 'Title')}}
-                                {{ Form::text('title','',['class'=>'form-control'])}}-->
+                {{ Form::text('last_name','',['class'=>'form-control'])}}              
                 {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
                 {{ Form::text('email_address','',['class'=>'form-control'])}} 
                 {{Form::label('account_name', 'Account Name')}}
                 {{ Form::text('account_name','',['class'=>'form-control'])}}
             </div>  
             <div class="col-sm-4">
-                <!--                {{Form::label('department', 'Departament')}}
-                                {{ Form::text('department','',['class'=>'form-control'])}}-->
+              
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone','',['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
@@ -59,80 +56,75 @@ NEW LEADS
                 {{ Form::text('mobile','',['class'=>'form-control'])}}
                 {{Form::label('fax', 'Fax')}}
                 {{ Form::text('fax','',['class'=>'form-control'])}}
-            </div> 
-            <div class="col-sm-4">               
-
-                <!--                {{Form::label('website', 'Website')}}
-                                {{ Form::text('website','',['class'=>'form-control'])}}                -->
-            </div> 
+            </div>         
         </div>
     </div>    
     <div class="tab-pane " id="tab-pane-2">
         <div class="form-group">
             <div class="col-sm-6">
+                <?php
+                $selectState = [
+                    'AL' => "Alabama",
+                    'AK' => "Alaska",
+                    'AZ' => "Arizona",
+                    'AR' => "Arkansas",
+                    'CA' => "California",
+                    'CO' => "Colorado",
+                    'CT' => "Connecticut",
+                    'DE' => "Delaware",
+                    'DC' => "District Of Columbia",
+                    'FL' => "Florida",
+                    'GA' => "Georgia",
+                    'HI' => "Hawaii",
+                    'ID' => "Idaho",
+                    'IL' => "Illinois",
+                    'IN' => "Indiana",
+                    'IA' => "Iowa",
+                    'KS' => "Kansas",
+                    'KY' => "Kentucky",
+                    'LA' => "Louisiana",
+                    'ME' => "Maine",
+                    'MD' => "Maryland",
+                    'MA' => "Massachusetts",
+                    'MI' => "Michigan",
+                    'MN' => "Minnesota",
+                    'MS' => "Mississippi",
+                    'MO' => "Missouri",
+                    'MT' => "Montana",
+                    'NE' => "Nebraska",
+                    'NV' => "Nevada",
+                    'NH' => "New Hampshire",
+                    'NJ' => "New Jersey",
+                    'NM' => "New Mexico",
+                    'NY' => "New York",
+                    'NC' => "North Carolina",
+                    'ND' => "North Dakota",
+                    'OH' => "Ohio",
+                    'OK' => "Oklahoma",
+                    'OR' => "Oregon",
+                    'PA' => "Pennsylvania",
+                    'RI' => "Rhode Island",
+                    'SC' => "South Carolina",
+                    'SD' => "South Dakota",
+                    'TN' => "Tennessee",
+                    'TX' => "Texas",
+                    'UT' => "Utah",
+                    'VT' => "Vermont",
+                    'VA' => "Virginia",
+                    'WA' => "Washington",
+                    'WV' => "West Virginia",
+                    'WI' => "Wisconsin",
+                    'WY' => "Wyoming"
+                ];
+                ?>
                 {{Form::label('primary_address_street', 'Primary Address Street')}}
                 {{ Form::textarea('primary_address_street','',['class'=>'form-control'])}}
                 {{Form::label('primary_address_city', 'Primary Address City')}}
                 {{ Form::text('primary_address_city','',['class'=>'form-control'])}}
                 {{Form::label('primary_address_state', 'Primary Address State')}}
-                <!--{{ Form::text('primary_address_state','',['class'=>'form-control'])}}-->
-                <select name="primary_address_state" id="primary_address_state" class="form-control">
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
+                {{ Form::select('primary_address_state',$selectState, null,['class'=>'form-control']) }}                                  
                 {{Form::label('primary_address_zipcode', 'Primary Address Zip Code')}}
-                {{ Form::text('primary_address_zipcode','',['class'=>'form-control'])}}
-                <!--                {{Form::label('primary_address_country', 'Primary Address Country')}}
-                                {{ Form::text('primary_address_country','',['class'=>'form-control'])}}-->
+                {{ Form::text('primary_address_zipcode','',['class'=>'form-control'])}}               
             </div>
             <div class="col-sm-6">
                 {{Form::label('alt_address_street', 'Alt Address Street')}}
@@ -140,64 +132,9 @@ NEW LEADS
                 {{Form::label('alt_address_city', 'Alt Address City')}}
                 {{ Form::text('alt_address_city','',['class'=>'form-control'])}}
                 {{Form::label('alt_address_state', 'Alt  Address State')}}
-                <!--{{ Form::text('alt_address_state','',['class'=>'form-control'])}}-->
-                <select name="alt_address_state" id="alt_address_state" class="form-control">
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
+                {{ Form::select('alt_address_state',$selectState, null,['class'=>'form-control']) }}                   
                 {{Form::label('alt_address_zipcode', 'Alt Address Postalcode')}}
-                {{ Form::text('alt_address_zipcode','',['class'=>'form-control'])}}
-                <!--                {{Form::label('alt_address_country', 'Alt Address Country')}}
-                                {{ Form::text('alt_address_country','',['class'=>'form-control'])}}-->
+                {{ Form::text('alt_address_zipcode','',['class'=>'form-control'])}}               
                 {{Form::label('copy', 'Copy address from left')}}
                 {{ Form::checkbox('copy') }}
             </div>
@@ -271,8 +208,6 @@ NEW LEADS
                 <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
                 {{Form::label('id_employee', 'Assigned to')}}
                 {{Form::select('id_employee',[''=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
-                <!--{{ Form::text('id_employee','',['class'=>'form-control'])}}-->  
-
             </div>
         </div>
     </div> 
