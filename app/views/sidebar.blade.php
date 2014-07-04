@@ -8,7 +8,7 @@
                 <h5><b>LEADS </b><i class="glyphicon <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
             </a>
             <ul id="userMenu" class="list-unstyled collapse <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'in' : ''; ?>">
-                <li <?php echo (Request::is('leads/new') || Request::is('car-type/new/*')) ? 'class="custom-active"' : ''; ?>>
+                <li <?php echo (Request::is('leads/new')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('leads/new')}}"><i class="glyphicon glyphicon-plus"></i> New Lead</a>
                 </li>
                 <li <?php echo (Request::is('leads/list')) ? 'class="custom-active"' : ''; ?>>

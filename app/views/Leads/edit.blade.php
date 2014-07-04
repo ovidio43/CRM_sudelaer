@@ -1,6 +1,6 @@
 @extends('sidebar')
 @section('title')
-NEW LEADS
+EDIT LEADS
 @stop
 @section('content')
 @if ($errors->any())
@@ -18,16 +18,15 @@ NEW LEADS
 $objLeads = Leads::find($id);
 ?>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#" id="1">Lead Information</a></li>    
-    <li><a href="#" id="2">Address Information</a></li>    
-    <li><a href="#" id="3">More Information</a></li>    
-    <li><a href="#" id="4">Other</a></li>    
-    <li><a href="#" id="5">Car Type</a></li>    
+    <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
+    <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
+    <li><a href="#MI"  role="tab" data-toggle="tab">More Information</a></li>    
+    <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
+    <li><a href="{{URL::to('car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
 {{ Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
-<input type="hidden" name="action" value="update">
 <div class="tab-content">
-    <div class="tab-pane active" id="tab-pane-1">
+    <div class="tab-pane active" id="LA">
         <div class="form-group">            
             <div class="col-sm-4"> 
                 <?php
@@ -62,7 +61,7 @@ $objLeads = Leads::find($id);
             </div>             
         </div>
     </div>    
-    <div class="tab-pane " id="tab-pane-2">
+    <div class="tab-pane " id="AI">
         <div class="form-group">
             <div class="col-sm-6">
                 <?php
@@ -152,7 +151,7 @@ $objLeads = Leads::find($id);
             </div>
         </div>
     </div>    
-    <div class="tab-pane " id="tab-pane-3">
+    <div class="tab-pane " id="MI">
         <div class="form-group">
             <div class="col-sm-6">                 
                 <?php
@@ -206,7 +205,7 @@ $objLeads = Leads::find($id);
             </div>
         </div>
     </div>    
-    <div class="tab-pane " id="tab-pane-4">
+    <div class="tab-pane " id="O">
         <div class="form-group">
             <div class="col-sm-4">
                 <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
@@ -214,67 +213,11 @@ $objLeads = Leads::find($id);
                 {{Form::select('id_employee',[''=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
             </div>
         </div>
-    </div> 
-    <div class="tab-pane " id="tab-pane-5">
-        <input type="hidden" id="aux" value="0"> <!--auxiliar para poner valores a los campos desde modal car type-->                     
-        <?php
-        $objCarType = CarType::where('id_leads', '=', $objLeads->id)->get();
-        $i = 0;           
-        foreach ($objCarType as $rowCT) {
-            ?>
-            <div class="form-group">
-                <div class="row">                
-                    <div class="col-sm-2">                        
-                        {{Form::label('make'.$i, 'Make')}}
-                        {{ Form::text('make'.$i,$rowCT->make,['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('year'.$i, 'Year')}}
-                        {{ Form::text('year'.$i,$rowCT->year,['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('stock'.$i, 'Stock')}}
-                        {{ Form::text('stock'.$i,$rowCT->stock,['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('budget'.$i, 'Budget')}}
-                        {{ Form::text('budget'.$i,$rowCT->budget,['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        <br>
-                        <a role="button" class="btn btn-primary link-get-car-type"  href="#" rel="{{$i}}">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>                            
-                    </div>             
-                </div>
-            </div>   
-            <?php
-            $i++;
-        }
-        ?>
-        <a href="#" id="link-add-inputs" >Add Row</a>
         <div class="form-group">
             <hr>
             {{ Form::submit('Save',['class'=>'btn btn-default'])}}
         </div>
-    </div>
-</div>
-<div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Select Car Type</h4>
-            </div>
-            <div id="modal-body" class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
+    </div>     
 </div>
 {{ Form::close() }}
 @stop

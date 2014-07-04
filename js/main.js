@@ -1,4 +1,4 @@
-var i = 0;
+var i = $('#initRows').val();
 $(document).ready(function() {
 //    $(".alert").addClass("in").fadeOut(4500);
     $('[data-toggle=collapse]').click(function() {
@@ -12,6 +12,10 @@ $(document).ready(function() {
 //        $('.tab-content').children().removeClass('active');
 //        $('.tab-content').children('#tab-pane-' + select).addClass('active');
 //    });
+    $('.force-redirect').on('click', function() {
+        location.href = $(this).attr('href');
+    });
+
     $('.nav-tabs a').click(function(e) {
         e.preventDefault()
         if ($(this).hasClass("disabled")) {
@@ -108,6 +112,22 @@ $(document).ready(function() {
         $(this).parent().parent().parent().remove();
         var rows = deleteInd(ind, $('#rows').val());
         $('#rows').val(rows);
+    });
+
+    $('body').on('click', '.link-delete-row-carType', function(e) {
+        e.preventDefault();
+        var currentObj = $(this);
+        var status = confirm("¿Esta seguro de eliminar el item?");
+        if (status !== false) {
+            $.post(currentObj.attr('href'), function(data) {
+                if (data === 'ok') {
+                    var ind = currentObj.attr('rel');
+                    var rows = deleteInd(ind, $('#rows').val());
+                    $('#rows').val(rows);
+                    currentObj.parent().parent().parent().remove();
+                }
+            });
+        }
     });
 
 });

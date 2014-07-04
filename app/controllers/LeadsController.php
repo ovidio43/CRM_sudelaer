@@ -22,7 +22,14 @@ class LeadsController extends BaseController {
     }
 
     public function edit_save($id) {
-        
+        $input = Input::all();
+        $validation = Validator::make($input, $this->rules);
+        if (!$validation->fails()) {
+            $this->insert_edit($input, $id);
+            return Redirect::to('leads/list');
+        } else {
+            return Redirect::back()->withErrors($validation)->withInput();
+        }
     }
 
     public function delete($id) {
@@ -34,13 +41,15 @@ class LeadsController extends BaseController {
         }
     }
 
-    private function insert_edit($input) {
-        
-    }
     private function insert($input) {
         $ObjLeads = new Leads();
         $this->setAttr($ObjLeads, $input);
         $this->id = $ObjLeads->id;
+    }
+
+    private function insert_edit($input, $id) {
+        $ObjLeads = Leads::find($id);
+        $this->setAttr($ObjLeads, $input);
     }
 
     private function setAttr($ObjLeads, $input) {
