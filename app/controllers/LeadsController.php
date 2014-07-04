@@ -9,35 +9,20 @@ class LeadsController extends BaseController {
         'email_address' => 'Required|email|unique:leads'
     );
     private $id;
-    private $action;
 
     public function save() {
         $input = Input::all();
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
-            DB::transaction(function() use ($input) {
-                $this->insert($input);
-                $this->insertCarType($input);
-            });
-            return Redirect::to('leads/list');
+            $this->insert($input);
+            return Redirect::to('car-type/new/' . $this->id);
         } else {
             return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
     public function edit_save($id) {
-        $input = Input::all();
-        $this->id = $id;
-        $this->action = $input['action'];
-        $this->rules['email_address'] = '';
-        $input = Input::all();
-        $validation = Validator::make($input, $this->rules);
-        if (!$validation->fails()) {
-            $this->insert($input);
-            return Redirect::to('leads/list');
-        } else {
-            return Redirect::back()->withErrors($validation)->withInput();
-        }
+        
     }
 
     public function delete($id) {
@@ -49,13 +34,16 @@ class LeadsController extends BaseController {
         }
     }
 
+    private function insert_edit($input) {
+        
+    }
     private function insert($input) {
-        if (isset($this->action)) {
-            $ObjLeads = Leads::find($this->id);
-        } else {
-            $ObjLeads = new Leads();
-        }
+        $ObjLeads = new Leads();
+        $this->setAttr($ObjLeads, $input);
+        $this->id = $ObjLeads->id;
+    }
 
+    private function setAttr($ObjLeads, $input) {
         $ObjLeads->salutation = $input['salutation'];
         $ObjLeads->first_name = $input['first_name'];
         $ObjLeads->last_name = $input['last_name'];
@@ -88,9 +76,6 @@ class LeadsController extends BaseController {
         $ObjLeads->type = 'leads';
         $ObjLeads->active = 1;
         $ObjLeads->save();
-        if (!isset($this->action)) {
-            $this->id = $ObjLeads->id;
-        }
     }
 
     public function migrate_to_contact($id_leads) {
@@ -103,31 +88,6 @@ class LeadsController extends BaseController {
                     $objContact->save();
                 });
         return is_null($exception) ? 'ok' : 'error';
-    }
-
-    private function insertCarType($input) {
-        for ($i = 0; $i <= 2; $i++) {
-            if ($input['make' . $i] || $input['year' . $i] || $input['stock' . $i] || $input['budget' . $i] !== '') {
-                $args = [
-                    'make' => $input['make' . $i],
-                    'year' => $input['year' . $i],
-                    'stock' => $input['stock' . $i],
-                    'budget' => $input['budget' . $i],
-                    'id_leads' => $this->id
-                ];
-                $this->newCarType($args);
-            }
-        }
-    }
-
-    private function newCarType($args) {
-        $ObjCarType = new CarType();
-        $ObjCarType->make = $args['make'];
-        $ObjCarType->year = $args['year'];
-        $ObjCarType->stock = $args['stock'];
-        $ObjCarType->budget = $args['budget'];
-        $ObjCarType->id_leads = $args['id_leads'];
-        $ObjCarType->save();
     }
 
 }

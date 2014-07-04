@@ -5,10 +5,10 @@
     <ul class="list-unstyled">
         <li class="nav-header"> 
             <a data-target="#userMenu" data-toggle="collapse" href="#">
-                <h5><b>LEADS </b><i class="glyphicon <?php echo (Request::is('leads/*')) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
+                <h5><b>LEADS </b><i class="glyphicon <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
             </a>
-            <ul id="userMenu" class="list-unstyled collapse <?php echo (Request::is('leads/*')) ? 'in' : ''; ?>">
-                <li <?php echo (Request::is('leads/new')) ? 'class="custom-active"' : ''; ?>>
+            <ul id="userMenu" class="list-unstyled collapse <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'in' : ''; ?>">
+                <li <?php echo (Request::is('leads/new') || Request::is('car-type/new/*')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('leads/new')}}"><i class="glyphicon glyphicon-plus"></i> New Lead</a>
                 </li>
                 <li <?php echo (Request::is('leads/list')) ? 'class="custom-active"' : ''; ?>>
@@ -35,13 +35,13 @@
                 <h5><b>SYSTEM </b><i class="glyphicon <?php echo (Request::is('system/*')) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
             </a>
             <ul id="menu3" class="list-unstyled collapse <?php echo (Request::is('system/*')) ? 'in' : ''; ?>">
-                <li <?php echo (Request::is('system/employee')||Request::is('system/employee/*')) ? 'class="custom-active"' : ''; ?>>
+                <li <?php echo (Request::is('system/employee') || Request::is('system/employee/*')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('system/employee')}}"><i class="glyphicon glyphicon-user"></i> Employee</a>
                 </li>
-                <li <?php echo (Request::is('system/type-user')||Request::is('system/type-user/*')) ? 'class="custom-active"' : ''; ?>>
+                <li <?php echo (Request::is('system/type-user') || Request::is('system/type-user/*')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('system/type-user')}}"><i class="glyphicon glyphicon-user"></i> Type User</a>
                 </li>
-                <li <?php echo (Request::is('system/user')||Request::is('system/user/*')) ? 'class="custom-active"' : ''; ?>>
+                <li <?php echo (Request::is('system/user') || Request::is('system/user/*')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('system/user')}}"><i class="glyphicon glyphicon-user"></i> User</a>
                 </li>
             </ul>

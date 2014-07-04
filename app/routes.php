@@ -14,6 +14,14 @@ Route::group(array('before' => 'auth'), function() {
     });
     Route::get('migrate-to-contacts/{id_leads}', 'LeadsController@migrate_to_contact');
 });
+Route::group(array('prefix' => 'car-type', 'before' => 'auth'), function() {
+    Route::get('new/{id_leadas}', function($id_leadas) {
+        return View::make('CarType.new')->with('id_leads', $id_leadas);
+    });
+    Route::post('save', 'CarTypeController@save');
+    Route::post('edit-save/{id}', 'CarTypeController@edit_save');
+    Route::post('delete/{id}', 'CarTypeController@delete');
+});
 Route::group(array('prefix' => 'leads', 'before' => 'auth'), function() {
     Route::get('new', function() {
         return View::make('Leads.new');
@@ -26,8 +34,9 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth'), function() {
     });
     Route::post('new/save', 'LeadsController@save');
     Route::post('edit-save/{id}', 'LeadsController@edit_save');
-     Route::post('delete/{id}', 'LeadsController@delete');
+    Route::post('delete/{id}', 'LeadsController@delete');
 });
+
 Route::group(array('prefix' => 'contacts', 'before' => 'auth'), function() {
     Route::get('new', function() {
         return View::make('Contacts.new');

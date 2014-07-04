@@ -212,21 +212,19 @@ $objLeads = Leads::find($id);
                 <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
                 {{Form::label('id_employee', 'Assigned to')}}
                 {{Form::select('id_employee',[''=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
-
             </div>
         </div>
     </div> 
     <div class="tab-pane " id="tab-pane-5">
-        <input type="hidden" id="aux" value="0">
+        <input type="hidden" id="aux" value="0"> <!--auxiliar para poner valores a los campos desde modal car type-->                     
         <?php
         $objCarType = CarType::where('id_leads', '=', $objLeads->id)->get();
-        $i = 0;
-
+        $i = 0;           
         foreach ($objCarType as $rowCT) {
             ?>
             <div class="form-group">
                 <div class="row">                
-                    <div class="col-sm-2">
+                    <div class="col-sm-2">                        
                         {{Form::label('make'.$i, 'Make')}}
                         {{ Form::text('make'.$i,$rowCT->make,['class'=>'form-control'])}}
                     </div>
@@ -246,44 +244,15 @@ $objLeads = Leads::find($id);
                         <br>
                         <a role="button" class="btn btn-primary link-get-car-type"  href="#" rel="{{$i}}">
                             <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                    </div>
+                        </a>                            
+                    </div>             
                 </div>
-            </div>  
+            </div>   
             <?php
             $i++;
         }
-        for ($c = $i; $c <= 2; $c++) {
-            ?>
-            <div class="form-group">
-                <div class="row">                
-                    <div class="col-sm-2">
-                        {{Form::label('make'.$c, 'Make')}}
-                        {{ Form::text('make'.$c,'',['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('year'.$c, 'Year')}}
-                        {{ Form::text('year'.$c,'',['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('stock'.$c, 'Stock')}}
-                        {{ Form::text('stock'.$c,'',['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        {{Form::label('budget'.$c, 'Budget')}}
-                        {{ Form::text('budget'.$c,'',['class'=>'form-control'])}}
-                    </div>
-                    <div class="col-sm-2">
-                        <br>
-                        <a role="button" class="btn btn-primary link-get-car-type"  href="#" rel="{{$c}}">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>    
-            <?php
-        }
         ?>
+        <a href="#" id="link-add-inputs" >Add Row</a>
         <div class="form-group">
             <hr>
             {{ Form::submit('Save',['class'=>'btn btn-default'])}}
