@@ -215,7 +215,7 @@ $objLeads = Leads::find($id);
         </div>
         <div class="form-group">
             <hr>
-            {{ Form::submit('Save',['class'=>'btn btn-default'])}}
+            {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
         </div>
     </div>     
 </div>
