@@ -23,9 +23,9 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
     <li><a href="#MI"  role="tab" data-toggle="tab">More Information</a></li>    
     <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
-    <li class="disabled"><a href="#">Car Type</a></li>     
+    <li><a href="{{URL::to('car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
-{{ Form::open(array('url' => 'contacts/new/save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'contacts/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
@@ -173,7 +173,6 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                     'Web' => 'Web'
                 ];
                 ?>
-
                 {{Form::label('reports_to', 'Reports to')}}
                 {{ Form::text('reports_to',$objContact->reports_to,['class'=>'form-control'])}}                
                 {{Form::label('lead_type', 'Lead Type')}}
@@ -185,10 +184,10 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
             </div>
             <div class="col-sm-6">
                 {{Form::label('sync_to_outlook', 'Sync to Outlook')}}
-                {{ Form::checkbox('sync_to_outlook','V')}} 
+                {{ Form::checkbox('sync_to_outlook','V',$objContact->sync_to_outlook=='V'?true:false)}} 
                 <br>
                 {{Form::label('do_not_call', 'Do Not Call')}}
-                {{ Form::checkbox('do_not_call','V')}}  
+                {{ Form::checkbox('do_not_call',$objLeads->do_not_call,$objLeads->do_not_call=='V'?true:false)}}  
             </div>
         </div>
     </div>    

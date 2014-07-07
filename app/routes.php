@@ -51,6 +51,7 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth'), function() {
         return View::make('Contacts.list');
     });
     Route::post('new/save', 'ContactsController@save');
+    Route::post('edit-save/{id}', 'ContactsController@edit_save');
 });
 Route::group(array('prefix' => 'system', 'before' => 'auth'), function() {
     /*     * *****employee********* */

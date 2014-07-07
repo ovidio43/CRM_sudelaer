@@ -11,6 +11,7 @@ class CreateCarType extends Migration {
             $table->string('make', 20);
             $table->string('year', 20);
             $table->string('stock', 20);
+            $table->string('model', 20);
             $table->string('budget', 20);
             $table->integer('id_leads')->unsigned();
             $table->foreign('id_leads')->references('id')->on('leads')->onDelete('cascade');

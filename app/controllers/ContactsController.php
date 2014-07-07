@@ -5,8 +5,8 @@ class ContactsController extends BaseController {
     private $rules = array(
         'first_name' => 'Required',
         'last_name' => 'Required',
-        'id_employee' => 'Required',
-        'email_address' => 'Required|email|unique:leads'
+        'id_employee' => 'Required'
+//        'email_address' => 'Required|email|unique:leads'
     );
     private $id;
 
@@ -24,6 +24,21 @@ class ContactsController extends BaseController {
         }
     }
 
+    public function edit_save($id) {
+        $this->id = $id;
+        $input = Input::all();
+        $validation = Validator::make($input, $this->rules);
+        if (!$validation->fails()) {
+            DB::transaction(function() use ($input) {
+                $this->insertLeadsEdit($input);
+                $this->insertContactEdit($input);
+            });
+            return Redirect::to('contacts/list');
+        } else {
+            return Redirect::back()->withErrors($validation)->withInput();
+        }
+    }
+
     private function insertLeads($input) {
         $ObjLeads = new Leads();
         $this->setAttrLeads($ObjLeads, $input);
@@ -32,6 +47,16 @@ class ContactsController extends BaseController {
 
     private function insertContact($input) {
         $ObjConatct = new Contacts();
+        $this->setAttrContact($ObjConatct, $input);
+    }
+
+    private function insertLeadsEdit($input) {
+        $ObjLeads = Leads::find($this->id);
+        $this->setAttrLeads($ObjLeads, $input);
+    }
+
+    private function insertContactEdit($input) {
+        $ObjConatct = Contacts::where('id_leads','=',$this->id)->first();
         $this->setAttrContact($ObjConatct, $input);
     }
 
@@ -67,7 +92,7 @@ class ContactsController extends BaseController {
 
     private function setAttrContact($ObjConatct, $input) {
         $ObjConatct->reports_to = $input['reports_to'];
-        $ObjConatct->sync_to_outlook = $input['sync_to_outlook'];
+        $ObjConatct->sync_to_outlook = isset($input['sync_to_outlook']) ? $input['sync_to_outlook'] : 'F';
         $ObjConatct->active = 1;
         $ObjConatct->id_leads = $this->id;
         $ObjConatct->save();

@@ -3,11 +3,18 @@
 EDIT CAR TYPE
 @stop
 @section('content')
+<?php
+$type = Leads::find($id_leads)->type;
+if ($type !== 'leads') {
+    $type = 'contacts';
+}
+?>
+
 <ul class="nav nav-tabs nav-justified">
-    <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >Lead Information</a></li>    
-    <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >Address Information</a></li>    
-    <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >More Information</a></li>    
-    <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >Other</a></li>    
+    <li ><a href="{{URL::to($type.'/edit/'.$id_leads)}}" class="force-redirect" >Lead Information</a></li>    
+    <li ><a href="{{URL::to($type.'/edit/'.$id_leads)}}" class="force-redirect" >Address Information</a></li>    
+    <li ><a href="{{URL::to($type.'/edit/'.$id_leads)}}" class="force-redirect" >More Information</a></li>    
+    <li ><a href="{{URL::to($type.'/edit/'.$id_leads)}}" class="force-redirect" >Other</a></li>    
     <li class="active"><a href="#CT">Car Type</a></li>    
 </ul> 
 {{ Form::open(array('url' => 'car-type/edit-save','class'=>'form-horizontal')) }}
@@ -36,6 +43,10 @@ EDIT CAR TYPE
                     <div class="col-sm-2">
                         {{Form::label('stock'.$i, 'Stock')}}
                         {{ Form::text('stock'.$i,$rowCT->stock,['class'=>'form-control'])}}                        
+                    </div>
+                    <div class="col-sm-2">
+                        {{Form::label('model'.$i, 'Model')}}
+                        {{ Form::text('model'.$i,$rowCT->model,['class'=>'form-control'])}}                        
                     </div>
                     <div class="col-sm-2">
                         {{Form::label('budget'.$i, 'Budget')}}

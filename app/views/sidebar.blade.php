@@ -5,9 +5,9 @@
     <ul class="list-unstyled">
         <li class="nav-header"> 
             <a data-target="#userMenu" data-toggle="collapse" href="#">
-                <h5><b>LEADS </b><i class="glyphicon <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
+                <h5><b>LEADS </b><i class="glyphicon <?php echo (Request::is('leads/*') ) ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'; ?>"></i></h5>
             </a>
-            <ul id="userMenu" class="list-unstyled collapse <?php echo (Request::is('leads/*') || Request::is('car-type/*')) ? 'in' : ''; ?>">
+            <ul id="userMenu" class="list-unstyled collapse <?php echo (Request::is('leads/*') ) ? 'in' : ''; ?>">
                 <li <?php echo (Request::is('leads/new')) ? 'class="custom-active"' : ''; ?>>
                     <a href="{{URL::to('leads/new')}}"><i class="glyphicon glyphicon-plus"></i> New Lead</a>
                 </li>

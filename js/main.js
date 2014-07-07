@@ -4,14 +4,7 @@ $(document).ready(function() {
     $('[data-toggle=collapse]').click(function() {
         $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
     });
-//    $('.nav-tabs a').on('click', function(e) {
-//        e.preventDefault();
-//        var select = $(this).attr('id');
-//        $(this).parent().addClass('active');
-//        $(this).parent().siblings().removeClass('active');
-//        $('.tab-content').children().removeClass('active');
-//        $('.tab-content').children('#tab-pane-' + select).addClass('active');
-//    });
+
     $('.force-redirect').on('click', function() {
         location.href = $(this).attr('href');
     });
@@ -64,17 +57,6 @@ $(document).ready(function() {
     });
     ;
     $("#myModal").on('show.bs.modal', function() {
-//        $.ajax({
-//            type: 'GET',
-//            url: getUrl(),
-//            cache: false,
-//            beforeSend: function() {
-//                $('#modal-body').text('Loading..');
-//            },
-//            success: function(data) {
-//                $('#modal-body').empty().append($(data).find('.twelve').children());
-//            }
-//        });
         $('#modal-body').text('Loading..');
         $.get(getUrl(), function(data) {
             $('#modal-body').empty().append($(data).find('.twelve').children());
@@ -93,6 +75,7 @@ $(document).ready(function() {
         var args = $(this).find('h4.address').text().split('#');
         $('#year' + row).val($(this).find('span.model-year-crm').text());
         $('#make' + row).val($(this).find('span.make-crm').text());
+        $('#model' + row).val($(this).find('span.model-crm').text());
         $('#stock' + row).val(args[1].trim());
         $("#myModal").modal('hide');
     });
@@ -155,6 +138,9 @@ function getHtmlInputsCarType(i) {
             '</div>' +
             '<div class="col-sm-2" >' +
             '<label for="stock' + i + '">Stock</label><input type="text" id="stock' + i + '" value="" name="stock' + i + '" class="form-control">' +
+            '</div>' +
+            '<div class="col-sm-2">' +
+            '<label for="model' + i + '">Model</label><input type="text" id="model' + i + '" value="" name="model' + i + '" class="form-control">' +
             '</div>' +
             '<div class="col-sm-2">' +
             '<label for="budget' + i + '">Budget</label><input type="text" id="budget' + i + '" value="" name="budget' + i + '" class="form-control">' +
