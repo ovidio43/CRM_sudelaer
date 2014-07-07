@@ -17,7 +17,7 @@ EDIT LEADS
 <?php
 $objLeads = Leads::find($id);
 ?>
-<ul class="nav nav-tabs nav-justified">
+<ul class="nav nav-pills">
     <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
     <li><a href="#MI"  role="tab" data-toggle="tab">More Information</a></li>    
