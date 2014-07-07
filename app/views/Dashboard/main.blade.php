@@ -1,12 +1,6 @@
 @extends('sidebar')
 @section('title')
 DASHBOARD
-<ul class="list-inline pull-right">
-    <li><a href="#"><i class="glyphicon glyphicon-cog"></i></a></li>
-    <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="glyphicon glyphicon-comment"></i><span class="count">3</span></a><ul role="menu" class="dropdown-menu"><li><a href="#">1. Is there a way..</a></li><li><a href="#">2. Hello, admin. I would..</a></li><li><a href="#"><strong>All messages</strong></a></li></ul></li>
-    <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
-    <li><a href="#addWidgetModal" data-toggle="modal" title="Add Widget"><span class="glyphicon glyphicon-plus-sign"></span> Add Widget</a></li>
-</ul>
 @stop
 @section('content')
 <div class="row">
@@ -84,8 +78,6 @@ DASHBOARD
             </tbody>
         </table>
     </div>
-
-
 </div>
 @stop
 

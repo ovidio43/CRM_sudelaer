@@ -5,11 +5,10 @@ class EmployeeController extends BaseController {
     private $rules = array(
         'first_name' => 'Required',
         'last_name' => 'Required',
-        'phone' => 'Required|Numeric',
-        'cellphone' => 'Required|Numeric',
-        'address' => 'Required',
-//        'email' => 'email|unique:employee'
-        'email' => 'email'
+//        'phone' => 'Required|Numeric',
+//        'cellphone' => 'Required|Numeric',
+//        'address' => 'Required',
+        'email' => 'Required|email'
     );
 
     public function save() {
