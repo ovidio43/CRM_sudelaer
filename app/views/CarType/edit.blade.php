@@ -43,11 +43,11 @@ EDIT CAR TYPE
                     </div>
                     <div class="col-sm-2">
                         <br>
-                        <a role="button" class="btn btn-primary link-get-car-type" href="#" rel="{{$i}}">
+                        <a role="button" title="ADD" class="btn btn-primary link-get-car-type" href="#" rel="{{$i}}">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a> 
-                        <a role="button" title="DELETE" href="{{URL::to('car-type/delete/'.$rowCT->id)}}" class="link-delete-row-carType btn btn-primary btn-danger" rel="{{$i}}">
-                            <span class=" glyphicon glyphicon-remove"></span>
+                        <a role="button" title="Remove" href="{{URL::to('car-type/delete/'.$rowCT->id)}}" class="link-delete-row-carType btn btn-primary btn-danger" rel="{{$i}}">
+                            <span class=" glyphicon glyphicon-minus"></span>
                         </a>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ EDIT CAR TYPE
         <a href="#" id="link-add-row-carType">Add Row</a>
         <div class="form-group">
             <hr>
-            {{ Form::submit('Save',['class'=>'btn btn-default'])}}
+            {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
         </div>
     </div>
 </div>
