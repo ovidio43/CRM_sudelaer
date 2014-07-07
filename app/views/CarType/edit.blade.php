@@ -3,7 +3,7 @@
 EDIT CAR TYPE
 @stop
 @section('content')
-<ul class="nav nav-pills">
+<ul class="nav nav-tabs">
     <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >Lead Information</a></li>    
     <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >Address Information</a></li>    
     <li ><a href="{{URL::to('leads/edit/'.$id_leads)}}" class="force-redirect" >More Information</a></li>    

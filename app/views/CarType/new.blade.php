@@ -3,7 +3,7 @@
 ADD CAR TYPE
 @stop
 @section('content')
-<ul class="nav nav-pills">
+<ul class="nav nav-tabs">
     <li class="disabled"><a href="#"  >Lead Information</a></li>    
     <li class="disabled"><a href="#"  >Address Information</a></li>    
     <li class="disabled"><a href="#"  >More Information</a></li>    
