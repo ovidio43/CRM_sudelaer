@@ -30,7 +30,7 @@ MY CONTACTS
                 <td>{{$rowL->email_address}}</td>                
                 <td>Empty</td>               
                 <td>{{$rowL->date_entered}}</td>                
-                <td><a href="#" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="{{URL::to('contacts/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td><a href="#" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a></td>                
             </tr>        
             <?php

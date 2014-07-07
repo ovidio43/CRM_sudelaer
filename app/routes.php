@@ -44,6 +44,9 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth'), function() {
     Route::get('new', function() {
         return View::make('Contacts.new');
     });
+    Route::get('edit/{id_leads}', function($id_leads) {
+        return View::make('Contacts.edit')->with('id_leads', $id_leads);;
+    });
     Route::get('list', function() {
         return View::make('Contacts.list');
     });
