@@ -1,6 +1,6 @@
 @extends('sidebar')
 @section('title')
-NEW CONTACT
+EDIT CONTACT
 @stop
 @section('content')
 @if ($errors->any())
@@ -14,6 +14,10 @@ NEW CONTACT
     </ul>
 </div>
 @endif
+<?php
+$objLeads = Leads::find($id_leads);
+$objContact = Contacts::where('id_leads', '=', $id_leads)->first();
+?>
 <ul class="nav nav-tabs">
     <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
@@ -37,27 +41,26 @@ NEW CONTACT
                 ?>
 
                 {{Form::label('salutation', 'Salutation')}}
-                {{ Form::select('salutation',$salutation, null,['class'=>'form-control']) }}                
+                {{ Form::select('salutation',$salutation, $objLeads->salutation,['class'=>'form-control']) }}                
                 {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                
-                {{ Form::text('first_name','',['class'=>'form-control'])}}
+                {{ Form::text('first_name',$objLeads->first_name,['class'=>'form-control'])}}
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
-                {{ Form::text('last_name','',['class'=>'form-control'])}}
+                {{ Form::text('last_name',$objLeads->last_name,['class'=>'form-control'])}}
                 {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
-                {{ Form::text('email_address','',['class'=>'form-control'])}}  
+                {{ Form::text('email_address',$objLeads->email_address,['class'=>'form-control'])}}  
                 {{Form::label('account_name', 'Account Name')}}
-                {{ Form::text('account_name','',['class'=>'form-control'])}}
-
+                {{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}                
             </div>  
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 {{Form::label('home_phone', 'Home Phone')}}
-                {{ Form::text('home_phone','',['class'=>'form-control'])}}
+                {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
-                {{ Form::text('office_phone','',['class'=>'form-control'])}}
+                {{ Form::text('office_phone',$objLeads->office_phone,['class'=>'form-control'])}}
                 {{Form::label('mobile', 'Mobile')}}
-                {{ Form::text('mobile','',['class'=>'form-control'])}}
+                {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
                 {{Form::label('fax', 'Fax')}}
-                {{ Form::text('fax','',['class'=>'form-control'])}}
-            </div> 
+                {{ Form::text('fax',$objLeads->fax,['class'=>'form-control'])}}
+            </div>          
         </div>
     </div>    
     <div class="tab-pane " id="AI">
@@ -119,23 +122,23 @@ NEW CONTACT
                 ];
                 ?>
                 {{Form::label('primary_address_street', 'Primary Address Street')}}
-                {{ Form::textarea('primary_address_street','',['class'=>'form-control'])}}
+                {{ Form::textarea('primary_address_street',$objLeads->primary_address_street,['class'=>'form-control'])}}
                 {{Form::label('primary_address_city', 'Primary Address City')}}
-                {{ Form::text('primary_address_city','',['class'=>'form-control'])}}
+                {{ Form::text('primary_address_city',$objLeads->primary_address_city,['class'=>'form-control'])}}
                 {{Form::label('primary_address_state', 'Primary Address State')}}
-                {{ Form::select('primary_address_state',$selectState, null,['class'=>'form-control']) }}                                  
+                {{ Form::select('primary_address_state',$selectState, $objLeads->primary_address_state,['class'=>'form-control']) }}                                  
                 {{Form::label('primary_address_zipcode', 'Primary Address Zip Code')}}
-                {{ Form::text('primary_address_zipcode','',['class'=>'form-control'])}}    
+                {{ Form::text('primary_address_zipcode',$objLeads->primary_address_zipcode,['class'=>'form-control'])}}    
             </div>
             <div class="col-sm-6">
                 {{Form::label('alt_address_street', 'Alt Address Street')}}
-                {{ Form::textarea('alt_address_street','',['class'=>'form-control'])}}
+                {{ Form::textarea('alt_address_street',$objLeads->alt_address_street,['class'=>'form-control'])}}
                 {{Form::label('alt_address_city', 'Alt Address City')}}
-                {{ Form::text('alt_address_city','',['class'=>'form-control'])}}
+                {{ Form::text('alt_address_city',$objLeads->alt_address_city,['class'=>'form-control'])}}
                 {{Form::label('alt_address_state', 'Alt  Address State')}}
-                {{ Form::select('alt_address_state',$selectState, null,['class'=>'form-control']) }}   
+                {{ Form::select('alt_address_state',$selectState, $objLeads->alt_address_state,['class'=>'form-control']) }}   
                 {{Form::label('alt_address_zipcode', 'Alt Address Zip Code')}}
-                {{ Form::text('alt_address_zipcode','',['class'=>'form-control'])}}               
+                {{ Form::text('alt_address_zipcode',$objLeads->alt_address_zipcode,['class'=>'form-control'])}}               
                 {{Form::label('copy', 'Copy address from left')}}
                 {{ Form::checkbox('copy') }}
             </div>
@@ -144,7 +147,7 @@ NEW CONTACT
         <div class="form-group">
             <div class="col-sm-4">
                 {{Form::label('note', 'Note')}}
-                {{ Form::textarea('note','',['class'=>'form-control'])}}                 
+                {{ Form::textarea('note',$objLeads->note,['class'=>'form-control'])}}                 
             </div>
         </div>
     </div>    
@@ -172,13 +175,13 @@ NEW CONTACT
                 ?>
 
                 {{Form::label('reports_to', 'Reports to')}}
-                {{ Form::text('reports_to','',['class'=>'form-control'])}}                
+                {{ Form::text('reports_to',$objContact->reports_to,['class'=>'form-control'])}}                
                 {{Form::label('lead_type', 'Lead Type')}}
-                {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
+                {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
                 {{Form::label('lead_source', 'Lead source')}}
-                {{ Form::select('lead_source', $leadSource, null,['class'=>'form-control']) }}  
+                {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }}  
                 {{Form::label('id_campaign', 'Campaign')}}
-                {{ Form::text('id_campaign','',['class'=>'form-control'])}}
+                {{ Form::text('id_campaign',$objLeads->id_campaign,['class'=>'form-control'])}}
             </div>
             <div class="col-sm-6">
                 {{Form::label('sync_to_outlook', 'Sync to Outlook')}}
@@ -194,7 +197,7 @@ NEW CONTACT
             <div class="col-sm-4">
                 <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
                 {{Form::label('id_employee', 'Assigned to')}}
-                {{Form::select('id_employee',[''=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
+                {{Form::select('id_employee',[''=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
             </div>
         </div>
         <div class="form-group">
@@ -205,3 +208,4 @@ NEW CONTACT
 </div>
 {{ Form::close() }}
 @stop
+
