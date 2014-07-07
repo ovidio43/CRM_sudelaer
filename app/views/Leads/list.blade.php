@@ -21,18 +21,23 @@ MY LEADS
     </thead>
     <tbody>
         <?php
-        $objLeads = Leads::where('type', '=', 'leads')->get();
+        $objLeads = Leads::where('type', '=', 'leads')->paginate(10);
         foreach ($objLeads as $rowL) {
+            $user = 'Web';
+            if ($rowL->id_employee > 0) {
+                $objEmployee = Employee::find($rowL->id_employee);
+                $user = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
+            }
             ?>        
             <tr>
-                <td>{{$rowL->first_name}}</td>                
+                <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                 <td>{{$rowL->status}}</td>                
                 <td>{{$rowL->account_name}}</td>                
                 <td>{{$rowL->office_phone}}</td>                
                 <td>{{$rowL->email_address}}</td>                
-                <td>Empty</td>                
+                <td>{{$user}}</td>                
                 <td>{{$rowL->date_entered}}</td>                
-               <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-list-alt"></span></a></td>
+                <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-list-alt"></span></a></td>
                 <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td><a href="{{URL::to('leads/delete/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a></td>                 
                 <td><a href="{{URL::to('migrate-to-contacts/'.$rowL->id)}}" title="MIGRATE TO CONTACTS" class="migrate-link"><span class=" glyphicon glyphicon-random"></span></a></td>                
@@ -42,7 +47,8 @@ MY LEADS
         ?>
     </tbody>
 </table>
-
+{{ $objLeads->links(); }}
 @stop
+
 
 

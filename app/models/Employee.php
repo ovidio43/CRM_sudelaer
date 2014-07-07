@@ -4,8 +4,8 @@ class Employee extends Eloquent {
 
     protected $table = 'employee';
 
-    public function phone() {
-        return $this->hasOne('User');
+    public function user() {
+        return $this->hasOne('User','id');
     }
 
 }

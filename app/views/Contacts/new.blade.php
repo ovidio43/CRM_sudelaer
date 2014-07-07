@@ -192,9 +192,20 @@ NEW CONTACT
     <div class="tab-pane " id="O">
         <div class="form-group">
             <div class="col-sm-4">
-                <?php $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id'); ?>
                 {{Form::label('id_employee', 'Assigned to')}}
-                {{Form::select('id_employee',[''=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
+                <?php
+                if (Auth::user()->user === 'admin') {
+                    $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
+                    ?>                
+                    {{Form::select('id_employee',[''=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
+                    <?php
+                } else {
+                    ?>
+                    {{ Form::hidden('id_employee',Auth::user()->employee->id)}}
+                    {{ Form::text('name_employee',Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name,['class'=>'form-control','readonly'=>'readonly'])}}
+                    <?php
+                }
+                ?>
             </div>
         </div>
         <div class="form-group">

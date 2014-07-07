@@ -19,8 +19,13 @@ MY CONTACTS
     </thead>
     <tbody>
         <?php
-        $objLeads = Leads::where('type', '=', 'contacts')->get();
+        $objLeads = Leads::where('type', '=', 'contacts')->paginate(10);
         foreach ($objLeads as $rowL) {
+            $user = 'Web';
+            if ($rowL->id_employee > 0) {
+                $objEmployee = Employee::find($rowL->id_employee);
+                $user = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
+            }
             ?>        
             <tr>
                 <td>{{$rowL->first_name}}</td>                
@@ -28,7 +33,7 @@ MY CONTACTS
                 <td>{{$rowL->account_name}}</td>                
                 <td>{{$rowL->office_phone}}</td>                
                 <td>{{$rowL->email_address}}</td>                
-                <td>Empty</td>               
+                <td>{{$user}}</td>   
                 <td>{{$rowL->date_entered}}</td>                
                 <td><a href="{{URL::to('contacts/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td><a href="#" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a></td>                
@@ -38,7 +43,7 @@ MY CONTACTS
         ?>
     </tbody>
 </table>
-
+{{ $objLeads->links(); }}
 @stop
 
 
