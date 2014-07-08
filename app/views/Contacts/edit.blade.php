@@ -201,7 +201,7 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                 if (Auth::user()->user === 'admin') {
                     $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
                     ?>                
-                    {{Form::select('id_employee',[''=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
+                    {{Form::select('id_employee',['0'=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
                     <?php
                 } else {
                     ?>
