@@ -6,7 +6,8 @@ class LeadsController extends BaseController {
         'first_name' => 'Required',
         'last_name' => 'Required',
         'id_employee' => 'Required',
-        'email_address' => 'Required|email|unique:leads'
+        'opportunity' => 'Required',
+        'email_address' => 'Required|email'
     );
     private $id;
 
@@ -82,6 +83,7 @@ class LeadsController extends BaseController {
         $ObjLeads->referred_by = $input['referred_by'];
         $ObjLeads->do_not_call = isset($input['do_not_call']) ? $input['do_not_call'] : 'F';
         $ObjLeads->id_employee = $input['id_employee'];
+        $ObjLeads->opportunity = $input['opportunity'];
         $ObjLeads->type = 'leads';
         $ObjLeads->active = 1;
         $ObjLeads->save();

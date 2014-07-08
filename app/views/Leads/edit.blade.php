@@ -36,7 +36,26 @@ $objLeads = Leads::find($id);
                     'Mrs.' => 'Mrs.',
                     'Dr.' => 'Dr.',
                     'Prof.' => 'Prof.'
-                        ]
+                ];
+
+                $leadSource = [
+                    'Univision Washington' => 'Univision Washington',
+                    'DContigo Tv Show' => 'DContigo Tv Show',
+                    'Telemundo Washington' => 'Telemundo Washington',
+                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
+                    'Variedades de Washington' => 'Variedades de Washington',
+                    'Referido' => 'Referido',
+                    'Cliente actual' => 'Cliente actual',
+                    'Periodicos' => 'Periodicos',
+                    'Revistas' => 'Revistas',
+                    'Otros' => 'Otros'
+                ];
+
+                $leadType = [
+                    'Phone in' => 'Phone in',
+                    'Walk in' => 'Walk in',
+                    'Web' => 'Web'
+                ];
                 ?>
                 {{Form::label('salutation', 'Salutation')}}
                 {{ Form::select('salutation',$salutation, $objLeads->salutation,['class'=>'form-control']) }}                
@@ -48,8 +67,12 @@ $objLeads = Leads::find($id);
                 {{ Form::text('email_address',$objLeads->email_address,['class'=>'form-control'])}} 
                 {{Form::label('account_name', 'Account Name')}}
                 {{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}
+                {{Form::label('lead_type', 'Lead Type')}}
+                {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
             </div>  
             <div class="col-sm-4">
+                {{Form::label('lead_source', 'Lead source')}}
+                {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }} 
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
@@ -172,30 +195,7 @@ $objLeads = Leads::find($id);
                 {{ Form::text('id_campaign',$objLeads->id_campaign,['class'=>'form-control'])}}  
             </div>
             <div class="col-sm-6">
-                <?php
-                $leadSource = [
-                    'Univision Washington' => 'Univision Washington',
-                    'DContigo Tv Show' => 'DContigo Tv Show',
-                    'Telemundo Washington' => 'Telemundo Washington',
-                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
-                    'Variedades de Washington' => 'Variedades de Washington',
-                    'Referido' => 'Referido',
-                    'Cliente actual' => 'Cliente actual',
-                    'Periodicos' => 'Periodicos',
-                    'Revistas' => 'Revistas',
-                    'Otros' => 'Otros'
-                ];
 
-                $leadType = [
-                    'Phone in' => 'Phone in',
-                    'Walk in' => 'Walk in',
-                    'Web' => 'Web'
-                ];
-                ?>
-                {{Form::label('lead_type', 'Lead Type')}}
-                {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
-                {{Form::label('lead_source', 'Lead source')}}
-                {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }}                 
                 {{Form::label('lead_source_description', 'Lead Source Description')}}
                 {{ Form::textarea('lead_source_description',$objLeads->lead_source_description,['class'=>'form-control'])}}   
                 {{Form::label('referred_by', 'Referred By')}}
@@ -208,6 +208,13 @@ $objLeads = Leads::find($id);
     <div class="tab-pane " id="O">
         <div class="form-group">
             <div class="col-sm-4">
+                <?php
+                $opportunity = ['Caliente' => 'Caliente',
+                    'Tibio' => 'Tibio',
+                    'Frio' => 'Frio'];
+                ?>
+                {{Form::label('opportunity', 'Opportunity')}}
+                {{ Form::select('opportunity',[''=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
                 {{Form::label('id_employee', 'Assigned to')}}
                 <?php
                 if (Auth::user()->user === 'admin') {

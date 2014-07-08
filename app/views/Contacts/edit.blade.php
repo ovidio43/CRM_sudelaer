@@ -37,7 +37,25 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                     'Mrs.' => 'Mrs.',
                     'Dr.' => 'Dr.',
                     'Prof.' => 'Prof.'
-                        ]
+                ];
+
+                $leadSource = [
+                    'Univision Washington' => 'Univision Washington',
+                    'DContigo Tv Show' => 'DContigo Tv Show',
+                    'Telemundo Washington' => 'Telemundo Washington',
+                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
+                    'Variedades de Washington' => 'Variedades de Washington',
+                    'Referido' => 'Referido',
+                    'Cliente actual' => 'Cliente actual',
+                    'Periodicos' => 'Periodicos',
+                    'Revistas' => 'Revistas',
+                    'Otros' => 'Otros'
+                ];
+                $leadType = [
+                    'Phone in' => 'Phone in',
+                    'Walk in' => 'Walk in',
+                    'Web' => 'Web'
+                ];
                 ?>
 
                 {{Form::label('salutation', 'Salutation')}}
@@ -49,9 +67,14 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                 {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
                 {{ Form::text('email_address',$objLeads->email_address,['class'=>'form-control'])}}  
                 {{Form::label('account_name', 'Account Name')}}
-                {{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}                
+                {{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}  
+                {{Form::label('lead_type', 'Lead Type')}}
+                {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
+
             </div>  
-            <div class="col-sm-4">                
+            <div class="col-sm-4">       
+                {{Form::label('lead_source', 'Lead source')}}
+                {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }}  
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
@@ -154,31 +177,10 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
     <div class="tab-pane " id="MI">
         <div class="form-group">
             <div class="col-sm-6">   
-                <?php
-                $leadSource = [
-                    'Univision Washington' => 'Univision Washington',
-                    'DContigo Tv Show' => 'DContigo Tv Show',
-                    'Telemundo Washington' => 'Telemundo Washington',
-                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
-                    'Variedades de Washington' => 'Variedades de Washington',
-                    'Referido' => 'Referido',
-                    'Cliente actual' => 'Cliente actual',
-                    'Periodicos' => 'Periodicos',
-                    'Revistas' => 'Revistas',
-                    'Otros' => 'Otros'
-                ];
-                $leadType = [
-                    'Phone in' => 'Phone in',
-                    'Walk in' => 'Walk in',
-                    'Web' => 'Web'
-                ];
-                ?>
+
                 {{Form::label('reports_to', 'Reports to')}}
                 {{ Form::text('reports_to',$objContact->reports_to,['class'=>'form-control'])}}                
-                {{Form::label('lead_type', 'Lead Type')}}
-                {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
-                {{Form::label('lead_source', 'Lead source')}}
-                {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }}  
+
                 {{Form::label('id_campaign', 'Campaign')}}
                 {{ Form::text('id_campaign',$objLeads->id_campaign,['class'=>'form-control'])}}
             </div>

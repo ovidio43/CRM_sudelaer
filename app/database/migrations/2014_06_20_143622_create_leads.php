@@ -37,10 +37,9 @@ class CreateLeads extends Migration {
             $table->string('referred_by', 100);
             $table->char('do_not_call', 1);
             $table->integer('id_employee');
+            $table->string('opportunity', 20);
             $table->string('type', 20);
             $table->char('active', 1);
-//            $table->integer('id_emlpoyee')->unsigned();
-//            $table->foreign('id_emlpoyee')->references('id')->on('employee')->onDelete('cascade');
             $table->timestamps();
         });
     }

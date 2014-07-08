@@ -5,8 +5,9 @@ class ContactsController extends BaseController {
     private $rules = array(
         'first_name' => 'Required',
         'last_name' => 'Required',
-        'id_employee' => 'Required'
-//        'email_address' => 'Required|email|unique:leads'
+        'id_employee' => 'Required',
+        'opportunity' => 'Required',
+        'email_address' => 'Required|email'
     );
     private $id;
 
@@ -56,7 +57,7 @@ class ContactsController extends BaseController {
     }
 
     private function insertContactEdit($input) {
-        $ObjConatct = Contacts::where('id_leads','=',$this->id)->first();
+        $ObjConatct = Contacts::where('id_leads', '=', $this->id)->first();
         $this->setAttrContact($ObjConatct, $input);
     }
 
@@ -85,6 +86,7 @@ class ContactsController extends BaseController {
         $ObjLeads->lead_source = $input['lead_source'];
         $ObjLeads->do_not_call = isset($input['do_not_call']) ? $input['do_not_call'] : 'F';
         $ObjLeads->id_employee = $input['id_employee'];
+        $ObjLeads->opportunity = $input['opportunity'];
         $ObjLeads->type = 'contacts';
         $ObjLeads->active = 1;
         $ObjLeads->save();
