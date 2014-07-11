@@ -6,12 +6,12 @@ New Employee
 <div class="row">
     <div class="col-md-2">
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-primary col-sm-3" href="{{URL::to('system/employee')}}"><i class="glyphicon glyphicon-list-alt"></i><br>List</a>     
+            <a class="btn btn-primary col-sm-3" href="{{URL::to($mod.'/employee')}}"><i class="glyphicon glyphicon-list-alt"></i><br>List</a>     
         </div> 
     </div>
 </div>
 <hr>
-{{ Form::open(array('url' => 'system/employee/save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => $mod.'/employee/save','class'=>'form-horizontal')) }}
 <div class="row">
     <div class="col-sm-4"> 
         {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                

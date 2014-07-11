@@ -8,4 +8,11 @@ class TypeUser extends Eloquent {
         return $this->hasMany('User');
     }
 
+    public function module() {
+        return $this->belongsToMany('Module', 'module_type_user', 'id_type_user', 'id_module');
+    }
+    public function action() {
+        return $this->belongsToMany('Action', 'action_type_user', 'id_type_user', 'id_action');
+    }
+
 }

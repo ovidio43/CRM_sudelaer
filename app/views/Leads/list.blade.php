@@ -37,10 +37,26 @@ MY LEADS
                 <td>{{$rowL->email_address}}</td>                
                 <td>{{$user}}</td>                
                 <td>{{$rowL->date_entered}}</td>                
-                <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-list-alt"></span></a></td>
-                <td><a href="{{URL::to('leads/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="{{URL::to('leads/delete/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a></td>                 
-                <td><a href="{{URL::to('migrate-to-contacts/'.$rowL->id)}}" title="MIGRATE TO CONTACTS" class="migrate-link"><span class=" glyphicon glyphicon-random"></span></a></td>                
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="{{URL::to('leads/'.Session::get('update').'/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-list-alt"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="{{URL::to('leads/'.Session::get('update').'/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('delete')) { ?>
+                        <a href="{{URL::to('leads/'.Session::get('delete').'/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a>
+                    <?php } ?>
+                </td>                 
+                <td>
+                    <?php if (Session::has('migrate')) { ?>
+                        <a href="{{URL::to('migrate-to-contacts/'.$rowL->id)}}" title="MIGRATE TO CONTACTS" class="migrate-link"><span class=" glyphicon glyphicon-random"></span></a>
+                        <?php } ?>
+                </td>                
             </tr>        
             <?php
         }

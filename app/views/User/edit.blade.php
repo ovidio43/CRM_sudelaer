@@ -9,7 +9,7 @@ $objUser = User::find($id);
 <div class="row">
     <div class="col-md-2">
         <div class="btn-group btn-group-justified">            
-            <a class="btn btn-primary col-sm-3" href="{{URL::to('system/user')}}"><i class="glyphicon glyphicon-list-alt"></i><br>List</a>     
+            <a class="btn btn-primary col-sm-3" href="{{URL::to($mod.'/user')}}"><i class="glyphicon glyphicon-list-alt"></i><br>List</a>     
         </div> 
     </div>
 </div>
@@ -18,7 +18,7 @@ $objUser = User::find($id);
 $selectTypeUser = TypeUser::lists('name', 'id');
 $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
 ?>
-{{ Form::open(array('url' => 'system/user/edit-save/'.$objUser->id,'class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => $mod.'/user/edit-save/'.$objUser->id,'class'=>'form-horizontal')) }}
 <div class="row">
     <div class="col-sm-4">         
         {{Form::label('user', 'User Name')}} <span class="required-field">*</span>                

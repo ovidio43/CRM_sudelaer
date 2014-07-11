@@ -25,6 +25,8 @@ class UserController extends BaseController {
             );
 
             if (Auth::attempt($userdata)) {
+                $this->setModules();
+                $this->setActions();
                 return Redirect::to('dashboard');
             } else {
                 return Redirect::back()->withErrors($validation)->withInput();
@@ -34,6 +36,7 @@ class UserController extends BaseController {
 
     public function logOut() {
         Auth::logout();
+        Session::flush();
         return Redirect::to('/');
     }
 
@@ -58,6 +61,20 @@ class UserController extends BaseController {
         $ObjUser->save();
     }
 
+    private function setModules() {
+        $module = Auth::user()->typeuser->module;
+        foreach ($module as $m) {
+            Session::put($m->name, $m->name);
+        }
+    }
+
+    private function setActions() {
+        $action = Auth::user()->typeuser->action;
+        foreach ($action as $a) {
+            Session::put($a->name, $a->suffix);
+        }
+    }
+
     public function edit_save($id) {
         $this->rules['user'] = '';
         $this->rules['password'] = '';
@@ -65,9 +82,8 @@ class UserController extends BaseController {
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $ObjUser = User::find($id);
-//            $ObjUser->user = $input['user'];
             if (isset($input['password'])) {
-                $ObjUser->password = Hash::make ($input['password']);
+                $ObjUser->password = Hash::make($input['password']);
             }
             $ObjUser->id_employee = $input['id_employee'];
             $ObjUser->id_type_user = $input['id_type_user'];

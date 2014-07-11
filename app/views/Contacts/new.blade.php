@@ -21,7 +21,7 @@ NEW CONTACT
     <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
     <li class="disabled"><a href="#">Car Type</a></li>     
 </ul> 
-{{ Form::open(array('url' => 'contacts/new/save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => $mod.'/new/save','class'=>'form-horizontal')) }}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            

@@ -6,7 +6,7 @@ List Employee
 <div class="row">
     <div class="col-md-2">
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-primary col-sm-3" href="{{URL::to('system/employee/new')}}"><i class="glyphicon glyphicon-plus"></i><br>New</a>     
+            <a class="btn btn-primary col-sm-3" href="{{URL::to($mod.'/employee/new')}}"><i class="glyphicon glyphicon-plus"></i><br>New</a>     
         </div> 
     </div>
 </div>
@@ -36,8 +36,16 @@ List Employee
                 <td>{{$rowE->cellphone}}</td>
                 <td>{{$rowE->address}}</td>                
                 <td>{{$rowE->email}}</td>
-                <td><a href="{{URL::to('system/employee/edit/'.$rowE->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="{{URL::to('system/employee/delete/'.$rowE->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a></td>    
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="{{URL::to($mod.'/employee/'.Session::get('update').'/'.$rowE->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('delete')) { ?>
+                        <a href="{{URL::to($mod.'/employee/'.Session::get('delete').'/'.$rowE->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a>
+                        <?php } ?>
+                </td>    
             </tr>  
             <?php
         }

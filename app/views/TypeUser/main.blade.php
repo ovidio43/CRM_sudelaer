@@ -6,7 +6,7 @@ List Type User
 <div class="row">
     <div class="col-md-2">
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-primary col-sm-3" href="{{URL::to('system/type-user/new')}}"><i class="glyphicon glyphicon-plus"></i><br>New</a>     
+            <a class="btn btn-primary col-sm-3" href="{{URL::to($mod.'/type-user/new')}}"><i class="glyphicon glyphicon-plus"></i><br>New</a>     
         </div> 
     </div>
 </div>
@@ -28,8 +28,16 @@ List Type User
             <tr>
                 <td>{{$rowTU->name}}</td>
                 <td>{{$rowTU->description}}</td>                
-                <td><a href="{{URL::to('system/type-user/edit/'.$rowTU->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="{{URL::to('system/type-user/delete/'.$rowTU->id)}}" class="delete-link" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a></td>    
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="{{URL::to($mod.'/type-user/'.Session::get('update').'/'.$rowTU->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('delete')) { ?>
+                        <a href="{{URL::to($mod.'/type-user/'.Session::get('delete').'/'.$rowTU->id)}}" class="delete-link" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a>
+                        <?php } ?>
+                </td>    
             </tr>  
             <?php
         }

@@ -13,9 +13,6 @@
         {{ HTML::style('css/custom.css') }}       
         {{ HTML::style('css/invetary.css') }}       
     </head>
-
-    <!-- HTML code from Bootply.com editor -->
-
     <body  >
 
         <!-- Header -->
@@ -33,7 +30,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                                <i class="glyphicon glyphicon-user"></i>
+                                <i class="glyphicon glyphicon-user"></i>                                
                                 {{Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name }}
                                 <span class="caret"></span>
                             </a>
@@ -51,3 +48,4 @@
         <!-- Main -->
         <div class="container">
             <div class="row">
+               

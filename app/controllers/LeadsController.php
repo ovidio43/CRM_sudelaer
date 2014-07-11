@@ -12,7 +12,7 @@ class LeadsController extends BaseController {
     private $id;
 
     public function save() {
-        $input = Input::all();
+               $input = Input::all();
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $this->insert($input);

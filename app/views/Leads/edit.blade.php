@@ -22,7 +22,7 @@ $objLeads = Leads::find($id);
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
     <li><a href="#MI"  role="tab" data-toggle="tab">More Information</a></li>    
     <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
-    <li><a href="{{URL::to('car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
+    <li><a href="{{URL::to($mod.'/car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
 {{ Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
 <div class="tab-content">

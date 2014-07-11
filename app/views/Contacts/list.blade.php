@@ -35,8 +35,16 @@ MY CONTACTS
                 <td>{{$rowL->email_address}}</td>                
                 <td>{{$user}}</td>   
                 <td>{{$rowL->date_entered}}</td>                
-                <td><a href="{{URL::to('contacts/edit/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="#" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a></td>                
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="{{URL::to($mod.'/'.Session::get('update').'/'.$rowL->id)}}" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('delete')) { ?>
+                        <a href="#" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>                
+                <?php } ?>
             </tr>        
             <?php
         }

@@ -14,6 +14,7 @@ NEW LEADS
     </ul>
 </div>
 @endif
+
 <ul class="nav nav-tabs">
     <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
@@ -21,7 +22,7 @@ NEW LEADS
     <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
     <li class="disabled"><a href="#">Car Type</a></li>    
 </ul> 
-{{ Form::open(array('url' => 'leads/new/save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => $mod.'/new/save','class'=>'form-horizontal')) }}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
