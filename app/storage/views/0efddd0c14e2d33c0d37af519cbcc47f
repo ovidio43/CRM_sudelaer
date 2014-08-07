@@ -1,0 +1,99 @@
+<?php $__env->startSection('title'); ?>
+EDIT CAR TYPE
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<?php
+$type = Leads::find($id_leads)->type;
+if ($type !== 'leads') {
+    $type = 'contacts';
+}
+?>
+
+<ul class="nav nav-tabs nav-justified">
+    <li ><a href="<?php echo URL::to($type.'/edit/'.$id_leads); ?>" class="force-redirect" >Lead Information</a></li>    
+    <li ><a href="<?php echo URL::to($type.'/edit/'.$id_leads); ?>" class="force-redirect" >Address Information</a></li>    
+    <li ><a href="<?php echo URL::to($type.'/edit/'.$id_leads); ?>" class="force-redirect" >More Information</a></li>    
+    <li ><a href="<?php echo URL::to($type.'/edit/'.$id_leads); ?>" class="force-redirect" >Other</a></li>    
+    <li class="active"><a href="#CT">Car Type</a></li>    
+</ul> 
+<?php echo Form::open(array('url' => 'car-type/edit-save','class'=>'form-horizontal')); ?>
+<div class="tab-content">
+    <div class="tab-pane active" id="CT">
+        <input type="hidden" id="aux" value="0"> <!--auxiliar para poner valores a los campos desde modal car type--> 
+        <?php echo Form::hidden('id_leads',$id_leads); ?>
+        <?php
+        $objCartType = CarType::where('id_leads', '=', $id_leads)->get();
+        $i = 0;
+        $rows = '';
+        foreach ($objCartType as $rowCT) {
+            $rows.=$i . ',';
+            ?>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">                        
+                        <?php echo Form::hidden('id_carType'.$i,$rowCT->id); ?>
+                        <?php echo Form::label('make'.$i, 'Make'); ?>
+                        <?php echo Form::text('make'.$i,$rowCT->make,['class'=>'form-control']); ?>                        
+                    </div>
+                    <div class="col-sm-2">
+                        <?php echo Form::label('year'.$i, 'Year'); ?>
+                        <?php echo Form::text('year'.$i,$rowCT->year,['class'=>'form-control']); ?>                        
+                    </div>
+                    <div class="col-sm-2">
+                        <?php echo Form::label('stock'.$i, 'Stock'); ?>
+                        <?php echo Form::text('stock'.$i,$rowCT->stock,['class'=>'form-control']); ?>                        
+                    </div>
+                    <div class="col-sm-2">
+                        <?php echo Form::label('model'.$i, 'Model'); ?>
+                        <?php echo Form::text('model'.$i,$rowCT->model,['class'=>'form-control']); ?>                        
+                    </div>
+                    <div class="col-sm-2">
+                        <?php echo Form::label('budget'.$i, 'Budget'); ?>
+                        <?php echo Form::text('budget'.$i,$rowCT->budget,['class'=>'form-control']); ?>                        
+                    </div>
+                    <div class="col-sm-2">
+                        <br>
+                        <a role="button" title="ADD" class="btn btn-primary link-get-car-type" href="#" rel="<?php echo $i; ?>">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a> 
+                        <a role="button" title="Remove" href="<?php echo URL::to('car-type/delete/'.$rowCT->id); ?>" class="link-delete-row-carType btn btn-primary btn-danger" rel="<?php echo $i; ?>">
+                            <span class=" glyphicon glyphicon-minus"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $i++;
+        }
+        ?>
+        <?php echo Form::hidden('initRows',$i,['id'=>'initRows']); ?>
+        <?php echo Form::hidden('rows',$rows,['id'=>'rows']); ?>
+
+        <a href="#" id="link-add-row-carType">Add Row</a>
+        <div class="form-group">
+            <hr>
+            <?php echo Form::submit('Save',['class'=>'btn btn-primary']); ?>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Car Type</h4>
+            </div>
+            <div id="modal-body" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

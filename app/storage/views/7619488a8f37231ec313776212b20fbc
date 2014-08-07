@@ -1,0 +1,56 @@
+<?php $__env->startSection('title'); ?>
+List User
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="btn-group btn-group-justified">
+            <a class="btn btn-primary col-sm-3" href="<?php echo URL::to($mod.'/user/new'); ?>"><i class="glyphicon glyphicon-plus"></i><br>New</a>     
+        </div> 
+    </div>
+</div>
+<hr>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Password</th>            
+            <th>Employee</th>
+            <th>Type User</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $objUser = User:: where('active', '=', '1')->where('id', '!=', '1')->get();
+        foreach ($objUser as $rowU) {
+            ?>        
+            <tr>
+                <td><?php echo $rowU->user; ?></td>
+                <td>**********</td>                
+                <td><?php echo $rowU->employee->first_name.' '.$rowU->employee->last_name; ?></td>                
+                <td><?php echo $rowU->typeUser->name; ?></td>                
+                <td>
+                    <?php if (Session::has('update')) { ?>
+                        <a href="<?php echo URL::to($mod.'/user/'.Session::get('update').'/'.$rowU->id); ?>" title="UPDATE"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (Session::has('delete')) { ?>
+                        <a href="<?php echo URL::to($mod.'/user/'.Session::get('delete').'/'.$rowU->id); ?>" class="delete-link" title="DELETE"><span class="glyphicon glyphicon-trash"></span></a>
+                        <?php } ?>
+                </td>    
+            </tr>  
+            <?php
+        }
+        ?>
+    </tbody>
+</table>
+
+<?php $__env->stopSection(); ?>
+
+
+
+
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,29 @@
+<?php echo $__env->make('header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="col-md-2">
+    <ul class="list-unstyled">        
+        <?php
+        $mod = '';
+        if (Session::has('leads')) {
+            $mod = Session::get('leads');
+            ?>
+            <?php echo $__env->make('Module.' . $mod, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php
+        }
+        if (Session::has('contacts')) {
+            $mod = Session::get('contacts');
+            ?>
+            <?php echo $__env->make('Module.' . $mod, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php
+        }
+        if (Session::has('system')) {
+            $mod = Session::get('system');
+            ?>
+            <?php echo $__env->make('Module.' . $mod, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php
+        }
+        ?>                 
+    </ul>    
+</div>
+<?php echo $__env->make('content', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+

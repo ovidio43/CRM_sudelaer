@@ -1,0 +1,57 @@
+<?php $__env->startSection('title'); ?>
+Edit User
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<?php
+$objUser = User::find($id);
+?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="btn-group btn-group-justified">            
+            <a class="btn btn-primary col-sm-3" href="<?php echo URL::to('system/user'); ?>"><i class="glyphicon glyphicon-list-alt"></i><br>List</a>     
+        </div> 
+    </div>
+</div>
+<hr>
+<?php
+$selectTypeUser = TypeUser::lists('name', 'id');
+$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id')
+?>
+<?php echo Form::open(array('url' => 'system/user/edit-save/'.$objUser->id,'class'=>'form-horizontal')); ?>
+<div class="row">
+    <div class="col-sm-4">         
+        <?php echo Form::label('user', 'User Name'); ?> <span class="required-field">*</span>                
+        <?php echo Form::text('user',$objUser->user,['class'=>'form-control','readonly'=>'readonly']); ?>
+        <?php echo Form::label('password', 'Password'); ?>
+        <?php echo Form::password('password',['class'=>'form-control']); ?>
+        <?php echo Form::label('id_employee', 'Employee'); ?> <span class="required-field">*</span>                
+        <?php echo Form::select('id_employee',[''=>'']+$selectEmployee,$objUser->id_employee,['class'=>'form-control'] ); ?>
+        <?php echo Form::label('id_type_user', 'Type User'); ?> <span class="required-field">*</span>                
+        <?php echo Form::select('id_type_user', [''=>'']+$selectTypeUser, $objUser->id_type_user,['class'=>'form-control']); ?>
+    </div>
+</div>
+<div class="row">
+    <hr>
+    <div class="col-sm-4">         
+        <?php echo Form::submit('Save',['class'=>'btn btn-default']); ?>    
+    </div>
+</div>
+
+<?php echo Form::close(); ?>
+<?php if($errors->any()): ?>
+<br>
+<div class="alert alert-danger">    
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Please fix the following errors:</strong>
+    <ul>
+        <?php foreach($errors->all() as $error): ?>
+        <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

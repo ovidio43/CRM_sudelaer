@@ -1,0 +1,242 @@
+<?php $__env->startSection('title'); ?>
+EDIT LEADS
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<?php if($errors->any()): ?>
+<div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Please fix the following errors:</strong>
+    <ul>
+        <?php foreach($errors->all() as $error): ?>
+        <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+<?php
+$objLeads = Leads::find($id);
+?>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
+    <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
+    <li><a href="#MI"  role="tab" data-toggle="tab">More Information</a></li>    
+    <li><a href="#O"  role="tab" data-toggle="tab">Other</a></li>    
+    <li><a href="<?php echo URL::to($mod.'/car-type/edit/'.$objLeads->id); ?>" class="force-redirect">Car Type</a></li>   
+</ul> 
+<?php echo Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')); ?>
+<div class="tab-content">
+    <div class="tab-pane active" id="LA">
+        <div class="form-group">            
+            <div class="col-sm-4"> 
+                <?php
+                $salutation = [
+                    'Mr.' => 'Mr.',
+                    'Ms.' => 'Ms.',
+                    'Mrs.' => 'Mrs.',
+                    'Dr.' => 'Dr.',
+                    'Prof.' => 'Prof.'
+                ];
+
+                $leadSource = [
+                    'Univision Washington' => 'Univision Washington',
+                    'DContigo Tv Show' => 'DContigo Tv Show',
+                    'Telemundo Washington' => 'Telemundo Washington',
+                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
+                    'Variedades de Washington' => 'Variedades de Washington',
+                    'Referido' => 'Referido',
+                    'Cliente actual' => 'Cliente actual',
+                    'Periodicos' => 'Periodicos',
+                    'Revistas' => 'Revistas',
+                    'Otros' => 'Otros'
+                ];
+
+                $leadType = [
+                    'Phone in' => 'Phone in',
+                    'Walk in' => 'Walk in',
+                    'Web' => 'Web'
+                ];
+                ?>
+                <?php echo Form::label('salutation', 'Salutation'); ?>
+                <?php echo Form::select('salutation',$salutation, $objLeads->salutation,['class'=>'form-control']); ?>                
+                <?php echo Form::label('first_name', 'First Name'); ?> <span class="required-field">*</span>                
+                <?php echo Form::text('first_name',$objLeads->first_name,['class'=>'form-control']); ?>
+                <?php echo Form::label('last_name', 'Last Name'); ?> <span class="required-field">*</span>
+                <?php echo Form::text('last_name',$objLeads->last_name,['class'=>'form-control']); ?>                
+                <?php echo Form::label('email_address', 'Email Address'); ?> <span class="required-field">*</span>
+                <?php echo Form::text('email_address',$objLeads->email_address,['class'=>'form-control']); ?> 
+                <?php echo Form::label('account_name', 'Account Name'); ?>
+                <?php echo Form::text('account_name',$objLeads->account_name,['class'=>'form-control']); ?>
+                <?php echo Form::label('lead_type', 'Lead Type'); ?>
+                <?php echo Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']); ?> 
+            </div>  
+            <div class="col-sm-4">
+                <?php echo Form::label('lead_source', 'Lead source'); ?>
+                <?php echo Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']); ?> 
+                <?php echo Form::label('home_phone', 'Home Phone'); ?>
+                <?php echo Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control']); ?>
+                <?php echo Form::label('office_phone', 'Office Phone'); ?>
+                <?php echo Form::text('office_phone',$objLeads->office_phone,['class'=>'form-control']); ?>
+                <?php echo Form::label('mobile', 'Mobile'); ?>
+                <?php echo Form::text('mobile',$objLeads->mobile,['class'=>'form-control']); ?>
+                <?php echo Form::label('fax', 'Fax'); ?>
+                <?php echo Form::text('fax',$objLeads->fax,['class'=>'form-control']); ?>
+            </div>             
+        </div>
+    </div>    
+    <div class="tab-pane " id="AI">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <?php
+                $selectState = [
+                    'AL' => "Alabama",
+                    'AK' => "Alaska",
+                    'AZ' => "Arizona",
+                    'AR' => "Arkansas",
+                    'CA' => "California",
+                    'CO' => "Colorado",
+                    'CT' => "Connecticut",
+                    'DE' => "Delaware",
+                    'DC' => "District Of Columbia",
+                    'FL' => "Florida",
+                    'GA' => "Georgia",
+                    'HI' => "Hawaii",
+                    'ID' => "Idaho",
+                    'IL' => "Illinois",
+                    'IN' => "Indiana",
+                    'IA' => "Iowa",
+                    'KS' => "Kansas",
+                    'KY' => "Kentucky",
+                    'LA' => "Louisiana",
+                    'ME' => "Maine",
+                    'MD' => "Maryland",
+                    'MA' => "Massachusetts",
+                    'MI' => "Michigan",
+                    'MN' => "Minnesota",
+                    'MS' => "Mississippi",
+                    'MO' => "Missouri",
+                    'MT' => "Montana",
+                    'NE' => "Nebraska",
+                    'NV' => "Nevada",
+                    'NH' => "New Hampshire",
+                    'NJ' => "New Jersey",
+                    'NM' => "New Mexico",
+                    'NY' => "New York",
+                    'NC' => "North Carolina",
+                    'ND' => "North Dakota",
+                    'OH' => "Ohio",
+                    'OK' => "Oklahoma",
+                    'OR' => "Oregon",
+                    'PA' => "Pennsylvania",
+                    'RI' => "Rhode Island",
+                    'SC' => "South Carolina",
+                    'SD' => "South Dakota",
+                    'TN' => "Tennessee",
+                    'TX' => "Texas",
+                    'UT' => "Utah",
+                    'VT' => "Vermont",
+                    'VA' => "Virginia",
+                    'WA' => "Washington",
+                    'WV' => "West Virginia",
+                    'WI' => "Wisconsin",
+                    'WY' => "Wyoming"
+                ];
+                ?>
+
+                <?php echo Form::label('primary_address_street', 'Primary Address Street'); ?>
+                <?php echo Form::textarea('primary_address_street',$objLeads->primary_address_street,['class'=>'form-control']); ?>
+                <?php echo Form::label('primary_address_city', 'Primary Address City'); ?>
+                <?php echo Form::text('primary_address_city',$objLeads->primary_address_city,['class'=>'form-control']); ?>
+                <?php echo Form::label('primary_address_state', 'Primary Address State'); ?>
+                <?php echo Form::select('primary_address_state',$selectState, $objLeads->primary_address_state,['class'=>'form-control']); ?>                  
+                <?php echo Form::label('primary_address_zipcode', 'Primary Address Zip Code'); ?>
+                <?php echo Form::text('primary_address_zipcode',$objLeads->primary_address_zipcode,['class'=>'form-control']); ?>                
+            </div>
+            <div class="col-sm-6">
+                <?php echo Form::label('alt_address_street', 'Alt Address Street'); ?>
+                <?php echo Form::textarea('alt_address_street',$objLeads->alt_address_street,['class'=>'form-control']); ?>
+                <?php echo Form::label('alt_address_city', 'Alt Address City'); ?>
+                <?php echo Form::text('alt_address_city',$objLeads->alt_address_city,['class'=>'form-control']); ?>
+                <?php echo Form::label('alt_address_state', 'Alt  Address State'); ?>
+                <?php echo Form::select('alt_address_state',$selectState, $objLeads->alt_address_state,['class'=>'form-control']); ?>                  
+                <?php echo Form::label('alt_address_zipcode', 'Alt Address Postalcode'); ?>
+                <?php echo Form::text('alt_address_zipcode',$objLeads->alt_address_zipcode,['class'=>'form-control']); ?>                
+                <?php echo Form::label('copy', 'Copy address from left'); ?>
+                <?php echo Form::checkbox('copy'); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-sm-4">
+
+                <?php echo Form::label('note', 'Note'); ?>
+                <?php echo Form::textarea('note',$objLeads->note,['class'=>'form-control']); ?>                 
+            </div>
+        </div>
+    </div>    
+    <div class="tab-pane " id="MI">
+        <div class="form-group">
+            <div class="col-sm-6">                 
+                <?php
+                $status = ['New' => 'New',
+                    'Assigned' => 'Assigned',
+                    'In Process' => 'In Process',
+                    'Converted' => 'Converted',
+                    'Recycled' => 'Recycled',
+                    'Dead' => 'Dead'];
+                ?>
+                <?php echo Form::label('status', 'Status'); ?>
+                <?php echo Form::select('status', $status, $objLeads->status,['class'=>'form-control']); ?>                 
+                <?php echo Form::label('status_description', 'Status Description'); ?>
+                <?php echo Form::textarea('status_description',$objLeads->status_description,['class'=>'form-control']); ?>   
+                <?php echo Form::label('opportunity_amount', 'Opportunity Amount'); ?>
+                <?php echo Form::text('opportunity_amount',$objLeads->opportunity_amount,['class'=>'form-control']); ?>  
+                <?php echo Form::label('id_campaign', 'Campaign'); ?>
+                <?php echo Form::text('id_campaign',$objLeads->id_campaign,['class'=>'form-control']); ?>  
+            </div>
+            <div class="col-sm-6">
+
+                <?php echo Form::label('lead_source_description', 'Lead Source Description'); ?>
+                <?php echo Form::textarea('lead_source_description',$objLeads->lead_source_description,['class'=>'form-control']); ?>   
+                <?php echo Form::label('referred_by', 'Referred By'); ?>
+                <?php echo Form::text('referred_by',$objLeads->referred_by,['class'=>'form-control']); ?>  
+                <?php echo Form::label('do_not_call', 'Do Not Call'); ?>
+                <?php echo Form::checkbox('do_not_call','V'); ?>  
+            </div>
+        </div>
+    </div>    
+    <div class="tab-pane " id="O">
+        <div class="form-group">
+            <div class="col-sm-4">
+                <?php
+                $opportunity = ['Caliente' => 'Caliente',
+                    'Tibio' => 'Tibio',
+                    'Frio' => 'Frio'];
+                ?>
+                <?php echo Form::label('opportunity', 'Opportunity'); ?>
+                <?php echo Form::select('opportunity',[''=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']); ?>  
+                <?php echo Form::label('id_employee', 'Assigned to'); ?>
+                <?php
+                if (Auth::user()->user === 'admin') {
+                    $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
+                    ?>                
+                    <?php echo Form::select('id_employee',['0'=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ); ?>
+                    <?php
+                } else {
+                    ?>
+                    <?php echo Form::hidden('id_employee',Auth::user()->employee->id); ?>
+                    <?php echo Form::text('name_employee',Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name,['class'=>'form-control','readonly'=>'readonly']); ?>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <hr>
+            <?php echo Form::submit('Save',['class'=>'btn btn-primary']); ?>
+        </div>
+    </div>     
+</div>
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
