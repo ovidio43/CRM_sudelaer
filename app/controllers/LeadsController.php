@@ -137,7 +137,7 @@ class LeadsController extends BaseController {
         $objAllocation->id_leads = $this->id;
     }
 
-    private function sendMail() {
+    private function sendMail() {                
         $typeUser = TypeUser::where('name', '=', 'Admin')->get();
         foreach ($typeUser as $tu) {
             foreach ($tu->user as $u) {
