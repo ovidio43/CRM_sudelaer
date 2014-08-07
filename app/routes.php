@@ -1,12 +1,5 @@
 <?php
 
-Route::get('testing', function() {
-    $objAlert = Alert::all();
-    foreach ($objAlert as $rA) {
-        echo $rA->title;
-        echo '<br>';
-    }
-});
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');
