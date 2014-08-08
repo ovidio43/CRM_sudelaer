@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'db_innervel1_1',
+			'database'  => 'db_innervel',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

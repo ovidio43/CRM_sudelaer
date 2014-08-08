@@ -1,5 +1,18 @@
 <?php
 
+//Route::get('testing', function() {
+//    $objAlert = Alert::find(1);
+//    $data = ['id_leads' => 100, 'id_template' => $objAlert->id_template, 'id_template_ext' => $objAlert->id_template_ext];
+//    foreach ($objAlert->typeUser as $rTU) {
+//        foreach ($rTU->user as $rU) {
+//            if ($rU->employee->id > 1) {              
+//                Mail::send('emails.newleads',$data, function($message) use ($rU) {
+//                    $message->to($rU->employee->email, $rU->employee->first_name . ' ' . $rU->employee->last_name)->subject('email testing!!!');
+//                });
+//            }
+//        }
+//    }
+//});
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');

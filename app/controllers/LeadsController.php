@@ -20,7 +20,7 @@ class LeadsController extends BaseController {
                 $this->insert($input);
                 $this->saveLogs();
                 $this->saveAllocation($input);
-                $this->sendMail();
+                $this->sendMail($input);
             });
             return Redirect::to('leads/car-type/new/' . $this->id);
         } else {
@@ -137,16 +137,22 @@ class LeadsController extends BaseController {
         $objAllocation->id_leads = $this->id;
     }
 
-    private function sendMail() {
-        $typeUser = TypeUser::where('name', '=', 'Admin')->get();
-        foreach ($typeUser as $tu) {
-            foreach ($tu->user as $u) {
-                if ($u->employee->id > 1) {
-                    Mail::send('emails.newleads', ['id_leads' => $this->id], function($message) use ($u) {
-                        $message->to($u->employee->email, $u->employee->first_name . ' ' . $u->employee->last_name)->subject('New Leads!');
+    private function sendMail($input) {
+        $objAlert = Alert::find(1);
+        $data = ['id_leads' => $this->id, 'id_template' => $objAlert->id_template, 'send_client' => false];
+        foreach ($objAlert->typeUser as $rTU) {
+            foreach ($rTU->user as $rU) {
+                if ($rU->employee->id > 1) {
+                    Mail::send('emails.newleads', $data, function($message) use ($rU) {
+                        $message->to($rU->employee->email, $rU->employee->first_name . ' ' . $rU->employee->last_name)->subject('New Leads Entry!!!');
                     });
                 }
             }
+        }
+        if ($objAlert->id_template_ext > 0 && isset($input['email_address'])) {
+            Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $objAlert->id_template_ext], function($message) use ($input) {
+                $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Welcome!!!');
+            });
         }
     }
 
