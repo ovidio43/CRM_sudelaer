@@ -11,10 +11,9 @@
         if (!$send_client) {
             ?>            
             <hr>
-            <p>{{URL::to('leads/edit/'.$id_leads)}}</p>
+            <p>{{URL::to('leads/edit/'.$id_leads)}} || Entered : {{date('Y-m-d H:i:s')}}</p>
             <?php
         }
         ?>
-
     </body>
 </html>

@@ -150,10 +150,14 @@ class LeadsController extends BaseController {
             }
         }
         if ($objAlert->id_template_ext > 0 && isset($input['email_address'])) {
-            Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $objAlert->id_template_ext], function($message) use ($input) {
-                $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Welcome!!!');
-            });
+            $this->sendMaiilCliente($input, $objAlert->id_template_ext);
         }
+    }
+
+    private function sendMaiilCliente($input, $id_template) {
+        Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $id_template], function($message) use ($input) {
+            $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Welcome!!!');
+        });
     }
 
     public function migrate_to_contact($id_leads) {
