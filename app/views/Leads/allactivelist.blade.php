@@ -38,7 +38,7 @@ MY LEADS
                     ?>        
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
-                        <td>{{$rowL->status.'-'.$rowL->create_by.'-'.$rowL->id_employee}}</td>                
+                        <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             
                         <td>{{$rowL->date_entered}}</td>    
                         <td>

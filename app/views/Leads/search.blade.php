@@ -37,10 +37,17 @@ MY LEADS
             <tbody>
                 <?php
                 if (Auth::user()->typeUser->name === 'Admin') {
-                    $objLeads = Leads::where('type', '=', 'leads')->where($filter, 'LIKE', '%' . $s . '%')->get()->take(100);
+                    $objLeads = Leads::where('type', '=', 'leads')
+                            ->where($filter, 'LIKE', '%' . $s . '%')
+                            ->take(100)->get();
                 } else {
                     $id_employee = Auth::user()->employee->id;
-                    $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->where($filter, 'LIKE', '%' . $s . '%')->get()->take(100);
+                    $objLeads = Leads::where('type', '=', 'leads')
+                            ->where('create_by', '=', $id_employee)
+                            ->orWhere('id_employee', '=', $id_employee)
+                            ->where($filter, 'LIKE', '%' . $s . '%')
+                            ->take(100)
+                            ->get();
                 }
 
                 foreach ($objLeads as $rowL) {
@@ -56,7 +63,7 @@ MY LEADS
                     ?>        
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
-                        <td>{{$rowL->status.'-'.$rowL->create_by.'-'.$rowL->id_employee}}</td>                                                 
+                        <td>{{$rowL->status}}</td>                                                 
                         <td>{{$rowL->email_address}}</td>                
                         <td>{{$create_by}}</td>                
                         <td>{{ $assign_to }}</td>                
