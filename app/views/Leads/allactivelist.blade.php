@@ -4,19 +4,19 @@ MY LEADS
 @stop
 @section('content')
 <ul class="nav nav-tabs">
-    
-    <li class="active"><a href="#MY"  role="tab" data-toggle="tab">Created by me</a></li>        
+
+    <li ><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li>       
     <li><a href="{{URL::to($mod.'/myassignments'.Session::get('list'))}}" class="force-redirect">My leads</a></li>        
     <?php if (Auth::user()->typeUser->name === 'Admin') { ?>  
         <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}" class="force-redirect">All Leads</a></li>    
     <?php } else {
         ?>
-        <li><a href="{{URL::to($mod.'/allactive'.Session::get('list'))}}" class="force-redirect">All Active</a></li> 
+        <li class="active"><a href="#AA"  role="tab" data-toggle="tab">All Active</a></li>    
     <?php }
     ?>  
 </ul> 
 <div class="tab-content">
-    <div class="tab-pane active" id="MY">
+    <div class="tab-pane active" id="AA">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -33,12 +33,12 @@ MY LEADS
             <tbody>
                 <?php
                 $id_employee = Auth::user()->employee->id;
-                $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
+                $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
                 foreach ($objLeads as $rowL) {
                     ?>        
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
-                        <td>{{$rowL->status}}</td>                
+                        <td>{{$rowL->status.'-'.$rowL->create_by.'-'.$rowL->id_employee}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             
                         <td>{{$rowL->date_entered}}</td>    
                         <td>

@@ -9,7 +9,11 @@ MY LEADS
     <li class="active"><a href="#MA" >My Leads</a></li>        
     <?php if (Auth::user()->typeUser->name === 'Admin') { ?>    
         <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}" class="force-redirect">All Leads</a></li>  
-    <?php } ?>
+    <?php } else {
+        ?>
+        <li><a href="{{URL::to($mod.'/allactive'.Session::get('list'))}}" class="force-redirect">All Active</a></li> 
+    <?php }
+    ?> 
 </ul> 
 <div class="tab-content">
     <div class="tab-pane active" id="MY">

@@ -65,13 +65,16 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
     }
     if (Session::has('list')) {
         Route::get('search', function() use($mod) {
-            return View::make('Leads.search')->with('s', Input::get('s'))->with('mod', $mod);
+            return View::make('Leads.search')->with('s', Input::get('s'))->with('filter', Input::get('filter'))->with('mod', $mod);
         });
         Route::get('list', function() use($mod) {
             return View::make('Leads.list')->with('mod', $mod);
         });
         Route::get('mylist', function() {
             return View::make('Leads.mylist')->with('mod', 'leads');
+        });
+        Route::get('allactivelist', function() use($mod){
+            return View::make('Leads.allactivelist')->with('mod', $mod);
         });
         Route::get('myassignmentslist', function() {
             return View::make('Leads.myassignmentslist')->with('mod', 'leads');

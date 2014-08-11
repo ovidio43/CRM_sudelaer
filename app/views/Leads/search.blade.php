@@ -8,7 +8,13 @@ MY LEADS
 <ul class="nav nav-tabs">
     <li ><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
     <li><a href="{{URL::to($mod.'/myassignments'.Session::get('list'))}}" class="force-redirect">My Leads</a></li>        
-    <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}"  class="force-redirect">All Leads</a></li>    
+    <?php if (Auth::user()->typeUser->name === 'Admin') { ?>  
+        <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}" class="force-redirect">All Leads</a></li>    
+    <?php } else {
+        ?>
+        <li><a href="{{URL::to($mod.'/allactive'.Session::get('list'))}}" class="force-redirect">All Active</a></li> 
+    <?php }
+    ?>    
     <li class="active"><a href="#SEARCH"  role="tab" data-toggle="tab">RESULTS SEARCH</a></li>   
 </ul> 
 <div class="tab-content">
@@ -30,17 +36,13 @@ MY LEADS
             </thead>
             <tbody>
                 <?php
-                $keywords = explode(' ', $s);
-                $objLeads = Leads::where('type', '=', 'leads')->orderBy('date_entered', 'DESC');
-                foreach ($keywords as $k) {
-                    $objLeads = $objLeads->where('first_name', 'LIKE', '%' . $k . '%');
-                    $objLeads = $objLeads->orWhere('last_name', 'LIKE', '%' . $k . '%');
-                    $objLeads = $objLeads->orWhere('email_address', 'LIKE', '%' . $k . '%');
-                    $objLeads = $objLeads->orWhere('status', 'LIKE', '%' . $k . '%');
-                    $objLeads = $objLeads->orWhere('home_phone', 'LIKE', '%' . $k . '%');
-                    $objLeads = $objLeads->orWhere('mobile', 'LIKE', '%' . $k . '%');
+                if (Auth::user()->typeUser->name === 'Admin') {
+                    $objLeads = Leads::where('type', '=', 'leads')->where($filter, 'LIKE', '%' . $s . '%')->get()->take(100);
+                } else {
+                    $id_employee = Auth::user()->employee->id;
+                    $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->where($filter, 'LIKE', '%' . $s . '%')->get()->take(100);
                 }
-                $objLeads = $objLeads->get()->take(10);
+
                 foreach ($objLeads as $rowL) {
                     $create_by = 'Web';
                     if ($rowL->create_by > 0) {
@@ -54,7 +56,7 @@ MY LEADS
                     ?>        
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
-                        <td>{{$rowL->status}}</td>                                                
+                        <td>{{$rowL->status.'-'.$rowL->create_by.'-'.$rowL->id_employee}}</td>                                                 
                         <td>{{$rowL->email_address}}</td>                
                         <td>{{$create_by}}</td>                
                         <td>{{ $assign_to }}</td>                
@@ -84,8 +86,7 @@ MY LEADS
                 }
                 ?>
             </tbody>
-        </table>
-        {{'' //$objLeads->links() }}
+        </table>        
     </div>
 </div>
 @stop
