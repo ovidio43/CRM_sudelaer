@@ -28,10 +28,10 @@ MY LEADS
             <tbody>
                 <?php
                 $id_employee = Auth::user()->employee->id;
-                $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(10);
+                $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
                 foreach ($objLeads as $rowL) {
                     ?>        
-                    <tr>
+                <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             

@@ -4,13 +4,15 @@ MY LEADS
 @stop
 @section('content')
 
+<b>Results Search : {{$s}}</b>
 <ul class="nav nav-tabs">
     <li ><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
     <li><a href="{{URL::to($mod.'/myassignments'.Session::get('list'))}}" class="force-redirect">My Leads</a></li>        
-    <li class="active"><a href="#AL"  role="tab" data-toggle="tab">All Leads</a></li>        
+    <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}"  class="force-redirect">All Leads</a></li>    
+    <li class="active"><a href="#SEARCH"  role="tab" data-toggle="tab">RESULTS SEARCH</a></li>   
 </ul> 
 <div class="tab-content">
-    <div class="tab-pane active" id="AL">
+    <div class="tab-pane active" id="SEARCH">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -28,7 +30,17 @@ MY LEADS
             </thead>
             <tbody>
                 <?php
-                $objLeads = Leads::where('type', '=', 'leads')->orderBy('date_entered', 'DESC')->paginate(20);
+                $keywords = explode(' ', $s);
+                $objLeads = Leads::where('type', '=', 'leads')->orderBy('date_entered', 'DESC');
+                foreach ($keywords as $k) {
+                    $objLeads = $objLeads->where('first_name', 'LIKE', '%' . $k . '%');
+                    $objLeads = $objLeads->orWhere('last_name', 'LIKE', '%' . $k . '%');
+                    $objLeads = $objLeads->orWhere('email_address', 'LIKE', '%' . $k . '%');
+                    $objLeads = $objLeads->orWhere('status', 'LIKE', '%' . $k . '%');
+                    $objLeads = $objLeads->orWhere('home_phone', 'LIKE', '%' . $k . '%');
+                    $objLeads = $objLeads->orWhere('mobile', 'LIKE', '%' . $k . '%');
+                }
+                $objLeads = $objLeads->get()->take(10);
                 foreach ($objLeads as $rowL) {
                     $create_by = 'Web';
                     if ($rowL->create_by > 0) {
@@ -73,7 +85,7 @@ MY LEADS
                 ?>
             </tbody>
         </table>
-        {{ $objLeads->links(); }}
+        {{'' //$objLeads->links() }}
     </div>
 </div>
 @stop

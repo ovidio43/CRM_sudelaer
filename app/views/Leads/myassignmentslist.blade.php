@@ -29,14 +29,14 @@ MY LEADS
             <tbody>
                 <?php
                 $id_employee = Auth::user()->employee->id;
-                $objLeads = Leads::where('type', '=', 'leads')->where('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(10);
-                foreach ($objLeads as $rowL) {                    
+                $objLeads = Leads::where('type', '=', 'leads')->where('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
+                foreach ($objLeads as $rowL) {
                     ?>        
-                    <tr>
+                    <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
-                        <td>{{$rowL->email_address}}</td>                                       
-                        <td>{{$rowL->date_entered}}</td>    
+                        <td>{{$rowL->email_address}}</td>   
+                        <td>{{ date("m-d-Y H:i:s", strtotime($rowL->date_entered)) }}</td>    
                         <td>
                             <?php if (Session::has('update')) { ?>
                                 <a href="{{URL::to($mod.'/'.Session::get('update').'/'.$rowL->id.'#content-logs')}}" title="LOGS"><span class="glyphicon glyphicon-book"></span></a>

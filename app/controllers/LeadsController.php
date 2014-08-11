@@ -6,9 +6,9 @@ class LeadsController extends BaseController {
         'first_name' => 'Required',
         'last_name' => 'Required',
         'lead_type' => 'Required',
-        'mobile' => 'Required|numeric',
-        'lead_source' => 'Required',
-        'email_address' => 'email'
+        'mobile' => 'Required|unique:leads',
+        'lead_source' => 'Required',        
+        'email_address' => 'email|unique:leads'
     );
     private $id;
 
@@ -29,8 +29,9 @@ class LeadsController extends BaseController {
     }
 
     public function edit_save($id) {
-
         $input = Input::all();
+        $this->rules['mobile']='Required';
+        $this->rules['email_address']='email';
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $this->id = $id;
@@ -38,7 +39,7 @@ class LeadsController extends BaseController {
                 $this->insert_edit($input);
                 $this->saveEditAllocation($input);
             });
-            return Redirect::to('leads/list');
+            return Redirect::to('leads/mylist');
         } else {
             return Redirect::back()->withErrors($validation)->withInput();
         }
@@ -57,6 +58,8 @@ class LeadsController extends BaseController {
         $ObjLeads = new Leads();
         $this->setAttr($ObjLeads, $input);
         $ObjLeads->create_by = Auth::user()->employee->id;
+        $ObjLeads->date_entered = date('Y-m-d H:i:s');
+        $ObjLeads->active = 1;
         $ObjLeads->save();
         $this->id = $ObjLeads->id;
     }
@@ -81,7 +84,6 @@ class LeadsController extends BaseController {
         $ObjLeads->alt_address_city = $input['alt_address_city'];
         $ObjLeads->alt_address_state = $input['alt_address_state'];
         $ObjLeads->alt_address_zipcode = $input['alt_address_zipcode'];
-        $ObjLeads->date_entered = date('Y-m-d H:i:s');
         $ObjLeads->email_address = $input['email_address'];
         $ObjLeads->note = $input['note'];
         $ObjLeads->status = $input['status'];
@@ -96,7 +98,6 @@ class LeadsController extends BaseController {
         $ObjLeads->id_employee = $input['id_employee'];
         $ObjLeads->opportunity = $input['opportunity'];
         $ObjLeads->type = 'leads';
-        $ObjLeads->active = 1;
     }
 
     private function saveLogs() {

@@ -1,18 +1,8 @@
 <?php
-
-//Route::get('testing', function() {
-//    $objAlert = Alert::find(1);
-//    $data = ['id_leads' => 100, 'id_template' => $objAlert->id_template, 'id_template_ext' => $objAlert->id_template_ext];
-//    foreach ($objAlert->typeUser as $rTU) {
-//        foreach ($rTU->user as $rU) {
-//            if ($rU->employee->id > 1) {              
-//                Mail::send('emails.newleads',$data, function($message) use ($rU) {
-//                    $message->to($rU->employee->email, $rU->employee->first_name . ' ' . $rU->employee->last_name)->subject('email testing!!!');
-//                });
-//            }
-//        }
-//    }
-//});
+//Event::listen('illuminate.query', function($sql)
+//{
+//    dd($sql);
+//}); 
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');
@@ -58,8 +48,9 @@ function setRouter() {
 }
 
 Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
+    $mod = 'leads';
     if (Session::has('insert')) {
-        Route::get('new', function() {
+        Route::get('new', function() use($mod) {
             return View::make('Leads.new')->with('mod', 'leads');
         });
         Route::post('new/save', 'LeadsController@save');
@@ -73,8 +64,11 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::post('end-visit', 'LogsController@EdnVisit');
     }
     if (Session::has('list')) {
-        Route::get('list', function() {
-            return View::make('Leads.list')->with('mod', 'leads');
+        Route::get('search', function() use($mod) {
+            return View::make('Leads.search')->with('s', Input::get('s'))->with('mod', $mod);
+        });
+        Route::get('list', function() use($mod) {
+            return View::make('Leads.list')->with('mod', $mod);
         });
         Route::get('mylist', function() {
             return View::make('Leads.mylist')->with('mod', 'leads');
