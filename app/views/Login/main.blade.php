@@ -1,3 +1,12 @@
+<?php
+if (Auth::check()) {
+    ?>
+    Redirect..
+    <meta http-equiv="Refresh" content="0;URL={{URL::to('dashboard')}}" />
+    <?php
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html>

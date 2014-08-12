@@ -55,7 +55,7 @@ MY LEADS
                         </td>
                         <td>
                             <?php if (Session::has('update')) { ?>
-                                <a href="{{URL::to($mod.'/'.Session::get('update').'/'.$rowL->id)}}" title="DETAILS"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="{{URL::to($mod.'/'.Session::get('update').'/'.$rowL->id)}}" title="EDIT"><span class="glyphicon glyphicon-pencil"></span></a>
                             <?php } ?>
                         </td>
                         <td>
