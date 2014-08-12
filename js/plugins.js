@@ -13,9 +13,7 @@ $(document).ready(function() {
         format: 'H:i',
         step: 5
     });
-    $('textarea#content').ckeditor();
-
-    $('.popover-dismiss').popover();
+    $('textarea#content').ckeditor();    
 });
 
 
