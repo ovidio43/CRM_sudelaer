@@ -13,6 +13,13 @@
         {{ HTML::script('js/main.min.js') }}                
     </head>
     <body>
+        <script type="text/javascript">
+            $(function() {
+                $(window).load(function() {
+                    $(':input:visible:enabled:first').focus();
+                });
+            })
+        </script>
         <div aria-hidden="true" role="dialog" tabindex="-1" class="modal show" id="loginModal">
             <div class="modal-dialog">
                 <div class="modal-content">
