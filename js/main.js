@@ -159,6 +159,30 @@ $(document).ready(function() {
         $('#data-end-visit').removeClass('hidden');
         $(this).hide();
     });
+    /********************memo short script****************************/
+    $('a.link-show-memo').on('click', function(e) {
+        e.preventDefault();
+        $(this).siblings('div').toggleClass('hidden');
+        var text = $(this).text() === 'Close' ? 'Memo' : 'Close';
+        $(this).text(text);
+    });
+    $('a.link-cancel-memo').on('click', function(e) {
+        e.preventDefault();
+        $(this).parent().toggleClass('hidden');
+    });
+    $('a.link-save-memo').on('click', function(e) {
+        e.preventDefault();
+        var currentObj = $(this);
+        currentObj.fadeOut();
+        currentObj.after('<span>Please wait..</span>');
+        $.post(currentObj.attr('href'), {memo_short: currentObj.siblings('textarea').val()}, function(data) {
+            if (data === 'ok') {
+                currentObj.next().fadeOut();
+                currentObj.fadeIn();                
+            }
+        });
+    });
+    /***************************************************************/
 });
 
 function getUrl() {

@@ -23,6 +23,7 @@ NEW LEADS
     <li class="disabled"><a href="#">Car Type</a></li>    
 </ul> 
 {{ Form::open(array('url' => $mod.'/new/save','class'=>'form-horizontal')) }}
+{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
@@ -90,13 +91,7 @@ NEW LEADS
                 {{Form::label('note', 'Note')}}
                 {{ Form::textarea('note','',['class'=>'form-control'])}} 
             </div>
-        </div>
-        <hr>      
-        <div class="form-group"> 
-            <div class="col-sm-4">
-                {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
-            </div>
-        </div>
+        </div>    
     </div>    
     <div class="tab-pane " id="AI">
         <div class="form-group">

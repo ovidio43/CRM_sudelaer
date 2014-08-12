@@ -23,7 +23,8 @@ MY LEADS
                     <th>Name</th>
                     <th>Status</th>                    
                     <th>Email</th> 
-                    <th>Note</th>
+                     <th>Car Type</th> 
+                    <th>Memo Short</th>
                     <th>Date Created</th>
                     <th></th>
                     <th></th>
@@ -41,12 +42,22 @@ MY LEADS
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>   
-                         <td>
-                            <button type="button" class="btn btn-default popover-dismiss" data-container="body" data-toggle="popover" data-placement="bottom" 
-                                    data-content="{{$rowL->note}}">
-                                Note
-                            </button>
+                           <td>
+                            <?php
+                            foreach ($rowL->carType as $rCT) {
+                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model.'<hr>';
+                            }
+                            ?>                            
                         </td> 
+                          <td>                              
+                            <a href="#" class="link-show-memo" title="Edit Memo Short">Memo</a>
+                            <div class="content-memo-short hidden alert alert-info">
+                                <textarea class="form-control">{{$rowL->memo_short}}</textarea>
+                                <?php if (Session::has('update')) { ?>
+                                    <a href="{{URL::to($mod.'/memo-edit/'.$rowL->id)}}" class="link-save-memo pull-right" title="Save Memo Short"><span class="glyphicon glyphicon-ok"></span></a>
+                                <?php } ?>
+                            </div>
+                        </td>  
                         <td>{{ date("m-d-Y H:i:s", strtotime($rowL->date_entered)) }}</td>    
                         <td>
                             <?php if (Session::has('update')) { ?>

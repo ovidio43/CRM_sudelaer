@@ -5,7 +5,7 @@ class Leads extends Eloquent {
     protected $table = 'leads';
 
     public function carType() {
-        return $this->hasMany('CarType');
+        return $this->hasMany('CarType','id_leads');
     }
 
     public function contacts() {

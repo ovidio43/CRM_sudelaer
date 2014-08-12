@@ -62,6 +62,7 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         });
         Route::post('edit-save/{id}', 'LeadsController@edit_save');
         Route::post('end-visit', 'LogsController@EdnVisit');
+        Route::post('memo-edit/{id}', 'LeadsController@edit_memo');        
     }
     if (Session::has('list')) {
         Route::get('search', function() use($mod) {

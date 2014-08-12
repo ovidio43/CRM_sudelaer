@@ -7,7 +7,7 @@ class LeadsController extends BaseController {
         'last_name' => 'Required',
         'lead_type' => 'Required',
         'mobile' => 'Required|unique:leads',
-        'lead_source' => 'Required',        
+        'lead_source' => 'Required',
         'email_address' => 'email|unique:leads'
     );
     private $id;
@@ -30,8 +30,8 @@ class LeadsController extends BaseController {
 
     public function edit_save($id) {
         $input = Input::all();
-        $this->rules['mobile']='Required';
-        $this->rules['email_address']='email';
+        $this->rules['mobile'] = 'Required';
+        $this->rules['email_address'] = 'email';
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $this->id = $id;
@@ -48,6 +48,17 @@ class LeadsController extends BaseController {
     public function delete($id) {
         $ObjLeads = Leads::find($id);
         if ($ObjLeads->delete()) {
+            return 'ok';
+        } else {
+            return 'error';
+        }
+    }
+
+    public function edit_memo($id) {
+        $ObjLeads = Leads::find($id);
+        $input = Input::all();
+        $ObjLeads->memo_short = $input['memo_short'];
+        if ($ObjLeads->save()) {
             return 'ok';
         } else {
             return 'error';

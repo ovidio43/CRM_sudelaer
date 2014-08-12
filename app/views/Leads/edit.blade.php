@@ -36,6 +36,8 @@ if (!$objLeads->logs) {
     <li><a href="{{URL::to($mod.'/car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
 {{ Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
+
+{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}    
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
@@ -89,24 +91,14 @@ if (!$objLeads->logs) {
                 {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }} 
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
-                <!--{{Form::label('office_phone', 'Office Phone')}}-->
-                <!--{{ Form::text('office_phone',$objLeads->office_phone,['class'=>'form-control'])}}-->
                 {{Form::label('mobile', 'Mobile')}}
                 {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
-                <!--{{Form::label('fax', 'Fax')}}-->
-                <!--{{ Form::text('fax',$objLeads->fax,['class'=>'form-control'])}}-->
+           
             </div>   
 
             <div class="col-sm-4">
                 {{Form::label('note', 'Note')}}
                 {{ Form::textarea('note',$objLeads->note,['class'=>'form-control'])}}                 
-            </div>
-
-        </div>
-        <hr>
-        <div class="form-group">
-            <div class="col-sm-4">
-                {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
             </div>
         </div>
     </div>    
