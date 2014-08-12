@@ -25,6 +25,7 @@ MY LEADS
                     <th>Name</th>
                     <th>Status</th>
                     <th>Email</th>
+                    <th>Note</th>
                     <th>Create by</th>
                     <th>Assigned to</th>
                     <th>Date Created</th>
@@ -38,8 +39,8 @@ MY LEADS
                 <?php
                 if (Auth::user()->typeUser->name === 'Admin') {
                     $objLeads = Leads::where('type', '=', 'leads')
-                            ->where($filter, 'LIKE', '%' . $s . '%')
-                            ->take(100)->get();
+                                    ->where($filter, 'LIKE', '%' . $s . '%')
+                                    ->take(100)->get();
                 } else {
                     $id_employee = Auth::user()->employee->id;
                     $objLeads = Leads::where('type', '=', 'leads')
@@ -64,7 +65,13 @@ MY LEADS
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                                                 
-                        <td>{{$rowL->email_address}}</td>                
+                        <td>{{$rowL->email_address}}</td>  
+                        <td>
+                            <button type="button" class="btn btn-default popover-dismiss" data-container="body" data-toggle="popover" data-placement="bottom" 
+                                    data-content="{{$rowL->note}}">
+                                Note
+                            </button>
+                        </td> 
                         <td>{{$create_by}}</td>                
                         <td>{{ $assign_to }}</td>                
                         <td>{{ date("m-d-Y H:i:s", strtotime($rowL->date_entered)) }}</td>    

@@ -14,6 +14,8 @@ $(document).ready(function() {
         step: 5
     });
     $('textarea#content').ckeditor();
+
+    $('.popover-dismiss').popover();
 });
 
 

@@ -23,6 +23,7 @@ MY LEADS
                     <th>Name</th>
                     <th>Status</th>
                     <th>Email</th>                                        
+                    <th>Note</th>
                     <th>Date Created</th>
                     <th></th>
                     <th></th>
@@ -40,6 +41,12 @@ MY LEADS
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             
+                        <td>
+                            <button type="button" class="btn btn-default popover-dismiss" data-container="body" data-toggle="popover" data-placement="bottom" 
+                                    data-content="{{$rowL->note}}">
+                                Note
+                            </button>
+                        </td>    
                         <td>{{$rowL->date_entered}}</td>    
                         <td>
                             <?php if (Session::has('update')) { ?>
