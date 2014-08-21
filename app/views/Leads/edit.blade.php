@@ -15,6 +15,10 @@ if (!$objLeads->logs) {
     echo '<script type="text/javascript"> document.location.reload();</script>';
     exit();
 }
+if ($objLeads->read_by_employee != $objLeads->id_employee) {
+    $objLeads->read_by_employee = $objLeads->id_employee;
+    $objLeads->save();
+}
 ?>
 @if ($errors->any())
 <div class="alert alert-danger">
@@ -93,7 +97,7 @@ if (!$objLeads->logs) {
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
                 {{Form::label('mobile', 'Mobile')}}
                 {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
-           
+
             </div>   
 
             <div class="col-sm-4">

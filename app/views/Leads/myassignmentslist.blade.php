@@ -23,7 +23,7 @@ MY LEADS
                     <th>Name</th>
                     <th>Status</th>                    
                     <th>Email</th> 
-                     <th>Car Type</th> 
+                    <th>Car Type</th> 
                     <th>Memo Short</th>
                     <th>Date Created</th>
                     <th></th>
@@ -38,18 +38,18 @@ MY LEADS
                 $objLeads = Leads::where('type', '=', 'leads')->where('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
                 foreach ($objLeads as $rowL) {
                     ?>        
-                    <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
+                    <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>   
-                           <td>
+                        <td>
                             <?php
                             foreach ($rowL->carType as $rCT) {
-                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model.'<hr>';
+                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model . '<hr>';
                             }
                             ?>                            
                         </td> 
-                          <td>                              
+                        <td>                              
                             <a href="#" class="link-show-memo" title="Edit Memo Short">Memo</a>
                             <div class="content-memo-short hidden alert alert-info">
                                 <textarea class="form-control">{{$rowL->memo_short}}</textarea>

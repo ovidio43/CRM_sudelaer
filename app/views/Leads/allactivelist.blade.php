@@ -37,7 +37,7 @@ All ACTIVE
                 $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
                 foreach ($objLeads as $rowL) {
                     ?>        
-                    <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
+                    <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             

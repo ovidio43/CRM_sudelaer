@@ -36,8 +36,9 @@ class CreateLeads extends Migration {
             $table->text('lead_source_description');
             $table->string('referred_by', 100);
             $table->char('do_not_call', 1);
-            $table->integer('id_employee');
             $table->integer('create_by');
+            $table->integer('id_employee');
+            $table->integer('read_by_employee');
             $table->string('opportunity', 20);
             $table->string('type', 20);
             $table->char('active', 1);

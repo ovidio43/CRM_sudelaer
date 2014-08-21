@@ -77,7 +77,7 @@ class LeadsController extends BaseController {
 
     private function insert_edit($input) {
         $ObjLeads = Leads::find($this->id);
-        $this->setAttr($ObjLeads, $input);
+        $this->setAttr($ObjLeads, $input);        
         $ObjLeads->save();
     }
 
