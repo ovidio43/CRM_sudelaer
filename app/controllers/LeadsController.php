@@ -77,7 +77,7 @@ class LeadsController extends BaseController {
 
     private function insert_edit($input) {
         $ObjLeads = Leads::find($this->id);
-        $this->setAttr($ObjLeads, $input);        
+        $this->setAttr($ObjLeads, $input);
         $ObjLeads->save();
     }
 
@@ -161,14 +161,15 @@ class LeadsController extends BaseController {
                 }
             }
         }
-        if ($objAlert->id_template_ext > 0 && isset($input['email_address'])) {
+        if ($objAlert->id_template_ext > 0 && !empty($input['email_address'])) {
             $this->sendMaiilCliente($input, $objAlert->id_template_ext);
         }
     }
 
     private function sendMaiilCliente($input, $id_template) {
         Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $id_template], function($message) use ($input) {
-            $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Welcome!!!');
+            $message->from('crmalerts@sudealeramigo.com','sudealeramigo.com');
+            $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Bienvenido a C&G Imports Su Dealer Amigo');
         });
     }
 
