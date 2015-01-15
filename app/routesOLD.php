@@ -3,11 +3,6 @@
 //{
 //    dd($sql);
 //}); 
-
-Route::get('/validation/real-email', function() {
-    return View::make('Validations.emailVerify.emailVerify');
-});
-
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');

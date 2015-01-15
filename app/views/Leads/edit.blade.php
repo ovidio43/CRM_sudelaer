@@ -235,7 +235,7 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                     'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',[''=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
+                {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
                 {{Form::label('id_employee', 'Assigned to')}}
                 <?php
                 if (Auth::user()->typeUser->name === 'Admin') {

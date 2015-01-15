@@ -13,6 +13,7 @@
         {{ HTML::style('js/datetimepicker-master/jquery.datetimepicker.css') }}       
         {{ HTML::style('css/custom.css') }}       
         {{ HTML::style('css/invetary.css') }}       
+        {{ HTML::style('css/thickbox.css') }}               
     </head>
     <body  >
 

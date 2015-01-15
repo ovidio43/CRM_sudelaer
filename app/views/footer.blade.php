@@ -8,6 +8,8 @@
 {{ HTML::script('js/ckeditor/adapters/jquery.js') }}
 {{ HTML::script('js/plugins.min.js') }} 
 {{ HTML::script('js/main.min.js') }} 
+{{ HTML::script('js/thickbox.js') }} 
+{{ HTML::script('js/capturarValores.js') }} 
 
 </body>
 </html>

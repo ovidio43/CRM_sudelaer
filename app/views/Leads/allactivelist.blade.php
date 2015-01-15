@@ -16,7 +16,7 @@ All ACTIVE
 </ul> 
 <div class="tab-content">
     <div class="tab-pane active" id="AA">
-        <table class="table table-striped">
+        <table class="table ">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -35,16 +35,16 @@ All ACTIVE
                 <?php
                 $id_employee = Auth::user()->employee->id;
                 $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
-                foreach ($objLeads as $rowL) {
+                foreach ($objLeads as $rowL) {                  
                     ?>        
-                    <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}}" title="{{$rowL->opportunity}}">
+                    <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}} " title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             
-                          <td>
+                        <td>
                             <?php
                             foreach ($rowL->carType as $rCT) {
-                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model.'<hr>';
+                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model . '<hr>';
                             }
                             ?>                            
                         </td>                                                                             

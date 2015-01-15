@@ -66,7 +66,11 @@ NEW LEADS
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}              
                 {{Form::label('email_address', 'Email Address')}} 
-                {{ Form::text('email_address','',['class'=>'form-control'])}} 
+                {{ Form::text('email_address','',['class'=>'form-control','id'=>'email_address'])}} 
+                <a href="#" onclick="capturarValorEmail()"  id="myEmailLink" class="thickbox">
+                    <img title="Verify email address" src="{{ URL::asset('img/email.png')}}" width="25px" heigth="25px">
+                </a>
+
                 <!--{{Form::label('account_name', 'Account Name')}}-->
                 <!--{{ Form::text('account_name','',['class'=>'form-control'])}}-->
                 {{Form::label('lead_type', 'Lead Type')}}<span class="required-field">*</span>
@@ -209,12 +213,13 @@ NEW LEADS
         <div class="form-group">
             <div class="col-sm-4">
                 <?php
-                $opportunity = ['Caliente' => 'Caliente',
+                $opportunity = [
+                    'Caliente' => 'Caliente',
                     'Tibio' => 'Tibio',
                     'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',[''=>'']+ $opportunity, null,['class'=>'form-control']) }}  
+                {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, null,['class'=>'form-control']) }}  
 
 
 

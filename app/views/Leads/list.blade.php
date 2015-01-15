@@ -11,7 +11,7 @@ MY LEADS
 </ul> 
 <div class="tab-content">
     <div class="tab-pane active" id="AL">
-        <table class="table table-striped">
+        <table class="table ">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -37,12 +37,14 @@ MY LEADS
                         $objEmployee = Employee::find($rowL->create_by);
                         $create_by = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
                     }
-                    $assign_to = 'undefined';
+                    $assign_to = 'undefined';                    
+                    $assigned = 'no-asigned';                    
                     if ($rowL->allocation) {
                         $assign_to = $rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name; //. ' (' . $rowL->allocation->employee->user->user . ')';
+                        $assigned = 'asigned';                    
                     }
                     ?>        
-                    <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
+                    <tr class="{{$rowL->opportunity.' '.$assigned}}" title="{{$rowL->opportunity}}">
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                                                
                         <td>{{$rowL->email_address}}</td> 

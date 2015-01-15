@@ -17,7 +17,7 @@ MY LEADS
 </ul> 
 <div class="tab-content">
     <div class="tab-pane active" id="MY">
-        <table class="table table-striped">
+        <table class="table ">
             <thead>
                 <tr>
                     <th>Name</th>
