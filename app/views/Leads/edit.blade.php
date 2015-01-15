@@ -3,6 +3,23 @@
 EDIT LEADS
 @stop
 @section('content')
+<?php
+$objLeads = Leads::find($id);
+if (!$objLeads->logs) {
+    ?>
+    <div role="alert" class="alert alert-info">Creating Logs..</div>
+    <?php
+    $objLogs = new Logs(); //forzando a crear logs para leads
+    $objLogs->id_leads = $id;
+    $objLogs->save();
+    echo '<script type="text/javascript"> document.location.reload();</script>';
+    exit();
+}
+if ($objLeads->read_by_employee != $objLeads->id_employee) {
+    $objLeads->read_by_employee = $objLeads->id_employee;
+    $objLeads->save();
+}
+?>
 @if ($errors->any())
 <div class="alert alert-danger">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -14,9 +31,7 @@ EDIT LEADS
     </ul>
 </div>
 @endif
-<?php
-$objLeads = Leads::find($id);
-?>
+
 <ul class="nav nav-tabs">
     <li class="active"><a href="#LA"  role="tab" data-toggle="tab">Lead Information</a></li>    
     <li><a href="#AI"  role="tab" data-toggle="tab">Address Information</a></li>    
@@ -25,6 +40,8 @@ $objLeads = Leads::find($id);
     <li><a href="{{URL::to($mod.'/car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
 {{ Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
+
+{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}    
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
@@ -39,6 +56,7 @@ $objLeads = Leads::find($id);
                 ];
 
                 $leadSource = [
+                    '' => '',
                     'Univision Washington' => 'Univision Washington',
                     'DContigo Tv Show' => 'DContigo Tv Show',
                     'Telemundo Washington' => 'Telemundo Washington',
@@ -48,10 +66,12 @@ $objLeads = Leads::find($id);
                     'Cliente actual' => 'Cliente actual',
                     'Periodicos' => 'Periodicos',
                     'Revistas' => 'Revistas',
+                    'Cliente Antiguo' => 'Cliente Antiguo',
                     'Otros' => 'Otros'
                 ];
 
                 $leadType = [
+                    '' => '',
                     'Phone in' => 'Phone in',
                     'Walk in' => 'Walk in',
                     'Web' => 'Web'
@@ -65,8 +85,8 @@ $objLeads = Leads::find($id);
                 {{ Form::text('last_name',$objLeads->last_name,['class'=>'form-control'])}}                
                 {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
                 {{ Form::text('email_address',$objLeads->email_address,['class'=>'form-control'])}} 
-                {{Form::label('account_name', 'Account Name')}}
-                {{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}
+                <!--{{Form::label('account_name', 'Account Name')}}-->
+                <!--{{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}-->
                 {{Form::label('lead_type', 'Lead Type')}}
                 {{ Form::select('lead_type', $leadType, $objLeads->lead_type,['class'=>'form-control']) }} 
             </div>  
@@ -75,13 +95,15 @@ $objLeads = Leads::find($id);
                 {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }} 
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
-                {{Form::label('office_phone', 'Office Phone')}}
-                {{ Form::text('office_phone',$objLeads->office_phone,['class'=>'form-control'])}}
                 {{Form::label('mobile', 'Mobile')}}
                 {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
-                {{Form::label('fax', 'Fax')}}
-                {{ Form::text('fax',$objLeads->fax,['class'=>'form-control'])}}
-            </div>             
+
+            </div>   
+
+            <div class="col-sm-4">
+                {{Form::label('note', 'Note')}}
+                {{ Form::textarea('note',$objLeads->note,['class'=>'form-control'])}}                 
+            </div>
         </div>
     </div>    
     <div class="tab-pane " id="AI">
@@ -166,13 +188,7 @@ $objLeads = Leads::find($id);
             </div>
         </div>
         <hr>
-        <div class="form-group">
-            <div class="col-sm-4">
 
-                {{Form::label('note', 'Note')}}
-                {{ Form::textarea('note',$objLeads->note,['class'=>'form-control'])}}                 
-            </div>
-        </div>
     </div>    
     <div class="tab-pane " id="MI">
         <div class="form-group">
@@ -209,15 +225,20 @@ $objLeads = Leads::find($id);
         <div class="form-group">
             <div class="col-sm-4">
                 <?php
+                if ($objLeads->allocation) {
+                    ?>
+                    {{ Form::hidden('id_allocation',$objLeads->allocation->id)}}  
+                    <?php
+                }
                 $opportunity = ['Caliente' => 'Caliente',
                     'Tibio' => 'Tibio',
                     'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',[''=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
+                {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
                 {{Form::label('id_employee', 'Assigned to')}}
                 <?php
-                if (Auth::user()->user === 'admin') {
+                if (Auth::user()->typeUser->name === 'Admin') {
                     $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
                     ?>                
                     {{Form::select('id_employee',['0'=>'']+$selectEmployee,$objLeads->id_employee,['class'=>'form-control'] ) }}
@@ -231,11 +252,77 @@ $objLeads = Leads::find($id);
                 ?>
             </div>
         </div>
-        <div class="form-group">
-            <hr>
-            {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
-        </div>
+
     </div>     
 </div>
 {{ Form::close() }}
+<div class="panel panel-default" id="content-logs">
+    <div class="panel-heading">
+        <h4>LOGS</h4>        
+    </div>
+    <div class="panel-body">        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Date</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody> 
+                <?php
+                $id_logs = $objLeads->logs->id;
+                $status = $objLeads->logs->status;
+                $activities = Logs::find($id_logs)->activities;
+                foreach ($activities as $a) {
+                    ?>
+                    <tr>
+                        <td>{{$a->name}}</td>
+                        <td>{{$a->pivot->date_entered}}</td>
+                        <td>{{$a->pivot->time_start}}</td>
+                        <td>{{$a->pivot->time_end}}</td>   
+                        <td>{{$a->pivot->description}}</td>   
+                        <td></td>                           
+                    </tr>
+                    <?php
+                }
+                if ($status > 0) {
+                    $activity = Activity::lists('name', 'id');
+                    ?>
+                    <tr>
+                        {{ Form::hidden('id_logs',$id_logs)}}
+                        <td>{{ Form::select('id_activity',[''=>'']+$activity, null,['class'=>'form-control']) }} </td>
+                        <td>{{ Form::text('date_entered','',['class'=>'form-control default-dtp'])}}</td>
+                        <td>{{ Form::text('time_start','',['class'=>'form-control hours-tp'])}}</td>
+                        <td>{{ Form::text('time_end','',['class'=>'form-control hours-tp'])}}</td>                    
+                        <td>{{ Form::textarea('description','',['class'=>'form-control'])}}</td>                    
+                        <td><a href="{{URL::to($mod.'/logs-activity/save')}}" class="save-activity">Save</a></td>
+                    </tr> 
+
+                    <?php
+                }
+                ?>
+            </tbody>
+        </table>
+        <div id="data-end-visit" class="row hidden">
+            <div class="col-sm-12">
+                <b>End Visit Description</b>
+                {{ Form::open(array('url' => $mod.'/end-visit','class'=>'form-horizontal','id'=>'end-visit-form')) }}
+                {{ Form::hidden('id_logs',$id_logs)}}
+                {{ Form::textarea('description','',['class'=>'form-control'])}}
+                <br>
+                {{ Form::submit('Confirm',['class'=>'btn btn-default pull-right'])}}                    
+                {{ Form::close() }}
+            </div>               
+        </div>
+        <?php if ($status > 0) { ?>
+            <a href="#" id="show-data-end-visit" ><span class="btn btn-default pull-right">End Visit</span></a>
+        <?php } else { ?>
+            <div class="well">{{$objLeads->logs->description}}</span></div>
+        <?php } ?>
+    </div><!--/panel-body-->
+</div>
 @stop

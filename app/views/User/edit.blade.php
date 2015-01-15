@@ -16,7 +16,7 @@ $objUser = User::find($id);
 <hr>
 <?php
 $selectTypeUser = TypeUser::lists('name', 'id');
-$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
+$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->where('id', '!=', '1')->lists('name', 'id');
 ?>
 {{ Form::open(array('url' => $mod.'/user/edit-save/'.$objUser->id,'class'=>'form-horizontal')) }}
 <div class="row">
@@ -25,7 +25,10 @@ $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," 
         {{ Form::text('user',$objUser->user,['class'=>'form-control','readonly'=>'readonly'])}}
         {{Form::label('password', 'Password')}}
         {{ Form::password('password',['class'=>'form-control'])}}
-        {{Form::label('id_employee', 'Employee')}} <span class="required-field">*</span>                
+        {{Form::label('id_employee', 'Employee')}} <span class="required-field">*</span>   
+         <a href="{{URL::to($mod.'/employee/new')}}" data-toggle="modal" title="Add Widget">
+            <span class="glyphicon glyphicon-plus-sign"></span> Add
+        </a> 
         {{Form::select('id_employee',[''=>'']+$selectEmployee,$objUser->id_employee,['class'=>'form-control'] ) }}
         {{Form::label('id_type_user', 'Type User')}} <span class="required-field">*</span>                
         {{ Form::select('id_type_user', [''=>'']+$selectTypeUser, $objUser->id_type_user,['class'=>'form-control']) }}

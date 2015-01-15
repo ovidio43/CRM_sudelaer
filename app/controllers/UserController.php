@@ -27,6 +27,9 @@ class UserController extends BaseController {
             if (Auth::attempt($userdata)) {
                 $this->setModules();
                 $this->setActions();
+                if (Session::has('uri_src')) {
+                    return Redirect::to(Session::get('uri_src'));
+                }
                 return Redirect::to('dashboard');
             } else {
                 return Redirect::back()->withErrors($validation)->withInput();

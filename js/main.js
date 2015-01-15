@@ -1,8 +1,9 @@
 var i = $('#initRows').val();
 $(document).ready(function() {
+
 //    $(".alert").addClass("in").fadeOut(4500);
-    $('[data-toggle=collapse]').click(function() {
-        $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
+    $('#is_checked').on('click', function() {
+        $('select#id_template_ext').toggleClass('hidden');
     });
 
     $('.force-redirect').on('click', function() {
@@ -19,7 +20,7 @@ $(document).ready(function() {
     $('.migrate-link').on('click', function(e) {
         e.preventDefault();
         var currentObj = $(this);
-        var status = confirm("¿esta seguro de migrar el item seleccionado?");
+        var status = confirm("Are you sure to migrate this selected item to contacts?");
         if (status !== false) {
             $.get(currentObj.attr('href'), function(data) {
                 if (data === 'ok') {
@@ -33,7 +34,7 @@ $(document).ready(function() {
     $('.delete-link').on('click', function(e) {
         e.preventDefault();
         var currentObj = $(this);
-        var status = confirm("¿Esta seguro de eliminar el item?");
+        var status = confirm("Are you sure to delete this selected item?");
         if (status !== false) {
             $.post(currentObj.attr('href'), function(data) {
                 if (data === 'ok') {
@@ -55,7 +56,7 @@ $(document).ready(function() {
         $('#aux').val($(this).attr('rel'));
         $("#myModal").modal('show');
     });
-    ;
+
     $("#myModal").on('show.bs.modal', function() {
         $('#modal-body').text('Loading..');
         $.get(getUrl(), function(data) {
@@ -113,11 +114,81 @@ $(document).ready(function() {
         }
     });
 
+    /*****************logs********************/
+    $('body').on('click', '.save-activity', function(e) {
+        e.preventDefault();
+        var currentObj = $(this);
+        var url = currentObj.attr('href')
+        var parent = currentObj.parent().parent();
+        var data = {};
+        parent.find('input').each(function() {
+            data[this.name] = this.value;
+        });
+        parent.find('textarea').each(function() {
+            data[this.name] = this.value;
+        });
+        parent.find('select').each(function() {
+            data[this.name] = this.value;
+        });
+        currentObj.attr('href', '').text('Processong..');
+        $.post(url, data, function(data) {
+            if (data === 'ok') {
+                document.location.reload();
+            } else {
+                currentObj.attr('href', url).text('Save');
+                alert(data);
+            }
+        });
+    });
+
+
+    $("#end-visit-form").submit(function() {
+        var url = $(this).attr('action');
+        var data = $(this).serialize();
+        $.post(url, data, function(data) {
+            if (data === 'ok') {
+                document.location.reload();
+            } else {
+                alert('Description empty!!');
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $('#show-data-end-visit').click(function(e) {
+        e.preventDefault();
+        $('#data-end-visit').removeClass('hidden');
+        $(this).hide();
+    });
+    /********************memo short script****************************/
+    $('a.link-show-memo').on('click', function(e) {
+        e.preventDefault();
+        $(this).siblings('div').toggleClass('hidden');
+        var text = $(this).text() === 'Close' ? 'Memo' : 'Close';
+        $(this).text(text);
+    });
+    $('a.link-cancel-memo').on('click', function(e) {
+        e.preventDefault();
+        $(this).parent().toggleClass('hidden');
+    });
+    $('a.link-save-memo').on('click', function(e) {
+        e.preventDefault();
+        var currentObj = $(this);
+        currentObj.fadeOut();
+        currentObj.after('<span>Please wait..</span>');
+        $.post(currentObj.attr('href'), {memo_short: currentObj.siblings('textarea').val()}, function(data) {
+            if (data === 'ok') {
+                currentObj.next().fadeOut();
+                currentObj.fadeIn();                
+            }
+        });
+    });
+    /***************************************************************/
 });
 
 function getUrl() {
     var input = $('#aux').val();//0-1-2
-    var url = 'http://www.sudealeramigo.com/search-results-crm/?' + 'make=' + $('#make' + input).val() + '&model-year=' + $('#year' + input).val() + '&stock-number=' + $('#stock' + input).val();
+//    var url = 'http://www.sudealeramigo.com/search-results-crm/?' + 'make=' + $('#make' + input).val() + '&model-year=' + $('#year' + input).val() + '&stock-number=' + $('#stock' + input).val();
+    var url = '/search-results-crm/?' + 'make=' + $('#make' + input).val() + '&model-year=' + $('#year' + input).val() + '&stock-number=' + $('#stock' + input).val();
     return url;
 }
 function addInd(i, cad) {

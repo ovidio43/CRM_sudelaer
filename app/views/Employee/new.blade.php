@@ -18,14 +18,14 @@ New Employee
         {{ Form::text('first_name','',['class'=>'form-control'])}}
         {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>                
         {{ Form::text('last_name','',['class'=>'form-control'])}}
-        {{Form::label('phone', 'phone')}} <span class="required-field">*</span>                
+        {{Form::label('phone', 'phone')}} 
         {{ Form::text('phone','',['class'=>'form-control'])}}
 
     </div>
     <div class="col-sm-4"> 
-        {{Form::label('cellphone', 'Cell Phone')}} <span class="required-field">*</span>                
+        {{Form::label('cellphone', 'Cell Phone')}} 
         {{ Form::text('cellphone','',['class'=>'form-control'])}}
-        {{Form::label('address', 'address')}} <span class="required-field">*</span>                
+        {{Form::label('address', 'address')}}
         {{ Form::text('address','',['class'=>'form-control'])}}
         {{Form::label('email', 'Email')}} <span class="required-field">*</span>                
         {{ Form::text('email','',['class'=>'form-control'])}}

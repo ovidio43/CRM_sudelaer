@@ -21,14 +21,14 @@ $objEmployee = Employee::find($id);
         {{ Form::text('first_name',$objEmployee->first_name,['class'=>'form-control'])}}
         {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>                
         {{ Form::text('last_name',$objEmployee->last_name,['class'=>'form-control'])}}
-        {{Form::label('phone', 'phone')}} <span class="required-field">*</span>                
+        {{Form::label('phone', 'phone')}} 
         {{ Form::text('phone',$objEmployee->phone,['class'=>'form-control'])}}
 
     </div>
     <div class="col-sm-4"> 
-        {{Form::label('cellphone', 'Cell Phone')}} <span class="required-field">*</span>                
+        {{Form::label('cellphone', 'Cell Phone')}}
         {{ Form::text('cellphone',$objEmployee->cellphone,['class'=>'form-control'])}}
-        {{Form::label('address', 'address')}} <span class="required-field">*</span>                
+        {{Form::label('address', 'address')}}
         {{ Form::text('address',$objEmployee->address,['class'=>'form-control'])}}
         {{Form::label('email', 'Email')}} <span class="required-field">*</span>                
         {{ Form::text('email',$objEmployee->email,['class'=>'form-control'])}}

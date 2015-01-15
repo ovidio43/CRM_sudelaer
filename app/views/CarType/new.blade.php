@@ -10,7 +10,7 @@ ADD CAR TYPE
     <li class="disabled"><a href="#"  >Other</a></li>    
     <li class="active"><a href="#CT">Car Type</a></li>    
 </ul> 
-{{ Form::open(array('url' => 'car-type/save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'leads/car-type/save','class'=>'form-horizontal')) }}
 <div class="tab-content">
     <div class="tab-pane active" id="CT">
         <input type="hidden" id="aux" value="0"> <!--auxiliar para poner valores a los campos desde modal car type--> 

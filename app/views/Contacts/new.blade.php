@@ -36,6 +36,7 @@ NEW CONTACT
                 ];
 
                 $leadSource = [
+                    ''=>'',
                     'Univision Washington' => 'Univision Washington',
                     'DContigo Tv Show' => 'DContigo Tv Show',
                     'Telemundo Washington' => 'Telemundo Washington',
@@ -48,6 +49,7 @@ NEW CONTACT
                     'Otros' => 'Otros'
                 ];
                 $leadType = [
+                    ''=>'',
                     'Phone in' => 'Phone in',
                     'Walk in' => 'Walk in',
                     'Web' => 'Web'

@@ -23,6 +23,7 @@ NEW LEADS
     <li class="disabled"><a href="#">Car Type</a></li>    
 </ul> 
 {{ Form::open(array('url' => $mod.'/new/save','class'=>'form-horizontal')) }}
+{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
@@ -37,6 +38,7 @@ NEW LEADS
                 ];
 
                 $leadSource = [
+                    '' => '',
                     'Univision Washington' => 'Univision Washington',
                     'DContigo Tv Show' => 'DContigo Tv Show',
                     'Telemundo Washington' => 'Telemundo Washington',
@@ -46,10 +48,12 @@ NEW LEADS
                     'Cliente actual' => 'Cliente actual',
                     'Periodicos' => 'Periodicos',
                     'Revistas' => 'Revistas',
+                    'Cliente Antiguo' => 'Cliente Antiguo',
                     'Otros' => 'Otros'
                 ];
 
                 $leadType = [
+                    '' => '',
                     'Phone in' => 'Phone in',
                     'Walk in' => 'Walk in',
                     'Web' => 'Web'
@@ -62,17 +66,29 @@ NEW LEADS
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}              
                 {{Form::label('email_address', 'Email Address')}} 
+<<<<<<< HEAD
                 {{ Form::text('email_address','',['class'=>'form-control'])}} 
                 {{Form::label('account_name', 'Account Name')}}
                 {{ Form::text('account_name','',['class'=>'form-control'])}}
+=======
+                {{ Form::text('email_address','',['class'=>'form-control','id'=>'email_address'])}} 
+                <a href="#" onclick="capturarValorEmail()"  id="myEmailLink" class="thickbox">
+                    <img title="Verify email address" src="{{ URL::asset('img/email.png')}}" width="25px" heigth="25px">
+                </a>
+
+                <!--{{Form::label('account_name', 'Account Name')}}-->
+                <!--{{ Form::text('account_name','',['class'=>'form-control'])}}-->
+>>>>>>> ef0514e0b04edc9157dd5bf360e4eb1df32325ca
                 {{Form::label('lead_type', 'Lead Type')}}<span class="required-field">*</span>
                 {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
+
             </div>  
             <div class="col-sm-4">
                 {{Form::label('lead_source', 'Lead source')}}<span class="required-field">*</span>
                 {{ Form::select('lead_source', $leadSource, null,['class'=>'form-control']) }}  
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone','',['class'=>'form-control'])}}
+<<<<<<< HEAD
                 {{Form::label('office_phone', 'Office Phone')}}
                 {{ Form::text('office_phone','',['class'=>'form-control'])}}
                 {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
@@ -85,6 +101,22 @@ NEW LEADS
             <hr>
             {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
         </div>        
+=======
+                <!--{{Form::label('office_phone', 'Office Phone')}}-->
+                <!--{{ Form::text('office_phone','',['class'=>'form-control'])}}-->
+                {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
+                {{ Form::text('mobile','',['class'=>'form-control'])}}
+                <!--{{Form::label('fax', 'Fax')}}-->
+                <!--{{ Form::text('fax','',['class'=>'form-control'])}}-->
+
+            </div>  
+
+            <div class="col-sm-4">
+                {{Form::label('note', 'Note')}}
+                {{ Form::textarea('note','',['class'=>'form-control'])}} 
+            </div>
+        </div>    
+>>>>>>> ef0514e0b04edc9157dd5bf360e4eb1df32325ca
     </div>    
     <div class="tab-pane " id="AI">
         <div class="form-group">
@@ -166,14 +198,7 @@ NEW LEADS
                 {{ Form::checkbox('copy') }}
             </div>
         </div>
-        <hr>
-        <div class="form-group">
-            <div class="col-sm-4">
 
-                {{Form::label('note', 'Note')}}
-                {{ Form::textarea('note','',['class'=>'form-control'])}}                 
-            </div>
-        </div>
     </div>    
     <div class="tab-pane " id="MI">
         <div class="form-group">
@@ -209,25 +234,28 @@ NEW LEADS
         <div class="form-group">
             <div class="col-sm-4">
                 <?php
-                $opportunity = ['Caliente' => 'Caliente',
+                $opportunity = [
+                    'Caliente' => 'Caliente',
                     'Tibio' => 'Tibio',
                     'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',[''=>'']+ $opportunity, null,['class'=>'form-control']) }}  
+                {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, null,['class'=>'form-control']) }}  
 
 
-                {{Form::label('id_employee', 'Assigned to')}}
+
                 <?php
-                if (Auth::user()->user === 'admin') {
+                if (Auth::user()->typeUser->name === 'Admin') {
                     $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');
-                    ?>                
+                    ?>    
+                    {{Form::label('id_employee', 'Assigned to')}}
                     {{Form::select('id_employee',['0'=>'']+$selectEmployee,null,['class'=>'form-control'] ) }}
                     <?php
                 } else {
                     ?>
-                    {{ Form::hidden('id_employee',Auth::user()->employee->id)}}
-                    {{ Form::text('name_employee',Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name,['class'=>'form-control','readonly'=>'readonly'])}}
+                    <!--{{ Form::hidden('id_employee',Auth::user()->employee->id)}}-->
+                    {{ Form::hidden('id_employee','0')}}
+                    <!--{{ Form::text('name_employee',Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name,['class'=>'form-control','readonly'=>'readonly'])}}-->
                     <?php
                 }
                 ?>

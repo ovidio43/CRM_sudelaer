@@ -17,7 +17,7 @@ if ($type !== 'leads') {
     <li ><a href="{{URL::to($type.'/edit/'.$id_leads)}}" class="force-redirect" >Other</a></li>    
     <li class="active"><a href="#CT">Car Type</a></li>    
 </ul> 
-{{ Form::open(array('url' => 'car-type/edit-save','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'leads/car-type/edit-save','class'=>'form-horizontal')) }}
 <div class="tab-content">
     <div class="tab-pane active" id="CT">
         <input type="hidden" id="aux" value="0"> <!--auxiliar para poner valores a los campos desde modal car type--> 
@@ -88,7 +88,7 @@ if ($type !== 'leads') {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div>
     </div>

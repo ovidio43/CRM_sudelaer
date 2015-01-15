@@ -1,7 +1,17 @@
 <?php
+//Event::listen('illuminate.query', function($sql)
+//{
+//    dd($sql);
+//}); 
+
+Route::get('/validation/real-email', function() {
+    return View::make('Validations.emailVerify.emailVerify');
+});
 
 App::missing(function() {
-    return View::make('Errors.denied');
+    Session::put('uri_src', Request::url());
+    return Redirect::guest('login');
+//    return View::make('Errors.denied');
 });
 Route::get('/', function() {
     return View::make('Login.main');
@@ -43,21 +53,37 @@ function setRouter() {
 }
 
 Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
+    $mod = 'leads';
     if (Session::has('insert')) {
-        Route::get('new', function() {
+        Route::get('new', function() use($mod) {
             return View::make('Leads.new')->with('mod', 'leads');
         });
         Route::post('new/save', 'LeadsController@save');
+        Route::post('logs-activity/save', 'ActivityLogsController@save');
     }
     if (Session::has('update')) {
         Route::get('edit/{id}', function($id) {
             return View::make('Leads.edit')->with('id', $id)->with('mod', 'leads');
         });
         Route::post('edit-save/{id}', 'LeadsController@edit_save');
+        Route::post('end-visit', 'LogsController@EdnVisit');
+        Route::post('memo-edit/{id}', 'LeadsController@edit_memo');        
     }
     if (Session::has('list')) {
-        Route::get('list', function() {
-            return View::make('Leads.list')->with('mod', 'leads');
+        Route::get('search', function() use($mod) {
+            return View::make('Leads.search')->with('s', Input::get('s'))->with('filter', Input::get('filter'))->with('mod', $mod);
+        });
+        Route::get('list', function() use($mod) {
+            return View::make('Leads.list')->with('mod', $mod);
+        });
+        Route::get('mylist', function() {
+            return View::make('Leads.mylist')->with('mod', 'leads');
+        });
+        Route::get('allactivelist', function() use($mod){
+            return View::make('Leads.allactivelist')->with('mod', $mod);
+        });
+        Route::get('myassignmentslist', function() {
+            return View::make('Leads.myassignmentslist')->with('mod', 'leads');
         });
     }
 
@@ -87,34 +113,50 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth|hasMod'), function(
 });
 Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() {
     /*     * *****employee********* */
-
+    $mod = 'system';
     if (Session::has('insert')) {
-        Route::get('employee/new', function() {
-            return View::make('Employee.new')->with('mod', 'system');
+        Route::get('employee/new', function() use ($mod) {
+            return View::make('Employee.new')->with('mod', $mod);
         });
-        Route::get('type-user/new', function() {
-            return View::make('TypeUser.new')->with('mod', 'system');
+        Route::get('type-user/new', function() use ($mod) {
+            return View::make('TypeUser.new')->with('mod', $mod);
         });
-        Route::get('user/new', function() {
-            return View::make('User.new')->with('mod', 'system');
+        Route::get('user/new', function() use ($mod) {
+            return View::make('User.new')->with('mod', $mod);
         });
-    }
-    if (Session::has('update')) {
-        Route::get('employee/edit/{id}', function($id) {
-            return View::make('Employee.edit')->with('id', $id)->with('mod', 'system');
+
+        Route::get('alert/templates/new', function() use ($mod) {
+            return View::make('Templates.new')->with('mod', $mod);
         });
-        Route::post('employee/edit-save/{id}', 'EmployeeController@edit_save');
-        Route::get('type-user/edit/{id}', function($id) {
-            return View::make('TypeUser.edit')->with('id', $id)->with('mod', 'system');
-        });
-        Route::post('type-user/edit-save/{id}', 'TypeUserController@edit_save');
-        Route::get('user/edit/{id}', function($id) {
-            return View::make('User.edit')->with('id', $id)->with('mod', 'system');
-        });
-        Route::post('user/edit-save/{id}', 'UserController@edit_save');
+
+
         Route::post('user/save', 'UserController@save');
         Route::post('type-user/save', 'TypeUserController@save');
         Route::post('employee/save', 'EmployeeController@save');
+        Route::post('alert/save', 'AlertTypeUserController@save');
+        Route::post('alert/templates/save', 'TemplatesController@save');
+    }
+    if (Session::has('update')) {
+        Route::get('employee/edit/{id}', function($id) use($mod) {
+            return View::make('Employee.edit')->with('id', $id)->with('mod', $mod);
+        });
+        Route::get('type-user/edit/{id}', function($id) use($mod) {
+            return View::make('TypeUser.edit')->with('id', $id)->with('mod', $mod);
+        });
+        Route::get('user/edit/{id}', function($id) use($mod) {
+            return View::make('User.edit')->with('id', $id)->with('mod', $mod);
+        });
+        Route::get('alert/edit/{id}', function($id) use($mod) {
+            return View::make('Alert.edit')->with('id', $id)->with('mod', $mod);
+        });
+        Route::get('alert/templates/edit/{id}', function($id) use($mod) {
+            return View::make('Templates.edit')->with('id', $id)->with('mod', $mod);
+        });
+        Route::post('employee/edit-save/{id}', 'EmployeeController@edit_save');
+        Route::post('user/edit-save/{id}', 'UserController@edit_save');
+        Route::post('type-user/edit-save/{id}', 'TypeUserController@edit_save');
+        Route::post('alert/templates/save-edit/{id}', 'TemplatesController@edit_save');
+        Route::post('alert/save-edit/{id}', 'AlertController@edit_save');
     }
     if (Session::has('list')) {
         Route::get('employee', function() {
@@ -125,6 +167,9 @@ Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() 
         });
         Route::get('user', function() {
             return View::make('User.main')->with('mod', 'system');
+        });
+        Route::get('alert', function() {
+            return View::make('Alert.main')->with('mod', 'system');
         });
     }
     if (Session::has('delete')) {

@@ -15,11 +15,16 @@ class LeadsController extends BaseController {
     private $id;
 
     public function save() {
-               $input = Input::all();
+        $input = Input::all();
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
-            $this->insert($input);
-            return Redirect::to('car-type/new/' . $this->id);
+            DB::transaction(function() use ($input) {
+                $this->insert($input);
+                $this->saveLogs();
+                $this->saveAllocation($input);
+                $this->sendMail($input);
+            });
+            return Redirect::to('leads/car-type/new/' . $this->id);
         } else {
             return Redirect::back()->withErrors($validation)->withInput();
         }
@@ -27,10 +32,16 @@ class LeadsController extends BaseController {
 
     public function edit_save($id) {
         $input = Input::all();
+        $this->rules['mobile'] = 'Required';
+        $this->rules['email_address'] = 'email';
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
-            $this->insert_edit($input, $id);
-            return Redirect::to('leads/list');
+            $this->id = $id;
+            DB::transaction(function() use ($input) {
+                $this->insert_edit($input);
+                $this->saveEditAllocation($input);
+            });
+            return Redirect::to('leads/mylist');
         } else {
             return Redirect::back()->withErrors($validation)->withInput();
         }
@@ -45,26 +56,39 @@ class LeadsController extends BaseController {
         }
     }
 
+    public function edit_memo($id) {
+        $ObjLeads = Leads::find($id);
+        $input = Input::all();
+        $ObjLeads->memo_short = $input['memo_short'];
+        if ($ObjLeads->save()) {
+            return 'ok';
+        } else {
+            return 'error';
+        }
+    }
+
     private function insert($input) {
         $ObjLeads = new Leads();
         $this->setAttr($ObjLeads, $input);
+        $ObjLeads->create_by = Auth::user()->employee->id;
+        $ObjLeads->date_entered = date('Y-m-d H:i:s');
+        $ObjLeads->active = 1;
+        $ObjLeads->save();
         $this->id = $ObjLeads->id;
     }
 
-    private function insert_edit($input, $id) {
-        $ObjLeads = Leads::find($id);
+    private function insert_edit($input) {
+        $ObjLeads = Leads::find($this->id);
         $this->setAttr($ObjLeads, $input);
+        $ObjLeads->save();
     }
 
     private function setAttr($ObjLeads, $input) {
         $ObjLeads->salutation = $input['salutation'];
         $ObjLeads->first_name = $input['first_name'];
         $ObjLeads->last_name = $input['last_name'];
-        $ObjLeads->account_name = $input['account_name'];
         $ObjLeads->home_phone = $input['home_phone'];
-        $ObjLeads->office_phone = $input['office_phone'];
         $ObjLeads->mobile = $input['mobile'];
-        $ObjLeads->fax = $input['fax'];
         $ObjLeads->primary_address_street = $input['primary_address_street'];
         $ObjLeads->primary_address_city = $input['primary_address_city'];
         $ObjLeads->primary_address_state = $input['primary_address_state'];
@@ -73,7 +97,6 @@ class LeadsController extends BaseController {
         $ObjLeads->alt_address_city = $input['alt_address_city'];
         $ObjLeads->alt_address_state = $input['alt_address_state'];
         $ObjLeads->alt_address_zipcode = $input['alt_address_zipcode'];
-        $ObjLeads->date_entered = date('Y-m-d H:i:s');
         $ObjLeads->email_address = $input['email_address'];
         $ObjLeads->note = $input['note'];
         $ObjLeads->status = $input['status'];
@@ -88,8 +111,68 @@ class LeadsController extends BaseController {
         $ObjLeads->id_employee = $input['id_employee'];
         $ObjLeads->opportunity = $input['opportunity'];
         $ObjLeads->type = 'leads';
-        $ObjLeads->active = 1;
-        $ObjLeads->save();
+    }
+
+    private function saveLogs() {
+        $objLogs = new Logs();
+        $objLogs->id_leads = $this->id;
+        $objLogs->save();
+    }
+
+    private function saveAllocation($input) {
+        if ($input['id_employee'] > 0) {
+            $objAllocation = new Allocation();
+            $this->setAttrAllocation($objAllocation, $input);
+            $objAllocation->save();
+            Mail::send('emails.newassign', [], function($message) use ($input) {
+                $objemp = Employee::find($input['id_employee']);
+                $message->to($objemp->email, $objemp->first_name . ' ' . $objemp->last_name)->subject('New Leads assigned!');
+            });
+        }
+    }
+
+    private function saveEditAllocation($input) {
+        if (!isset($input['id_allocation'])) {
+            $this->saveAllocation($input);
+        } else {
+            if ($input['id_employee'] > 0) {
+                $objAllocation = Allocation::find($input['id_allocation']);
+                $this->setAttrAllocation($objAllocation, $input);
+                $objAllocation->save();
+            } else {
+                $objAllocation = Allocation::find($input['id_allocation']);
+                $objAllocation->delete();
+            }
+        }
+    }
+
+    private function setAttrAllocation($objAllocation, $input) {
+        $objAllocation->id_employee = $input['id_employee'];
+        $objAllocation->id_leads = $this->id;
+    }
+
+    private function sendMail($input) {
+        $objAlert = Alert::find(1);
+        $data = ['id_leads' => $this->id, 'id_template' => $objAlert->id_template, 'send_client' => false];
+        foreach ($objAlert->typeUser as $rTU) {
+            foreach ($rTU->user as $rU) {
+                if ($rU->employee->id > 1) {
+                    Mail::send('emails.newleads', $data, function($message) use ($rU) {
+                        $message->to($rU->employee->email, $rU->employee->first_name . ' ' . $rU->employee->last_name)->subject('New Leads Entry!!!');
+                    });
+                }
+            }
+        }
+        if ($objAlert->id_template_ext > 0 && !empty($input['email_address'])) {
+            $this->sendMaiilCliente($input, $objAlert->id_template_ext);
+        }
+    }
+
+    private function sendMaiilCliente($input, $id_template) {
+        Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $id_template], function($message) use ($input) {
+            $message->from('crmalerts@sudealeramigo.com','sudealeramigo.com');
+            $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Bienvenido a C&G Imports Su Dealer Amigo');
+        });
     }
 
     public function migrate_to_contact($id_leads) {

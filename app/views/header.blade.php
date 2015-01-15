@@ -10,8 +10,10 @@
         <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->                   
+        {{ HTML::style('js/datetimepicker-master/jquery.datetimepicker.css') }}       
         {{ HTML::style('css/custom.css') }}       
         {{ HTML::style('css/invetary.css') }}       
+        {{ HTML::style('css/thickbox.css') }}               
     </head>
     <body  >
 

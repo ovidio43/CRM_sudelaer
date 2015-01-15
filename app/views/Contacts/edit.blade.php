@@ -40,6 +40,7 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                 ];
 
                 $leadSource = [
+                    '' => '',
                     'Univision Washington' => 'Univision Washington',
                     'DContigo Tv Show' => 'DContigo Tv Show',
                     'Telemundo Washington' => 'Telemundo Washington',
@@ -52,6 +53,7 @@ $objContact = Contacts::where('id_leads', '=', $id_leads)->first();
                     'Otros' => 'Otros'
                 ];
                 $leadType = [
+                    '' => '',
                     'Phone in' => 'Phone in',
                     'Walk in' => 'Walk in',
                     'Web' => 'Web'

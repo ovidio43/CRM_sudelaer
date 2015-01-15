@@ -16,8 +16,8 @@
         }
         if (Session::has('list')) {
             ?>       
-            <li <?php echo (Request::is($mod . '/' . Session::get('list'))) ? 'class="custom-active"' : ''; ?>>            
-                <a href="{{URL::to($mod.'/'.Session::get('list'))}}"><i class="glyphicon glyphicon-list-alt"></i> {{ucwords(Session::get('list'))}}</a>
+            <li <?php echo (Request::is($mod . '/' . Session::get('list')) || Request::is($mod . '/my' . Session::get('list')) || Request::is($mod . '/myassignments' . Session::get('list'))) ? 'class="custom-active"' : ''; ?>>            
+                <a href="{{URL::to($mod.'/my'.Session::get('list'))}}"><i class="glyphicon glyphicon-list-alt"></i> {{ucwords(Session::get('list'))}}</a>
             </li>                
             <?php
         }

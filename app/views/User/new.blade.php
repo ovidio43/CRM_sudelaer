@@ -25,7 +25,7 @@ New User
 <hr>
 <?php
 $selectTypeUser = TypeUser::lists('name', 'id');
-$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id')
+$selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->where('id', '!=', '1')->lists('name', 'id')
 ?>
 {{ Form::open(array('url' => $mod.'/user/save','class'=>'form-horizontal')) }}
 <div class="row">
@@ -39,7 +39,6 @@ $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," 
             <span class="glyphicon glyphicon-plus-sign"></span> Add
         </a>                
         {{Form::select('id_employee',[''=>'']+$selectEmployee,Input::old('id_employee'),['class'=>'form-control'] ) }}
-
         {{Form::label('id_type_user', 'Type User')}} <span class="required-field">*</span>                
         {{ Form::select('id_type_user', [''=>'']+$selectTypeUser, Input::old('id_type_user'),['class'=>'form-control']) }}
     </div>    
