@@ -61,26 +61,30 @@ NEW LEADS
                 {{ Form::text('first_name','',['class'=>'form-control'])}}
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}              
-                {{Form::label('email_address', 'Email Address')}} <span class="required-field">*</span>
+                {{Form::label('email_address', 'Email Address')}} 
                 {{ Form::text('email_address','',['class'=>'form-control'])}} 
                 {{Form::label('account_name', 'Account Name')}}
                 {{ Form::text('account_name','',['class'=>'form-control'])}}
-                {{Form::label('lead_type', 'Lead Type')}}
+                {{Form::label('lead_type', 'Lead Type')}}<span class="required-field">*</span>
                 {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
             </div>  
             <div class="col-sm-4">
-                {{Form::label('lead_source', 'Lead source')}}
+                {{Form::label('lead_source', 'Lead source')}}<span class="required-field">*</span>
                 {{ Form::select('lead_source', $leadSource, null,['class'=>'form-control']) }}  
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone','',['class'=>'form-control'])}}
                 {{Form::label('office_phone', 'Office Phone')}}
                 {{ Form::text('office_phone','',['class'=>'form-control'])}}
-                {{Form::label('mobile', 'Mobile')}}
+                {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
                 {{ Form::text('mobile','',['class'=>'form-control'])}}
                 {{Form::label('fax', 'Fax')}}
                 {{ Form::text('fax','',['class'=>'form-control'])}}
             </div>         
         </div>
+        <div class="form-group">
+            <hr>
+            {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
+        </div>        
     </div>    
     <div class="tab-pane " id="AI">
         <div class="form-group">
@@ -229,10 +233,7 @@ NEW LEADS
                 ?>
             </div>
         </div>
-        <div class="form-group">
-            <hr>
-            {{ Form::submit('Save',['class'=>'btn btn-primary'])}}
-        </div>
+
     </div>  
 </div>
 {{ Form::close() }}

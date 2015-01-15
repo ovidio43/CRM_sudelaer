@@ -21,12 +21,14 @@ MY LEADS
     </thead>
     <tbody>
         <?php
-        $objLeads = Leads::where('type', '=', 'leads')->paginate(10);
+        $objLeads = Leads::where('type', '=', 'leads')->orderBy('date_entered', 'DESC')->paginate(10);
         foreach ($objLeads as $rowL) {
             $user = 'Web';
             if ($rowL->id_employee > 0) {
                 $objEmployee = Employee::find($rowL->id_employee);
-                $user = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
+               //$user = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
+                $user = $objEmployee->first_name . ' ' . $objEmployee->last_name ;
+                
             }
             ?>        
             <tr>
