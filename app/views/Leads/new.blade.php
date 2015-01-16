@@ -216,7 +216,7 @@ NEW LEADS
         <div class="form-group">
             <div class="col-sm-4">
                 <?php
-                $opportunity = [
+                $opportunity = [                    
                     'Caliente' => 'Caliente',
                     'Tibio' => 'Tibio',
                     'Frio' => 'Frio'];

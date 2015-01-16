@@ -5,10 +5,12 @@ class LeadsController extends BaseController {
     private $rules = array(
         'first_name' => 'Required',
         'last_name' => 'Required',
+        'id_employee' => 'Required',
+        'mobile' => 'Required',
         'lead_type' => 'Required',
-        'mobile' => 'Required|unique:leads',
-        'lead_source' => 'Required',
-        'email_address' => 'email|unique:leads'
+        'lead_source' => 'Required'
+        //'opportunity' => 'Required',
+        //'email_address' => 'Required|email'
     );
     private $id;
 
