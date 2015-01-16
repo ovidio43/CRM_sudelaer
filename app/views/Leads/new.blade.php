@@ -85,7 +85,10 @@ NEW LEADS
                 <!--{{Form::label('office_phone', 'Office Phone')}}-->
                 <!--{{ Form::text('office_phone','',['class'=>'form-control'])}}-->
                 {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
-                {{ Form::text('mobile','',['class'=>'form-control'])}}
+                {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile'])}}
+                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
+                    <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
+                </a>
                 <!--{{Form::label('fax', 'Fax')}}-->
                 <!--{{ Form::text('fax','',['class'=>'form-control'])}}-->
 
@@ -219,7 +222,7 @@ NEW LEADS
                     'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, null,['class'=>'form-control']) }}  
+                {{ Form::select('opportunity',['no-asigned'=>'']+ $opportunity, null,['class'=>'form-control']) }}  
 
 
 
