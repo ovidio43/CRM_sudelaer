@@ -1,44 +1,36 @@
 <link href="../css/email.css" rel="stylesheet" type="text/css" />
 <?php
-
-
-$USER_ID = "luminia1489@outlook.es"; //replace this value with your StrikeIron UserID or Email Verification v6.0.0 License Key 
-$PASSWORD = "a5hLC4"; //Replace this value with your StrikeIron Web Service Password; you can set this value to null if you are using a License Key
-
-$WSDL = 'http://ws.strikeiron.com/EmailVerify6?WSDL';
-
-// create client
-$client = new SoapClient($WSDL, array('trace' => 1, 'exceptions' => 1));
-
-// create registered user for soap header
-$registered_user = array("RegisteredUser" => array("UserID" => $USER_ID, "Password" => $PASSWORD));
-$header = new SoapHeader("http://ws.strikeiron.com", "LicenseInfo", $registered_user);
-
-// set soap headers - this will apply to all operations
-$client->__setSoapHeaders($header);
-
 try {
     //Calls VerifyEmail and displayes the result
 //    $myEmail = $_GET['email'];
-    $myEmail = 'iprojimoi@gmail.com';
+    if ($email == '') {
+        $email = 'none';
+    }
 
-    VerifyEmail($myEmail);
+    VerifyEmail($email);
 } catch (Exception $ex) {
     echo $ex->getMessage() . "<br>";
 }
 
 function VerifyEmail($myEmail) {
-    global $client;
-
+//    global $client;
+    $USER_ID = "luminia1489@outlook.es"; //replace this value with your StrikeIron UserID or Email Verification v6.0.0 License Key 
+    $PASSWORD = "a5hLC4"; //Replace this value with your StrikeIron Web Service Password; you can set this value to null if you are using a License Key
+    $WSDL = 'http://ws.strikeiron.com/EmailVerify6?WSDL';
+// create client
+    $client = new SoapClient($WSDL, array('trace' => 1, 'exceptions' => 1));
+// create registered user for soap header
+    $registered_user = array("RegisteredUser" => array("UserID" => $USER_ID, "Password" => $PASSWORD));
+    $header = new SoapHeader("http://ws.strikeiron.com", "LicenseInfo", $registered_user);
+// set soap headers - this will apply to all operations
+    $client->__setSoapHeaders($header);
     //Set up input parameters for the VerifyEmail operation
     $emailAddress = $myEmail;
     $timeout = '30';
-
     //set up parameter array
     $params = array("Email" => $emailAddress,
         "Timeout" => $timeout,
     );
-
     //call the web service operation
     $result = $client->__soapCall("VerifyEmail", array($params), null, null, $output_header);
 

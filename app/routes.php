@@ -1,13 +1,17 @@
 <?php
+
 //Event::listen('illuminate.query', function($sql)
 //{
 //    dd($sql);
 //}); 
-
-Route::get('/validation/real-email', function() {
-    return View::make('Validations.emailVerify.emailVerify');
+/* * ***rutas para verificar datos reales************ */
+Route::get('real-email-validation/{email}', function($email) {
+    return View::make('Validations.emailVerify.emailVerify')->with('email', $email);
 });
-
+Route::get('real-phone-validation/{phone}', function($phone) {
+    return View::make('Validations.openCnam.reversePhone')->with('phone', $phone);
+});
+/* * *************** */
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');
@@ -67,7 +71,7 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         });
         Route::post('edit-save/{id}', 'LeadsController@edit_save');
         Route::post('end-visit', 'LogsController@EdnVisit');
-        Route::post('memo-edit/{id}', 'LeadsController@edit_memo');        
+        Route::post('memo-edit/{id}', 'LeadsController@edit_memo');
     }
     if (Session::has('list')) {
         Route::get('search', function() use($mod) {
@@ -79,7 +83,7 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::get('mylist', function() {
             return View::make('Leads.mylist')->with('mod', 'leads');
         });
-        Route::get('allactivelist', function() use($mod){
+        Route::get('allactivelist', function() use($mod) {
             return View::make('Leads.allactivelist')->with('mod', $mod);
         });
         Route::get('myassignmentslist', function() {
