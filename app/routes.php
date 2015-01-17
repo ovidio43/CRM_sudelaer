@@ -11,7 +11,7 @@ Route::get('real-email-validation/{email}', function($email) {
 Route::get('real-phone-validation/{phone}', function($phone) {
     return View::make('Validations.openCnam.reversePhone')->with('phone', $phone);
 });
-/* * *************** */
+/* * *********************************************** */
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');
@@ -64,6 +64,10 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         });
         Route::post('new/save', 'LeadsController@save');
         Route::post('logs-activity/save', 'ActivityLogsController@save');
+        /*         * **consulta si numero de telefon existe**** */
+//        Route::post('verify-phone-number/{phone}', 'LeadsController@verify_phone');
+        Route::get('verify-phone-number/{phone}', 'LeadsController@verify_phone_number');
+        /*         * ****** */
     }
     if (Session::has('update')) {
         Route::get('edit/{id}', function($id) {

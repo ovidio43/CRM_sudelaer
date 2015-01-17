@@ -16,6 +16,24 @@
         {{ HTML::style('css/thickbox.css') }}               
     </head>
     <body  >
+        <!--global modal---->
+        <div id="global-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header alert alert-warning">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 id="title-global-modal" class="modal-title"></h4>
+                    </div>
+                    <div id="global-modal-body" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <!--<a href="/leads/list" class="btn btn-primary">CANCEL</a> para mi local funciona-->
+                        <a href="/crm/leads/list" class="btn btn-primary">CANCEL</a>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">CONTINUE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Header -->
         <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
@@ -50,4 +68,3 @@
         <!-- Main -->
         <div class="container">
             <div class="row">
-               

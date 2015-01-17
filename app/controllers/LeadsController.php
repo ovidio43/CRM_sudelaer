@@ -9,8 +9,8 @@ class LeadsController extends BaseController {
         'mobile' => 'Required',
         'lead_type' => 'Required',
         'lead_source' => 'Required'
-        //'opportunity' => 'Required',
-        //'email_address' => 'Required|email'
+            //'opportunity' => 'Required',
+            //'email_address' => 'Required|email'
     );
     private $id;
 
@@ -64,6 +64,25 @@ class LeadsController extends BaseController {
             return 'ok';
         } else {
             return 'error';
+        }
+    }
+
+    public function verify_phone_number($phone) {
+        $ObjLeads = Leads::where('type', '=', 'leads')->where('mobile', '=', $phone)->get();
+        $obj = [];
+        foreach ($ObjLeads as $rowL) {
+            $obj['first_name'] = $rowL->first_name;
+            $obj['last_name'] = $rowL->last_name;
+            $obj['email_address'] = $rowL->email_address;
+            $obj['ssign_to'] = 'undefined';
+            if ($rowL->allocation) {
+                $obj['ssign_to'] = $rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name; //. ' (' . $rowL->allocation->employee->user->user . ')';                
+            }
+        }
+        if ($obj) {
+            return '[' . json_encode($obj) . ']';
+        } else {
+            return '[]';
         }
     }
 
@@ -170,7 +189,7 @@ class LeadsController extends BaseController {
 
     private function sendMaiilCliente($input, $id_template) {
         Mail::send('emails.newleads', ['send_client' => true, 'id_template' => $id_template], function($message) use ($input) {
-            $message->from('crmalerts@sudealeramigo.com','sudealeramigo.com');
+            $message->from('crmalerts@sudealeramigo.com', 'sudealeramigo.com');
             $message->to($input['email_address'], $input['first_name'] . ' ' . $input['last_name'])->subject('Bienvenido a C&G Imports Su Dealer Amigo');
         });
     }

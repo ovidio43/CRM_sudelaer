@@ -1,42 +1,42 @@
 var i = $('#initRows').val();
-$(document).ready(function() {
+$(document).ready(function () {
 
 //    $(".alert").addClass("in").fadeOut(4500);
-    $('#is_checked').on('click', function() {
+    $('#is_checked').on('click', function () {
         $('select#id_template_ext').toggleClass('hidden');
     });
 
-    $('.force-redirect').on('click', function() {
+    $('.force-redirect').on('click', function () {
         location.href = $(this).attr('href');
     });
 
-    $('.nav-tabs a').click(function(e) {
+    $('.nav-tabs a').click(function (e) {
         e.preventDefault()
         if ($(this).hasClass("disabled")) {
             e.preventDefault();
             return false;
         }
     })
-    $('.migrate-link').on('click', function(e) {
+    $('.migrate-link').on('click', function (e) {
         e.preventDefault();
         var currentObj = $(this);
         var status = confirm("Are you sure to migrate this selected item to contacts?");
         if (status !== false) {
-            $.get(currentObj.attr('href'), function(data) {
+            $.get(currentObj.attr('href'), function (data) {
                 if (data === 'ok') {
                     currentObj.parent().parent().remove();
                 }
-            }).complete(function() {
+            }).complete(function () {
 
             });
         }
     });
-    $('.delete-link').on('click', function(e) {
+    $('.delete-link').on('click', function (e) {
         e.preventDefault();
         var currentObj = $(this);
         var status = confirm("Are you sure to delete this selected item?");
         if (status !== false) {
-            $.post(currentObj.attr('href'), function(data) {
+            $.post(currentObj.attr('href'), function (data) {
                 if (data === 'ok') {
                     currentObj.parent().parent().remove();
                 }
@@ -45,33 +45,67 @@ $(document).ready(function() {
     });
 
 
+    /*******modal show query fo verify phone number in db****************************************/
+    $('input#mobile').on('keyup', function () {
+        var dataTable = '';
+        var phone = $(this).val();
+        if (phone.length >= 10 && $.isNumeric(phone)) {     
+//            $.getJSON('/leads/verify-phone-number/' + phone, function (data) {  para mi local
+            $.getJSON('/crm/leads/verify-phone-number/' + phone, function (data) {                         
+                if (data.length > 0) {
+                    $("#global-modal #title-global-modal").text('Mobile number "' + phone + '" already exists!');
 
+                    dataTable += '<table class="table table-striped">';
+                    dataTable += '<tr>';
+                    dataTable += '<th>Name</th>';
+                    dataTable += '<th>Email</th>';
+                    dataTable += '<th>Assigned to</th>';
+                    dataTable += '</tr>';
+
+                    $.each(data, function (i, item) {
+                        dataTable += '<tr>';
+                        dataTable += '<td>' + item.first_name + ' ' + item.last_name + '</td>';
+                        dataTable += '<td>' + item.email_address + '</td>';
+                        dataTable += '<td>' + item.ssign_to + '</td>';
+                        dataTable += '</tr>';
+                    });
+                    dataTable += '</table>';
+                    $('#global-modal-body').empty().append(dataTable);
+                    $("#global-modal").modal('show');
+                    $('#myPhoneLink').addClass('hidden');
+                } else {
+                
+                    $('#myPhoneLink').removeClass('hidden');
+                }
+            });
+        }
+    });
     /******************modal *************************/
-    $('body').on('click', '.listingblock > .four > .vignette > a', function(e) {
+    $('body').on('click', '.listingblock > .four > .vignette > a', function (e) {
         e.preventDefault();
     });
 
-    $('body').on('click', 'a.link-get-car-type', function(e) {
+    $('body').on('click', 'a.link-get-car-type', function (e) {
         e.preventDefault();
         $('#aux').val($(this).attr('rel'));
-        $("#myModal").modal('show');
+
     });
 
-    $("#myModal").on('show.bs.modal', function() {
+    $("#myModal").on('show.bs.modal', function () {
         $('#modal-body').text('Loading..');
-        $.get(getUrl(), function(data) {
+        $.get(getUrl(), function (data) {
             $('#modal-body').empty().append($(data).find('.twelve').children());
         });
     });
-    $('body').on('click', 'a.page,a.nextpostslink,a.last,a.first,a.previouspostslink', function(e) {
+    $('body').on('click', 'a.page,a.nextpostslink,a.last,a.first,a.previouspostslink', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         $('#modal-body').text('Loading..');
-        $.post(url, function(data) {
+        $.post(url, function (data) {
             $('#modal-body').empty().append($(data).find('.twelve').children());
         });
     })
-    $('body').on('click', '.listingblock', function(e) {
+    $('body').on('click', '.listingblock', function (e) {
         var row = $('#aux').val();
         var args = $(this).find('h4.address').text().split('#');
         $('#year' + row).val($(this).find('span.model-year-crm').text());
@@ -82,7 +116,7 @@ $(document).ready(function() {
     });
     /****************** *************************/
 
-    $('body').on('click', '#link-add-row-carType', function(e) {
+    $('body').on('click', '#link-add-row-carType', function (e) {
         e.preventDefault();
         $(this).before(getHtmlInputsCarType(i));
         var rows = addInd(i, $('#rows').val());
@@ -90,7 +124,7 @@ $(document).ready(function() {
         i++;
 
     });
-    $('body').on('click', '.link-remove-row-carType', function(e) {
+    $('body').on('click', '.link-remove-row-carType', function (e) {
         e.preventDefault();
         var ind = $(this).attr('rel');
         $(this).parent().parent().parent().remove();
@@ -98,12 +132,12 @@ $(document).ready(function() {
         $('#rows').val(rows);
     });
 
-    $('body').on('click', '.link-delete-row-carType', function(e) {
+    $('body').on('click', '.link-delete-row-carType', function (e) {
         e.preventDefault();
         var currentObj = $(this);
         var status = confirm("¿Esta seguro de eliminar el item?");
         if (status !== false) {
-            $.post(currentObj.attr('href'), function(data) {
+            $.post(currentObj.attr('href'), function (data) {
                 if (data === 'ok') {
                     var ind = currentObj.attr('rel');
                     var rows = deleteInd(ind, $('#rows').val());
@@ -114,24 +148,26 @@ $(document).ready(function() {
         }
     });
 
+
+
     /*****************logs********************/
-    $('body').on('click', '.save-activity', function(e) {
+    $('body').on('click', '.save-activity', function (e) {
         e.preventDefault();
         var currentObj = $(this);
         var url = currentObj.attr('href')
         var parent = currentObj.parent().parent();
         var data = {};
-        parent.find('input').each(function() {
+        parent.find('input').each(function () {
             data[this.name] = this.value;
         });
-        parent.find('textarea').each(function() {
+        parent.find('textarea').each(function () {
             data[this.name] = this.value;
         });
-        parent.find('select').each(function() {
+        parent.find('select').each(function () {
             data[this.name] = this.value;
         });
         currentObj.attr('href', '').text('Processong..');
-        $.post(url, data, function(data) {
+        $.post(url, data, function (data) {
             if (data === 'ok') {
                 document.location.reload();
             } else {
@@ -142,10 +178,10 @@ $(document).ready(function() {
     });
 
 
-    $("#end-visit-form").submit(function() {
+    $("#end-visit-form").submit(function () {
         var url = $(this).attr('action');
         var data = $(this).serialize();
-        $.post(url, data, function(data) {
+        $.post(url, data, function (data) {
             if (data === 'ok') {
                 document.location.reload();
             } else {
@@ -154,31 +190,31 @@ $(document).ready(function() {
         });
         return false; // avoid to execute the actual submit of the form.
     });
-    $('#show-data-end-visit').click(function(e) {
+    $('#show-data-end-visit').click(function (e) {
         e.preventDefault();
         $('#data-end-visit').removeClass('hidden');
         $(this).hide();
     });
     /********************memo short script****************************/
-    $('a.link-show-memo').on('click', function(e) {
+    $('a.link-show-memo').on('click', function (e) {
         e.preventDefault();
         $(this).siblings('div').toggleClass('hidden');
         var text = $(this).text() === 'Close' ? 'Memo' : 'Close';
         $(this).text(text);
     });
-    $('a.link-cancel-memo').on('click', function(e) {
+    $('a.link-cancel-memo').on('click', function (e) {
         e.preventDefault();
         $(this).parent().toggleClass('hidden');
     });
-    $('a.link-save-memo').on('click', function(e) {
+    $('a.link-save-memo').on('click', function (e) {
         e.preventDefault();
         var currentObj = $(this);
         currentObj.fadeOut();
         currentObj.after('<span>Please wait..</span>');
-        $.post(currentObj.attr('href'), {memo_short: currentObj.siblings('textarea').val()}, function(data) {
+        $.post(currentObj.attr('href'), {memo_short: currentObj.siblings('textarea').val()}, function (data) {
             if (data === 'ok') {
                 currentObj.next().fadeOut();
-                currentObj.fadeIn();                
+                currentObj.fadeIn();
             }
         });
     });

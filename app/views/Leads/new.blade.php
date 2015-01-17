@@ -86,7 +86,7 @@ NEW LEADS
                 <!--{{ Form::text('office_phone','',['class'=>'form-control'])}}-->
                 {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
                 {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile'])}}
-                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
+                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox hidden">
                     <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
                 </a>
                 <!--{{Form::label('fax', 'Fax')}}-->
