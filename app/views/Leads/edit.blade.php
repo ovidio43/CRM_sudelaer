@@ -97,7 +97,9 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
                 {{Form::label('mobile', 'Mobile')}}
                 {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
-
+                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
+                    <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
+                </a>
             </div>   
 
             <div class="col-sm-4">

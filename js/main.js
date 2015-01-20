@@ -72,10 +72,10 @@ $(document).ready(function () {
                     dataTable += '</table>';
                     $('#global-modal-body').empty().append(dataTable);
                     $("#global-modal").modal('show');
-                    $('#myPhoneLink').addClass('hidden');
+//                    $('#myPhoneLink').addClass('hidden');
                 } else {
                 
-                    $('#myPhoneLink').removeClass('hidden');
+//                    $('#myPhoneLink').removeClass('hidden');
                 }
             });
         }
