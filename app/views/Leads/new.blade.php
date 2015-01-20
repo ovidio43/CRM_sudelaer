@@ -58,42 +58,42 @@ NEW LEADS
                     'Walk in' => 'Walk in',
                     'Web' => 'Web'
                 ];
-                ?>
+                ?>  
+
+                {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span> 
+                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
+                    <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
+                </a>
+                {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile'])}}
                 {{Form::label('salutation', 'Salutation')}}
                 {{ Form::select('salutation',$salutation, null,['class'=>'form-control']) }}                
                 {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                
                 {{ Form::text('first_name','',['class'=>'form-control'])}}
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}              
-                {{Form::label('email_address', 'Email Address')}} 
-                {{ Form::text('email_address','',['class'=>'form-control','id'=>'email_address'])}} 
-                <a href="#" onclick="capturarValorEmail()"  id="myEmailLink" class="thickbox">
-                    <img title="Verify email address" src="{{ URL::asset('img/email.png')}}" width="25px" heigth="25px">
-                </a>
+
 
                 <!--{{Form::label('account_name', 'Account Name')}}-->
                 <!--{{ Form::text('account_name','',['class'=>'form-control'])}}-->
-                {{Form::label('lead_type', 'Lead Type')}}<span class="required-field">*</span>
-                {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
-
             </div>  
             <div class="col-sm-4">
+                {{Form::label('email_address', 'Email Address')}} 
+                <a href="#" onclick="capturarValorEmail()"  id="myEmailLink" class="thickbox">
+                    <img title="Verify email address" src="{{ URL::asset('img/email.png')}}" width="25px" heigth="25px">
+                </a>
+                {{ Form::text('email_address','',['class'=>'form-control','id'=>'email_address'])}} 
+                {{Form::label('lead_type', 'Lead Type')}}<span class="required-field">*</span>
+                {{ Form::select('lead_type', $leadType, null,['class'=>'form-control']) }} 
                 {{Form::label('lead_source', 'Lead source')}}<span class="required-field">*</span>
                 {{ Form::select('lead_source', $leadSource, null,['class'=>'form-control']) }}  
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone','',['class'=>'form-control'])}}
                 <!--{{Form::label('office_phone', 'Office Phone')}}-->
                 <!--{{ Form::text('office_phone','',['class'=>'form-control'])}}-->
-                {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span>
-                {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile'])}}
-                <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
-                    <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
-                </a>
+
                 <!--{{Form::label('fax', 'Fax')}}-->
                 <!--{{ Form::text('fax','',['class'=>'form-control'])}}-->
-
             </div>  
-
             <div class="col-sm-4">
                 {{Form::label('note', 'Note')}}
                 {{ Form::textarea('note','',['class'=>'form-control'])}} 

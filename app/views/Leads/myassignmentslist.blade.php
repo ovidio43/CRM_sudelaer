@@ -6,7 +6,8 @@ MY LEADS
 
 <ul class="nav nav-tabs">
     <li ><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
-    <li class="active"><a href="#MA" >My Leads</a></li>        
+    <li class="active"><a href="#MA" >My Leads</a></li>  
+    <li><a href="{{URL::to($mod.'/hot'.Session::get('list'))}}" class="force-redirect">Hot leads</a></li> 
     <?php if (Auth::user()->typeUser->name === 'Admin') { ?>    
         <li><a href="{{URL::to($mod.'/'.Session::get('list'))}}" class="force-redirect">All Leads</a></li>  
     <?php } else {

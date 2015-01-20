@@ -5,8 +5,9 @@ MY LEADS
 @section('content')
 
 <ul class="nav nav-tabs">
-    <li ><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
+    <li><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
     <li><a href="{{URL::to($mod.'/myassignments'.Session::get('list'))}}" class="force-redirect">My Leads</a></li>        
+    <li><a href="{{URL::to($mod.'/hot'.Session::get('list'))}}" class="force-redirect">Hot leads</a></li>        
     <li class="active"><a href="#AL"  role="tab" data-toggle="tab">All Leads</a></li>        
 </ul> 
 <div class="tab-content">
@@ -37,11 +38,11 @@ MY LEADS
                         $objEmployee = Employee::find($rowL->create_by);
                         $create_by = $objEmployee->first_name . ' ' . $objEmployee->last_name . '(' . $objEmployee->user->user . ')';
                     }
-                    $assign_to = 'undefined';                    
-                    $assigned = 'no-asigned';                    
+                    $assign_to = 'undefined';
+                    $assigned = 'no-asigned';
                     if ($rowL->allocation) {
                         $assign_to = $rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name; //. ' (' . $rowL->allocation->employee->user->user . ')';
-                        $assigned = 'asigned';                    
+                        $assigned = 'asigned';
                     }
                     ?>        
                     <tr class="{{$rowL->opportunity.' '.$assigned}}" title="{{$rowL->opportunity}}">
@@ -51,7 +52,7 @@ MY LEADS
                         <td>
                             <?php
                             foreach ($rowL->carType as $rCT) {
-                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model.'<hr>';
+                                echo $rCT->make . ', ' . $rCT->year . ' ' . $rCT->model . '<hr>';
                             }
                             ?>                            
                         </td> 

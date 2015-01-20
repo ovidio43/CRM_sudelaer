@@ -93,6 +93,9 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::get('myassignmentslist', function() {
             return View::make('Leads.myassignmentslist')->with('mod', 'leads');
         });
+        Route::get('hotlist', function() use($mod) {
+            return View::make('Leads.hotlist')->with('mod', $mod);
+        });
     }
 
     if (Session::has('delete')) {
