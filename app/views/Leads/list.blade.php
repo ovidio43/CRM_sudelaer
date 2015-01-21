@@ -7,7 +7,7 @@ MY LEADS
 <ul class="nav nav-tabs">
     <li><a href="{{URL::to($mod.'/my'.Session::get('list'))}}" class="force-redirect">Created by me</a></li> 
     <li><a href="{{URL::to($mod.'/myassignments'.Session::get('list'))}}" class="force-redirect">My Leads</a></li>        
-    <li><a href="{{URL::to($mod.'/hot'.Session::get('list'))}}" class="force-redirect">Hot leads</a></li>        
+    <li><a href="{{URL::to($mod.'/hot'.Session::get('list'))}}" class="force-redirect">Hot Leads</a></li>        
     <li class="active"><a href="#AL"  role="tab" data-toggle="tab">All Leads</a></li>        
 </ul> 
 <div class="tab-content">

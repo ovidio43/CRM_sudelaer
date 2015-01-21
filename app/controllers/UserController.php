@@ -85,7 +85,7 @@ class UserController extends BaseController {
         $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $ObjUser = User::find($id);
-            if (isset($input['password'])) {
+            if (!empty($input['password'])) {
                 $ObjUser->password = Hash::make($input['password']);
             }
             $ObjUser->id_employee = $input['id_employee'];
@@ -104,6 +104,38 @@ class UserController extends BaseController {
             return 'ok';
         } else {
             return 'error';
+        }
+    }
+
+    public function editMyProfile($id) {
+        $input = Input::all();
+        $rules = array(
+            'first_name' => 'Required',
+            'last_name' => 'Required',
+            'email' => 'Required|email'
+        );
+        $validation = Validator::make($input, $rules);
+        if (!$validation->fails()) {
+            $ObjEmployee = Employee::find($id);
+            $ObjEmployee->first_name = $input['first_name'];
+            $ObjEmployee->last_name = $input['last_name'];
+            $ObjEmployee->phone = $input['phone'];
+            $ObjEmployee->cellphone = $input['cellphone'];
+            $ObjEmployee->address = $input['address'];
+            $ObjEmployee->email = $input['email'];
+            $ObjEmployee->save();
+            if (!empty($input['password'])) {
+                $ObjUser = User::find(Auth::user()->id);
+                $ObjUser->password = Hash::make($input['password']);
+
+//                echo 'kokokokokok';
+//                exit();
+                $ObjUser->save();
+            }
+
+            return Redirect::to('my-profile');
+        } else {
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 

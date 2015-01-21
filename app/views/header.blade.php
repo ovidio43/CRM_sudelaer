@@ -54,11 +54,12 @@
                                 {{Auth::user()->employee->first_name.' '.Auth::user()->employee->last_name }}
                                 <span class="caret"></span>
                             </a>
-                            <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                                <li><a href="#">My Profile</a></li>                                
+                            <ul id="g-account-menu" class="dropdown-menu" role="menu" style="width: 100%">
+                                <li><a href="{{URL::to('my-profile')}}"><i class="glyphicon glyphicon-user"></i>  My Profile</a></li>  
+                                <li><a href="{{URL::to('logout')}}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>                             
                             </ul>
                         </li>
-                        <li><a href="{{URL::to('logout')}}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                        
                     </ul>
                 </div>
             </div><!-- /container -->

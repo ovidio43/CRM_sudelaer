@@ -29,6 +29,7 @@ if (Auth::check()) {
                 });
             })
         </script>
+        <h1>{{Hash::make('admin')}}</h1>
         <div aria-hidden="true" role="dialog" tabindex="-1" class="modal show" id="loginModal">
             <div class="modal-dialog">
                 <div class="modal-content">

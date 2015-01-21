@@ -4,14 +4,7 @@
 //{
 //    dd($sql);
 //}); 
-/* * ***rutas para verificar datos reales************ */
-Route::get('real-email-validation/{email}', function($email) {
-    return View::make('Validations.emailVerify.emailVerify')->with('email', $email);
-});
-Route::get('real-phone-validation/{phone}', function($phone) {
-    return View::make('Validations.openCnam.reversePhone')->with('phone', $phone);
-});
-/* * *********************************************** */
+
 App::missing(function() {
     Session::put('uri_src', Request::url());
     return Redirect::guest('login');
@@ -30,6 +23,19 @@ Route::group(array('before' => 'auth'), function() {
         return View::make('Dashboard.main');
     });
     Route::get('migrate-to-contacts/{id_leads}', 'LeadsController@migrate_to_contact');
+    /*     * ***rutas para verificar datos reales************ */
+    Route::get('real-email-validation/{email}', function($email) {
+        return View::make('Validations.emailVerify.emailVerify')->with('email', $email);
+    });
+    Route::get('real-phone-validation/{phone}', function($phone) {
+        return View::make('Validations.openCnam.reversePhone')->with('phone', $phone);
+    });
+    /*     * *********************************************** */
+    Route::get('my-profile', function() {
+        return View::make('User.profile');
+    });
+    
+     Route::post('edit-profile/{id}', 'UserController@editMyProfile');
 });
 Route::group(array('prefix' => 'leads/car-type', 'before' => 'auth|hasMod'), function() {
     setRouter();
@@ -102,7 +108,6 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::post('delete/{id}', 'LeadsController@delete');
     }
 });
-
 Route::group(array('prefix' => 'contacts', 'before' => 'auth|hasMod'), function() {
     if (Session::has('insert')) {
         Route::get('new', function() {
@@ -189,3 +194,4 @@ Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() 
         Route::post('user/delete/{id}', 'UserController@delete');
     }
 });
+
