@@ -34,8 +34,11 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('my-profile', function() {
         return View::make('User.profile');
     });
-    
-     Route::post('edit-profile/{id}', 'UserController@editMyProfile');
+    Route::get('sms-form/{mobile}', function($mobile) {
+        return View::make('Leads.smsform')->with('mobile', $mobile);
+    });
+
+    Route::post('edit-profile/{id}', 'UserController@editMyProfile');
 });
 Route::group(array('prefix' => 'leads/car-type', 'before' => 'auth|hasMod'), function() {
     setRouter();
@@ -64,6 +67,8 @@ function setRouter() {
 
 Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
     $mod = 'leads';
+
+
     if (Session::has('insert')) {
         Route::get('new', function() use($mod) {
             return View::make('Leads.new')->with('mod', 'leads');
@@ -71,8 +76,7 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::post('new/save', 'LeadsController@save');
         Route::post('logs-activity/save', 'ActivityLogsController@save');
         /*         * **consulta si numero de telefon existe**** */
-//        Route::post('verify-phone-number/{phone}', 'LeadsController@verify_phone');
-        Route::get('verify-phone-number/{phone}', 'LeadsController@verify_phone_number');
+
         /*         * ****** */
     }
     if (Session::has('update')) {
@@ -102,8 +106,10 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::get('hotlist', function() use($mod) {
             return View::make('Leads.hotlist')->with('mod', $mod);
         });
+        Route::get('verify-mobile-number/{mobile}', function($mobile) use($mod) {
+            return View::make('Leads.mobilelist')->with('mobile', $mobile)->with('mod', $mod);
+        });
     }
-
     if (Session::has('delete')) {
         Route::post('delete/{id}', 'LeadsController@delete');
     }

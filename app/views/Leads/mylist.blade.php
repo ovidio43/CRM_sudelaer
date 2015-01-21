@@ -70,6 +70,9 @@ MY LEADS
                             <?php } ?>
                         </td>
                         <td>
+                            <a href="{{URL::to('sms-form/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-envelope"></span></a>                            
+                        </td>
+                        <td>
                             <?php if (Session::has('delete')) { ?>
                                 <a href="{{URL::to($mod.'/'.Session::get('delete').'/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a>
                             <?php } ?>

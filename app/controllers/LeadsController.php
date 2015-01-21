@@ -67,25 +67,6 @@ class LeadsController extends BaseController {
         }
     }
 
-    public function verify_phone_number($phone) {
-        $ObjLeads = Leads::where('type', '=', 'leads')->where('mobile', '=', $phone)->get();
-        $obj = [];
-        foreach ($ObjLeads as $rowL) {
-            $obj['first_name'] = $rowL->first_name;
-            $obj['last_name'] = $rowL->last_name;
-            $obj['email_address'] = $rowL->email_address;
-            $obj['ssign_to'] = 'undefined';
-            if ($rowL->allocation) {
-                $obj['ssign_to'] = $rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name; //. ' (' . $rowL->allocation->employee->user->user . ')';                
-            }
-        }
-        if ($obj) {
-            return '[' . json_encode($obj) . ']';
-        } else {
-            return '[]';
-        }
-    }
-
     private function insert($input) {
         $ObjLeads = new Leads();
         $this->setAttr($ObjLeads, $input);

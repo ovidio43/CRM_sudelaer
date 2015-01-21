@@ -49,36 +49,25 @@ $(document).ready(function () {
     $('input#mobile').on('keyup', function () {
         var dataTable = '';
         var phone = $(this).val();
-        if (phone.length >= 10 && $.isNumeric(phone)) {     
-//            $.getJSON('/leads/verify-phone-number/' + phone, function (data) {  para mi local
-            $.getJSON('/crm/leads/verify-phone-number/' + phone, function (data) {                         
-                if (data.length > 0) {
-                    $("#global-modal #title-global-modal").text('Mobile number "' + phone + '" already exists!');
-
-                    dataTable += '<table class="table table-striped">';
-                    dataTable += '<tr>';
-                    dataTable += '<th>Name</th>';
-                    dataTable += '<th>Email</th>';
-                    dataTable += '<th>Assigned to</th>';
-                    dataTable += '</tr>';
-
-                    $.each(data, function (i, item) {
-                        dataTable += '<tr>';
-                        dataTable += '<td>' + item.first_name + ' ' + item.last_name + '</td>';
-                        dataTable += '<td>' + item.email_address + '</td>';
-                        dataTable += '<td>' + item.ssign_to + '</td>';
-                        dataTable += '</tr>';
-                    });
-                    dataTable += '</table>';
-                    $('#global-modal-body').empty().append(dataTable);
+        if (phone.length >= 10 && $.isNumeric(phone)) {
+            $.get($('body').attr('rel') + '/leads/verify-mobile-number/' + phone, function (data) {  //para mi local
+                if (data != '') {
+                    $("#global-modal #title-global-modal").html('Mobile number <strong>"' + phone + '"</strong>  already exists!');
+                    $('#global-modal-body').html(data);
                     $("#global-modal").modal('show');
-//                    $('#myPhoneLink').addClass('hidden');
-                } else {
-                
-//                    $('#myPhoneLink').removeClass('hidden');
                 }
             });
         }
+    });
+    /******************funcion de peticion de form para en vio de SMS***************************/
+    $('body').on('click', 'a.link-send-sms', function (e) {
+        e.preventDefault();
+        $('#global-modal-body').html('Loading...');
+        $("#global-modal #title-global-modal").html('Send SMS');
+        $("#global-modal").modal('show');
+        $.get($(this).attr('href'), function (data) {
+            $('#global-modal-body').html(data);
+        });
     });
     /******************modal *************************/
     $('body').on('click', '.listingblock > .four > .vignette > a', function (e) {
@@ -88,7 +77,7 @@ $(document).ready(function () {
     $('body').on('click', 'a.link-get-car-type', function (e) {
         e.preventDefault();
         $('#aux').val($(this).attr('rel'));
-
+        $("#myModal").modal('show');
     });
 
     $("#myModal").on('show.bs.modal', function () {

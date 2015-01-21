@@ -15,21 +15,16 @@
         {{ HTML::style('css/invetary.css') }}       
         {{ HTML::style('css/thickbox.css') }}               
     </head>
-    <body  >
+    <body rel="{{URL::to('/')}}" >
         <!--global modal---->
         <div id="global-modal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header alert alert-warning">
+                    <div class="modal-header alert alert-info">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 id="title-global-modal" class="modal-title"></h4>
                     </div>
                     <div id="global-modal-body" class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <!--<a href="/leads/list" class="btn btn-primary">CANCEL</a> para mi local funciona-->
-                        <a href="/crm/leads/list" class="btn btn-primary">CANCEL</a>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">CONTINUE</button>
                     </div>
                 </div>
             </div>
@@ -56,10 +51,10 @@
                             </a>
                             <ul id="g-account-menu" class="dropdown-menu" role="menu" style="width: 100%">
                                 <li><a href="{{URL::to('my-profile')}}"><i class="glyphicon glyphicon-user"></i>  My Profile</a></li>  
-                                <li><a href="{{URL::to('logout')}}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>                             
+                                <li><a href="{{URL::to('logout')}}"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>                             
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div><!-- /container -->
