@@ -6,11 +6,10 @@ class LeadsController extends BaseController {
         'first_name' => 'Required',
         'last_name' => 'Required',
         'id_employee' => 'Required',
-        'mobile' => 'Required',
+        'mobile' => 'Required|numeric',
         'lead_type' => 'Required',
-        'lead_source' => 'Required'
-            //'opportunity' => 'Required',
-            //'email_address' => 'Required|email'
+        'lead_source' => 'Required',
+        'home_phone' => 'numeric'            
     );
     private $id;
 
