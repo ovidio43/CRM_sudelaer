@@ -1,5 +1,5 @@
 <div class="col-md-10"> 
-    <b>@yield('title')</b>   
+    @yield('title')
     <?php if (Request::is('leads/*')) { ?>
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
@@ -22,8 +22,7 @@
         </div>
         <?php
     }
-    ?>
-    <hr>
+    ?>    
     <div class="table-responsive">
         @yield('content')
     </div>
