@@ -20,6 +20,7 @@ All ACTIVE
         <table class="table ">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Status</th>
                     <th>Email</th>                                        
@@ -36,9 +37,12 @@ All ACTIVE
                 <?php
                 $id_employee = Auth::user()->employee->id;
                 $objLeads = Leads::where('type', '=', 'leads')->where('create_by', '=', $id_employee)->orWhere('id_employee', '=', $id_employee)->orderBy('date_entered', 'DESC')->paginate(20);
-                foreach ($objLeads as $rowL) {                  
+                foreach ($objLeads as $rowL) {
                     ?>        
                     <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}} " title="{{$rowL->opportunity}}">
+                        <td>
+                            <a href="{{URL::to('sms-form/'.$rowL->id.'/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-envelope"></span></a>                              
+                        </td>
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>                                                                             
@@ -69,6 +73,7 @@ All ACTIVE
                                 <a href="{{URL::to($mod.'/'.Session::get('update').'/'.$rowL->id)}}" title="EDIT"><span class="glyphicon glyphicon-pencil"></span></a>
                             <?php } ?>
                         </td>
+
                         <td>
                             <?php if (Session::has('delete')) { ?>
                                 <a href="{{URL::to($mod.'/'.Session::get('delete').'/'.$rowL->id)}}" title="DELETE" class="delete-link"><span class="glyphicon glyphicon-trash"></span></a>

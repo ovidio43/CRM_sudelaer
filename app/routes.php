@@ -34,10 +34,13 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('my-profile', function() {
         return View::make('User.profile');
     });
-    Route::get('sms-form/{mobile}', function($mobile) {
-        return View::make('Leads.smsform')->with('mobile', $mobile);
+    /*     * *****ruta para traer form sms envio********** */
+    Route::get('sms-form/{id_leads}/{mobile}', function($id_leads, $mobile) {
+        return View::make('Leads.smsform')->with('mobile', $mobile)->with('id_leads', $id_leads);
     });
-
+    /*     * **********ruta para envio de sms*************** */
+    Route::post('send-sms', 'LeadsController@sendSMS');
+    /*     * ************************* */
     Route::post('edit-profile/{id}', 'UserController@editMyProfile');
 });
 Route::group(array('prefix' => 'leads/car-type', 'before' => 'auth|hasMod'), function() {
@@ -67,8 +70,6 @@ function setRouter() {
 
 Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
     $mod = 'leads';
-
-
     if (Session::has('insert')) {
         Route::get('new', function() use($mod) {
             return View::make('Leads.new')->with('mod', 'leads');

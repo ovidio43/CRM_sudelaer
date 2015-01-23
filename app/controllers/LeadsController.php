@@ -9,7 +9,7 @@ class LeadsController extends BaseController {
         'mobile' => 'Required|numeric',
         'lead_type' => 'Required',
         'lead_source' => 'Required',
-        'home_phone' => 'numeric'            
+        'home_phone' => 'numeric'
     );
     private $id;
 
@@ -184,6 +184,48 @@ class LeadsController extends BaseController {
                     $objContact->save();
                 });
         return is_null($exception) ? 'ok' : 'error';
+    }
+
+    public function sendSMS() {
+        $input = Input::all();
+        $rules = [
+            'subject' => 'Required',
+            'message' => 'Required',
+        ];
+
+        $validation = Validator::make($input, $rules);
+
+        if (!$validation->fails()) {
+            $direccion = "user=jc22304&pass=Patricia1&phonenumber=" . $input['mobile'] . "&subject=" . $input['subject'] . "&message=" . $input['message'] . "&express=1";
+            $ch = curl_init('https://app.clubtexting.com/api/sending');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $direccion);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $data = curl_exec($ch);
+//            echo "SEND MESSAGE COMPLETED";
+//            print($data); /* result of API call */
+            $objLogs = Logs::find(Leads::find($input['id_leads'])->logs->id);
+            $args = [
+                'date_entered' => date('Y-m-d'),
+                'time_start' => date('H:i'),
+                'time_end' => date('H:i'),
+                'description' => 'Envío de SMS'
+            ];
+            $objLogs->activities()->attach(7, $args); // 7 = ID de activity envio sms en la db           
+            return 'ok';
+        } else {
+            $errors = $validation->errors();
+            $response = '<div class = "alert alert-danger" >' .
+                    '<strong>Please fix the following errors:</strong>' .
+                    '<ul>';
+            foreach ($errors->all() as $error) {
+                $response.= '<li> ' . $error . '</li>';
+            }
+            $response.= '</ul>' .
+                    '</div>';
+        }
+        return $response;
     }
 
 }

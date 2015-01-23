@@ -207,7 +207,25 @@ $(document).ready(function () {
             }
         });
     });
-    /***************************************************************/
+    /********************envio de form SMS por ajax*******************************************/
+    $('body').on('submit', '.global-form', function (e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('action');
+        var data = thisObj.serialize();
+        thisObj.children('input[type="submit"]').prop("disabled", true);
+        $.post(url, data, function (data) {
+            if (data == 'ok') {
+                thisObj.parent().html('<div class="alert alert-success" role="alert">Your message was sent successfully.</div><button type="button" class="btn btn-success" data-dismiss="modal">DONE</button>');
+                thisObj.remove();
+            } else {
+                thisObj.prev().remove();
+                thisObj.before(data); 
+                thisObj.children('input[type="submit"]').prop("disabled", false);
+            }
+           
+        });
+    });
 });
 
 function getUrl() {

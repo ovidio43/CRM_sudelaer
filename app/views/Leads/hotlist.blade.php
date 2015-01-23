@@ -19,7 +19,8 @@ MY LEADS
     <div class="tab-pane active" id="MY">
         <table class="table ">
             <thead>
-                <tr>
+                <tr> 
+                    <th></th>
                     <th>Name</th>
                     <th>Status</th>
                     <th>Email</th>  
@@ -39,6 +40,9 @@ MY LEADS
                 foreach ($objLeads as $rowL) {
                     ?>        
                     <tr class="{{$rowL->opportunity}}" title="{{$rowL->opportunity}}">
+                        <td>
+                            <a href="{{URL::to('sms-form/'.$rowL->id.'/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-envelope"></span></a>                              
+                        </td>
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                
                         <td>{{$rowL->email_address}}</td>  

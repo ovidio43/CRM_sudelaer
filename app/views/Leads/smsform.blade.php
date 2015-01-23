@@ -1,15 +1,16 @@
-{{ Form::open(array('url' => null)) }}
+{{ Form::open(array('url' => 'send-sms','class'=>'global-form')) }}
+{{ Form::hidden('id_leads',$id_leads)}}
 <div class="form-group">
-    {{Form::label('sms-mobile', 'Mobile')}}
-    {{ Form::text('sms-mobile',$mobile,['class'=>'form-control','id'=>'sms-mobile','readonly'=>'readonly'])}}       
+    {{Form::label('mobile', 'Mobile')}}
+    {{ Form::text('mobile',$mobile,['class'=>'form-control','id'=>'mobile','readonly'=>'readonly'])}}       
 </div>
 <div class="form-group">
-    {{Form::label('sms-subject', 'Subject')}}
-    {{ Form::text('sms-subject','',['class'=>'form-control','id'=>'sms-subject','placeholder'=>'Subject'])}}       
+    {{Form::label('subject', 'Subject')}}
+    {{ Form::text('subject','',['class'=>'form-control','id'=>'subject','placeholder'=>'Subject'])}}       
 </div>
 <div class="form-group">
-    {{Form::label('sms-message', 'Message')}}<small> (All languages are supported) Char Left: 0/120</small>
-    {{ Form::textarea('sms-message','',['class'=>'form-control','placeholder'=>'Message'])}}
+    {{Form::label('message', 'Message')}}<small> (All languages are supported) Char Left: 0/120</small>
+    {{ Form::textarea('message','',['class'=>'form-control','placeholder'=>'Message'])}}
 </div>    
-<!--<button type="submit" class="btn btn-default">Send</button>-->
+<input type="submit" class="btn btn-default " value="Send">
 {{ Form::close() }}
