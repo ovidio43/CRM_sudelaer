@@ -17,7 +17,21 @@ if (count($ObjLeads) > 0) {
                 <tr>
                     <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>
                     <td>{{$rowL->email_address}}</td>
-                    <td>{{$rowL->allocation==true?$rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name:'undefined'}}</td>       
+                    <td>
+                        <?php
+                        if ($rowL->allocation) {
+                            if ($rowL->allocation->employee->id == Auth::user()->employee->id) {
+                                ?>
+                                <a href="{{URL::to('leads/edit/'.$rowL->id)}}" target="_blank" title="GO TO LEADS"><span  class="glyphicon glyphicon-new-window"></span></a>
+                                <?php
+                            } else {
+                                echo $rowL->allocation->employee->first_name . ' ' . $rowL->allocation->employee->last_name;
+                            }
+                        } else {
+                            echo 'undefined';
+                        }
+                        ?>
+                    </td>
                 </tr>
             <?php } ?>
         </tbody>

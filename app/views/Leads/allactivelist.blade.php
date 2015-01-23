@@ -1,6 +1,6 @@
 @extends('sidebar')
 @section('title')
-All ACTIVE
+<strong>All ACTIVE LEADS</strong>
 @stop
 @section('content')
 <ul class="nav nav-tabs">

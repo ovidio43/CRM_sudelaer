@@ -1,6 +1,6 @@
 @extends('sidebar')
 @section('title')
-MY LEADS
+<strong>MY ASSIGNMENTS LEADS</strong>
 @stop
 @section('content')
 
