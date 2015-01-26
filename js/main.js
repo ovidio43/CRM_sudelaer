@@ -49,8 +49,9 @@ $(document).ready(function () {
     $('input#mobile').on('keyup', function () {
         var dataTable = '';
         var phone = $(this).val();
+        var idLeads = $(this).attr('rel');
         if (phone.length >= 10 && $.isNumeric(phone)) {
-            $.get($('body').attr('rel') + '/leads/verify-mobile-number/' + phone, function (data) {  //para mi local
+            $.get($('body').attr('rel') + '/leads/verify-mobile-number/' + phone + '/' + idLeads, function (data) {  //para mi local
                 if (data != '') {
                     $("#global-modal #title-global-modal").html('Mobile number <strong>"' + phone + '"</strong>  already exists!');
                     $('#global-modal-body').html(data);
@@ -137,8 +138,6 @@ $(document).ready(function () {
         }
     });
 
-
-
     /*****************logs********************/
     $('body').on('click', '.save-activity', function (e) {
         e.preventDefault();
@@ -165,8 +164,6 @@ $(document).ready(function () {
             }
         });
     });
-
-
     $("#end-visit-form").submit(function () {
         var url = $(this).attr('action');
         var data = $(this).serialize();
@@ -220,10 +217,10 @@ $(document).ready(function () {
                 thisObj.remove();
             } else {
                 thisObj.prev().remove();
-                thisObj.before(data); 
+                thisObj.before(data);
                 thisObj.children('input[type="submit"]').prop("disabled", false);
             }
-           
+
         });
     });
 });

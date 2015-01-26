@@ -64,7 +64,7 @@ NEW LEADS
                 <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
                     <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
                 </a>
-                {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile'])}}
+                {{ Form::text('mobile','',['class'=>'form-control','id'=>'mobile','rel'=>'0'])}}
                 {{Form::label('salutation', 'Salutation')}}
                 {{ Form::select('salutation',$salutation, null,['class'=>'form-control']) }}                
                 {{Form::label('first_name', 'First Name')}} <span class="required-field">*</span>                

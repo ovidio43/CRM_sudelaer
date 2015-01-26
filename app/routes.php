@@ -107,8 +107,8 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::get('hotlist', function() use($mod) {
             return View::make('Leads.hotlist')->with('mod', $mod);
         });
-        Route::get('verify-mobile-number/{mobile}', function($mobile) use($mod) {
-            return View::make('Leads.mobilelist')->with('mobile', $mobile)->with('mod', $mod);
+        Route::get('verify-mobile-number/{mobile}/{id_leads}', function($mobile,$id_leads) use($mod) {
+            return View::make('Leads.mobilelist')->with('mobile', $mobile)->with('id_leads',$id_leads)->with('mod', $mod);
         });
     }
     if (Session::has('delete')) {

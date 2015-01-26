@@ -81,7 +81,7 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                 <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
                     <img title="Verify phone number" src="{{ URL::asset('img/phone.png')}}" width="25px" heigth="25px">
                 </a>
-                {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control'])}}
+                {{ Form::text('mobile',$objLeads->mobile,['class'=>'form-control','id'=>'mobile','rel'=>$objLeads->id])}}
 
                 {{Form::label('salutation', 'Salutation')}}
                 {{ Form::select('salutation',$salutation, $objLeads->salutation,['class'=>'form-control']) }}                

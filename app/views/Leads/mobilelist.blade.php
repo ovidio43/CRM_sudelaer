@@ -1,5 +1,10 @@
 <?php
-$ObjLeads = Leads::where('type', '=', 'leads')->where('mobile', '=', $mobile)->get();
+if ($id_leads > 0) {
+    $ObjLeads = Leads::where('type', '=', 'leads')->where('mobile', '=', $mobile)->where('id', '!=', $id_leads)->get();
+} else {
+    $ObjLeads = Leads::where('type', '=', 'leads')->where('mobile', '=', $mobile)->get();
+}
+
 if (count($ObjLeads) > 0) {
     ?>
     <table class="table table-striped">
