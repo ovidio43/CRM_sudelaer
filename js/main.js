@@ -220,7 +220,57 @@ $(document).ready(function () {
                 thisObj.before(data);
                 thisObj.children('input[type="submit"]').prop("disabled", false);
             }
+        });
+    });
 
+    /*********envio de notificacion a usuarios asignados**************/
+    $('body').on('click', '.link-send-notification', function (e) {
+        e.preventDefault();
+        $(this).next().slideToggle()
+        $(this).children().toggleClass('glyphicon-remove');
+        $(this).children().toggleClass('glyphicon-send');
+    });
+    /*********funcion para enviar notificacion a usuarios assignados**********************/
+    $('body').on('submit', '#notification-form', function (e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('action');
+        var data = thisObj.serialize();
+        thisObj.children('button').prop("disabled", true);
+        $.post(url, data, function (data) {
+            if (data == 'ok') {
+                thisObj.parent().html('<div class="alert alert-success" role="alert">Notification was sent successfully.</div><button type="button" class="btn btn-success" data-dismiss="modal">DONE</button>');
+                thisObj.remove();
+            } else {
+                thisObj.prev().remove();
+                thisObj.before(data);
+                thisObj.children('button').prop("disabled", false);
+            }
+        });
+    });
+    /******funcionalidad para gestionar las notificaciones**********/
+    $('#selected-all').on('click', function () {
+        if ($(this).is(":checked")) {
+            $(".message-check").prop('checked', true);
+            $('#btn-del-notification').show();
+        } else {
+            $(".message-check").prop('checked', false);
+            $('#btn-del-notification').hide();
+        }
+    })
+
+    $(".message-check").on('click', function () {
+        $(".message-check").each(function () {
+            var c = 0;
+            if ($(this).is(":checked")) {
+                c++;
+            }
+            if (c > 0) {
+                $('#btn-del-notification').show();
+            } else {
+                $('#btn-del-notification').hide();               
+            }
+             $('#selected-all').prop('checked', false);
         });
     });
 });

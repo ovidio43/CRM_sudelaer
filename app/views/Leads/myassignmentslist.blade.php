@@ -42,7 +42,7 @@
                     ?>        
                     <tr class="{{$rowL->opportunity}} {{($rowL->read_by_employee!=$rowL->id_employee?'no-read':'')}}" title="{{$rowL->opportunity}}">
                         <td>
-                            <a href="{{URL::to('sms-form/'.$rowL->id.'/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-envelope"></span></a>                              
+                            <a href="{{URL::to('sms-form/'.$rowL->id.'/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-phone"></span></a>                              
                         </td>
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
                         <td>{{$rowL->status}}</td>                

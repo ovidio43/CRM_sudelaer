@@ -38,10 +38,18 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('sms-form/{id_leads}/{mobile}', function($id_leads, $mobile) {
         return View::make('Leads.smsform')->with('mobile', $mobile)->with('id_leads', $id_leads);
     });
+
     /*     * **********ruta para envio de sms*************** */
     Route::post('send-sms', 'LeadsController@sendSMS');
+    /*     * **********ruta para envio de Notificacion a usuarios *************** */
+    Route::post('notification-save', 'NotificationController@save');
     /*     * ************************* */
     Route::post('edit-profile/{id}', 'UserController@editMyProfile');
+    /*     * **********************viste single de las notificaciones************************* */
+    Route::get('single/{id_notification}', function($id_notification) {
+        return View::make('Dashboard.single')->with('id_notification', $id_notification);
+    });
+    Route::post('send-trash', 'NotificationController@sendTrash');
 });
 Route::group(array('prefix' => 'leads/car-type', 'before' => 'auth|hasMod'), function() {
     setRouter();
@@ -107,8 +115,8 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::get('hotlist', function() use($mod) {
             return View::make('Leads.hotlist')->with('mod', $mod);
         });
-        Route::get('verify-mobile-number/{mobile}/{id_leads}', function($mobile,$id_leads) use($mod) {
-            return View::make('Leads.mobilelist')->with('mobile', $mobile)->with('id_leads',$id_leads)->with('mod', $mod);
+        Route::get('verify-mobile-number/{mobile}/{id_leads}', function($mobile, $id_leads) use($mod) {
+            return View::make('Leads.mobilelist')->with('mobile', $mobile)->with('id_leads', $id_leads)->with('mod', $mod);
         });
     }
     if (Session::has('delete')) {
