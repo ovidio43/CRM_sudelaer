@@ -55,8 +55,8 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'db_innervel',
-//			'database'  => 'db_sudealeramigo_crm',
+//			'database'  => 'db_innervel',
+			'database'  => 'db_sudealeramigo_crm',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

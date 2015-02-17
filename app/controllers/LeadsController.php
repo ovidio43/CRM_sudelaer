@@ -177,11 +177,11 @@ class LeadsController extends BaseController {
     public function migrate_to_contact($id_leads) {
         $exception = DB::transaction(function() use ($id_leads) {
                     $ObjLeads = Leads::find($id_leads);
-                    $ObjLeads->type = 'contacts';
+                    $ObjLeads->type = 'contacts';//Nota: Cuando se pone el type contacts se refiere a la tabla importada desde csv
                     $ObjLeads->save();
-                    $objContact = new Contacts();
-                    $objContact->id_leads = $id_leads;
-                    $objContact->save();
+//                    $objContact = new Contacts();
+//                    $objContact->id_leads = $id_leads;
+//                    $objContact->save();
                 });
         return is_null($exception) ? 'ok' : 'error';
     }

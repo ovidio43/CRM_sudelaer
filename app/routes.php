@@ -22,14 +22,14 @@ Route::get('testing', function() {
 //    $stringTable.= 'PRIMARY KEY (`id`)'
 //            . ') ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;';
 //    echo $stringTable;
-    $tableName = 'leads_import_data_from_csv';
-    $csvFile = base_path() . DIRECTORY_SEPARATOR . "imports" . DIRECTORY_SEPARATOR . "imported-file.csv";
-    $query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tableName FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
-    DB::connection()->getpdo()->exec($query);
+//    $tableName = 'leads_import_data_from_csv';
+//    $csvFile = base_path() . DIRECTORY_SEPARATOR . "imports" . DIRECTORY_SEPARATOR . "imported-file.csv";
+//    $query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tableName FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
+//    DB::connection()->getpdo()->exec($query);
     'UPDATE tabla SET campo = REPLACE(campo, "-", ""); '; //reeemplazando el - por nada
     'UPDATE tabla SET campo = REPLACE(campo, " ", ""); '; //reeemplazando el espacio por nada
-    ' UPDATE table1 t1 INNER JOIN table2 t2 ON (t1.id = t2.id) SET t1.field_3 = t2.field_3 '; //actualizandos datos de tabla1 a tabla2
-    'SELECT t2.* FROM table2 t2 where t2.id not in (select id from table1)';//seleccionado fila de table2 q no esta en table1
+    'UPDATE table1 t1 INNER JOIN table2 t2 ON (t1.id = t2.id) SET t1.field_3 = t2.field_3 '; //actualizandos datos de tabla1 a tabla2
+    'SELECT t2.* FROM table2 t2 where t2.id not in (select id from table1)'; //seleccionado fila de table2 q no esta en table1
 });
 
 
@@ -167,6 +167,12 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth|hasMod'), function(
     if (Session::has('list')) {
         Route::get('list', function() {
             return View::make('Contacts.list')->with('mod', 'contacts');
+        });
+        Route::get('ambiguous-list', function() {
+            return View::make('Contacts.ambiguouslist')->with('mod', 'contacts');
+        });
+        Route::get('contact-detail/{id}', function($id) {
+            return View::make('Contacts.detail')->with('mod', 'contacts')->with('id', $id);
         });
     }
 });

@@ -24,7 +24,7 @@
                 <tr>
                     <th></th>
                     <th>Name</th>
-                    <th>Status</th>
+                    <th>Mobile</th>
                     <th>Email</th>
                     <th>Car Type</th> 
                     <th>Memo Short</th>
@@ -69,7 +69,7 @@
                             <a href="{{URL::to('sms-form/'.$rowL->id.'/'.$rowL->mobile)}}" title="SEND SMS" class="link-send-sms"><span class="glyphicon glyphicon-envelope"></span></a>                              
                         </td>
                         <td>{{$rowL->first_name.' '.$rowL->last_name}}</td>                
-                        <td>{{$rowL->status}}</td>                                                 
+                        <td>{{$rowL->mobile}}</td>                                                 
                         <td>{{$rowL->email_address}}</td>  
                         <td>
                             <?php
