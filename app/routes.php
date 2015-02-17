@@ -14,18 +14,7 @@ Route::get('testing', function() {
 
 
     /*     * ******generador de tabla a partir de array de campos************* */
-//    $stringTable = "CREATE TABLE IF NOT EXISTS `leads_import_data_from_csv` ("
-//            . "`id` int(10) unsigned NOT NULL AUTO_INCREMENT,";
-//    foreach (explode(',', $fields) as $value) {
-//        $stringTable.=$value . ' varchar(120) COLLATE utf8_unicode_ci NOT NULL,';
-//    }    
-//    $stringTable.= 'PRIMARY KEY (`id`)'
-//            . ') ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;';
-//    echo $stringTable;
-//    $tableName = 'leads_import_data_from_csv';
-//    $csvFile = base_path() . DIRECTORY_SEPARATOR . "imports" . DIRECTORY_SEPARATOR . "imported-file.csv";
-//    $query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tableName FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
-//    DB::connection()->getpdo()->exec($query);
+
     'UPDATE tabla SET campo = REPLACE(campo, "-", ""); '; //reeemplazando el - por nada
     'UPDATE tabla SET campo = REPLACE(campo, " ", ""); '; //reeemplazando el espacio por nada
     'UPDATE table1 t1 INNER JOIN table2 t2 ON (t1.id = t2.id) SET t1.field_3 = t2.field_3 '; //actualizandos datos de tabla1 a tabla2
@@ -199,13 +188,7 @@ Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() 
         Route::post('type-user/save', 'TypeUserController@save');
         Route::post('employee/save', 'EmployeeController@save');
         Route::post('alert/save', 'AlertTypeUserController@save');
-        Route::post('alert/templates/save', 'TemplatesController@save');
-
-        /*         * *********MANIPULACION DE ARCHIVO CSV******************* */
-        Route::get('imports', function() use ($mod) {
-            return View::make('Imports.main')->with('mod', $mod);
-        });
-        Route::post('imports/upload', 'FileManagementCsvController@upload');
+        Route::post('alert/templates/save', 'TemplatesController@save');        
     }
     if (Session::has('update')) {
         Route::get('employee/edit/{id}', function($id) use($mod) {

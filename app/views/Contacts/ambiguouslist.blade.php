@@ -1,7 +1,7 @@
 @extends('sidebar')
 @section('title')
-<b>MY CONTACTS</b>
-<br>
+<b>AMBIGUOUS LIST</b>
+<hr>
 @stop
 @section('content')
 <div class="panel-heading">
@@ -40,7 +40,7 @@
                 <td>{{$row->primary_buyer_email_address}}</td>
                 <td>{{$row->primary_buyer_address_line_1}}</td>                
                 <td>                  
-                    <a href="{{URL::to('leads/search/?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS "><span class="glyphicon glyphicon-folder-open"></span></a>                    
+                    <a href="{{URL::to('leads/search/?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
                 </td>         
             </tr>
             <?php
@@ -48,7 +48,6 @@
         ?>
     </tbody>
 </table>
-
 {{ $pagination->links() }}
 @stop
 
