@@ -7,7 +7,7 @@
 <div class="panel-heading">
     <div class="btn-toolbar" aria-label="Toolbar with button groups" role="toolbar">
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="/contacts/ambiguous-list" class="btn btn-default">List of ambiguous records</a>            
+            <a href="{{URL::to('contacts/ambiguous-list')}}" class="btn btn-default">List of ambiguous records</a>            
         </div>        
     </div>
 </div>

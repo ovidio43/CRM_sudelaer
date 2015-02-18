@@ -7,7 +7,7 @@
 <div class="panel-heading">
     <div class="btn-toolbar" aria-label="Toolbar with button groups" role="toolbar">
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="/contacts/list" class="btn btn-default">Contacts List</a>            
+            <a href="{{URL::to('contacts/list')}}" class="btn btn-default">Contacts List</a>            
         </div>        
     </div>
 </div>
@@ -40,7 +40,7 @@
                 <td>{{$row->primary_buyer_email_address}}</td>
                 <td>{{$row->primary_buyer_address_line_1}}</td>                
                 <td>                  
-                    <a href="{{URL::to('leads/search/?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
+                    <a href="{{URL::to('leads/find?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
                 </td>         
             </tr>
             <?php

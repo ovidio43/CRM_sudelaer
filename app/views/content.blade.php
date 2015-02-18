@@ -3,7 +3,7 @@
     <?php if (Request::is('leads/*')) { ?>
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <form action="{{URL::to('leads/search')}}" method="get" role="search" class="navbar-form navbar-right">
+                <form action="{{URL::to('leads/find')}}" method="get" role="search" class="navbar-form navbar-right">
                     <div class="form-group">
                         
                         <select name="filter" class="form-control">

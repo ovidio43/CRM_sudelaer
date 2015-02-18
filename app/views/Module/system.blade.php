@@ -14,9 +14,6 @@
         </li>                                        
         <li <?php echo (Request::is($mod . '/alert') || Request::is($mod . '/alert/*')) ? 'class="custom-active"' : ''; ?>>            
             <a href="{{URL::to($mod.'/alert')}}"><i class="glyphicon glyphicon-comment"></i> Alerts</a>
-        </li>                                        
-        <li <?php echo (Request::is($mod . '/imports') || Request::is($mod . '/imports/*')) ? 'class="custom-active"' : ''; ?>>            
-            <a href="{{URL::to($mod.'/imports')}}"><i class="glyphicon glyphicon-comment"></i> Import</a>
-        </li>                                        
+        </li>                                                                                     
     </ul>
 </li> 

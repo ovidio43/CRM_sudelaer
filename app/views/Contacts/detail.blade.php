@@ -7,7 +7,7 @@
 <div class="panel-heading">
     <div class="btn-toolbar" aria-label="Toolbar with button groups" role="toolbar">
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="/contacts/list" class="btn btn-default">Return to List</a>            
+            <a href="{{URL::to('contacts/list')}}" class="btn btn-default">Return to List</a>            
         </div>        
     </div>
 </div>
