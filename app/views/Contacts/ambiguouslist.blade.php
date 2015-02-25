@@ -20,13 +20,14 @@
             <th>Email Address</th> 
             <th>Address line 1</th>                          
             <th></th>                          
+            <th></th>                          
         </tr>
     </thead>
     <tbody>
         <?php
         $page = Input::get('page', 1);
         $items = 80;
-        $fields = 'primary_buyer_first_name,primary_buyer_last_name,co_buyer_mobile_phone,primary_buyer_email_address,primary_buyer_address_line_1';
+        $fields = 'id,primary_buyer_first_name,primary_buyer_last_name,co_buyer_mobile_phone,primary_buyer_email_address,primary_buyer_address_line_1';
         $countRes = DB::select('SELECT count(*) as "count" FROM leads_import_data_from_csv where co_buyer_mobile_phone in (select mobile from leads)');
         $results = DB::select('SELECT ' . $fields . ' FROM leads_import_data_from_csv where co_buyer_mobile_phone in (select mobile from leads) LIMIT ' . (($page * $items) - $items) . ',' . $items);
         $pagination = Paginator::make($countRes, $countRes[0]->count, $items);
@@ -41,7 +42,10 @@
                 <td>{{$row->primary_buyer_address_line_1}}</td>                
                 <td>                  
                     <a href="{{URL::to('leads/find?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
-                </td>         
+                </td>    
+                <td>                  
+                    <a href="{{URL::to($mod.'/contact-detail/'.$row->id)}}" title="VIEW DETAIL "><span class="glyphicon glyphicon-list-alt"></span></a>                    
+                </td>
             </tr>
             <?php
         }
