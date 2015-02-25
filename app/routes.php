@@ -114,8 +114,8 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::post('memo-edit/{id}', 'LeadsController@edit_memo');
     }
     if (Session::has('list')) {
-        Route::get('find', function() use($mod) {
-            return View::make('Leads.search')->with('s', Input::get('s'))->with('filter', Input::get('filter'))->with('mod', $mod);
+        Route::post('find', function() use($mod) {
+            return View::make('Leads.search')->with('s', Input::get('wildcard'))->with('filter', Input::get('filter'))->with('mod', $mod);
         });
         Route::get('list', function() use($mod) {
             return View::make('Leads.list')->with('mod', $mod);
@@ -164,6 +164,9 @@ Route::group(array('prefix' => 'contacts', 'before' => 'auth|hasMod'), function(
             return View::make('Contacts.detail')->with('mod', 'contacts')->with('id', $id);
         });
     }
+    Route::any('find', function() {
+        return View::make('Contacts.search')->with('mod', 'contacts');
+    });
 });
 Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() {
     /*     * *****employee********* */
@@ -188,7 +191,7 @@ Route::group(array('prefix' => 'system', 'before' => 'auth|hasMod'), function() 
         Route::post('type-user/save', 'TypeUserController@save');
         Route::post('employee/save', 'EmployeeController@save');
         Route::post('alert/save', 'AlertTypeUserController@save');
-        Route::post('alert/templates/save', 'TemplatesController@save');        
+        Route::post('alert/templates/save', 'TemplatesController@save');
     }
     if (Session::has('update')) {
         Route::get('employee/edit/{id}', function($id) use($mod) {

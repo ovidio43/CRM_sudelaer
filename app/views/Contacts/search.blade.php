@@ -1,6 +1,13 @@
+<?php
+if (Request::isMethod('post')) {
+    $input = Input::all();
+    Session::put('filter', $input['filter']);
+    Session::put('wildcard', $input['wildcard']);
+}
+?>
 @extends('sidebar')
 @section('title')
-<b>MY CONTACTS</b>
+<b>RESULTS TO : {{Session::get('wildcard')}} </b>
 <hr>
 @stop
 @section('content')
@@ -26,16 +33,21 @@
     </thead>
     <tbody>
         <?php
+        if (Request::isMethod('post')) {
+            $input = Input::all();
+            Session::put('filter', $input['filter']);
+            Session::put('wildcard', $input['wildcard']);
+        }
         $page = Input::get('page', 1);
         $items = 50;
         $fields = 'id,primary_buyer_first_name,primary_buyer_last_name,co_buyer_mobile_phone,primary_buyer_email_address,primary_buyer_address_line_1';
-        $countRes = DB::select('SELECT count(*) as "count" FROM leads_import_data_from_csv where co_buyer_mobile_phone not in (select mobile from leads where type="leads")');
-        $results = DB::select('SELECT ' . $fields . ' FROM leads_import_data_from_csv where co_buyer_mobile_phone not in (select mobile from leads where type="leads") LIMIT ' . (($page * $items) - $items) . ',' . $items);
+        $countRes = DB::select('SELECT count(*) as "count" FROM leads_import_data_from_csv where co_buyer_mobile_phone not in (select mobile from leads where type="leads")and ' . Session::get('filter') . ' like "%' . Session::get('wildcard') . '%"');
+        $results = DB::select('SELECT ' . $fields . ' FROM leads_import_data_from_csv where co_buyer_mobile_phone not in (select mobile from leads where type="leads") and ' . Session::get('filter') . ' like "%' . Session::get('wildcard') . '%" LIMIT ' . (($page * $items) - $items) . ',' . $items);
         $pagination = Paginator::make($countRes, $countRes[0]->count, $items);
         /*         * *********** */
         foreach ($results as $row) {
             ?>
-            <tr>                
+            <tr>                                
                 <td>{{$row->primary_buyer_first_name}}</td>
                 <td>{{$row->primary_buyer_last_name}}</td>
                 <td>{{$row->co_buyer_mobile_phone}}</td>
