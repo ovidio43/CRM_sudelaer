@@ -10,9 +10,9 @@ $stringFields = strtolower('CustomerID,"Primary Buyer First Name","Primary Buyer
 $charToReplace = ['(', ')', '-', '/', ' '];
 $fields = str_replace('"', '`', $stringFields); //reemplazandno doble comilla por nada
 $fields = str_replace($charToReplace, '_', $fields); //reemplazandno caqracteres por guiens bajo "_"
-$tableName = 'leads_import_data_from_csv_temp';
+$tempTable = 'leads_import_data_from_csv_temp';
 $csvFile = base_path() . DIRECTORY_SEPARATOR . "imports" . DIRECTORY_SEPARATOR . "imported-file.csv";
-$query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tableName FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
+$query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tempTable FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
 $db->query($query);
 
 $query = 'UPDATE leads_import_data_from_csv_temp SET co_buyer_mobile_phone = REPLACE(co_buyer_mobile_phone, "-", "")'; //reeemplazando el - por nada
@@ -20,17 +20,20 @@ $db->query($query);
 $query = 'delete from leads_import_data_from_csv_temp where id=1'; //eliminar primer campo porque inserta nombre de campos NO BORRAR
 $db->query($query);
 
+/* * *********insertando datos nuevos desde tabla temporal  a la tabla maestra******************** */
+$masterTable='leads_import_data_from_csv';
+$query = "INSERT INTO $masterTable $fields (SELECT $fields FROM $tempTable where customerid not in (select customerid from $masterTable))";
+$db->query($query);
 
 
 
 
-
-/*******************procedimientos para crear tabla ***********************/
+/* * *****************procedimientos para crear tabla ********************** */
 //    $stringTable = "CREATE TABLE IF NOT EXISTS `leads_import_data_from_csv` ("
 //            . "`id` int(10) unsigned NOT NULL AUTO_INCREMENT,";
-//    foreach (explode(',', $fields) as $value) {
-//        $stringTable.=$value . ' varchar(120) COLLATE utf8_unicode_ci NOT NULL,';
+//    foreach (explode(', ', $fields) as $value) {
+//        $stringTable.=$value . ' varchar(120) COLLATE utf8_unicode_ci NOT NULL, ';
 //    }    
 //    $stringTable.= 'PRIMARY KEY (`id`)'
-//            . ') ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;';
+//            . ') ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1;';
 //    echo $stringTable;
