@@ -15,13 +15,13 @@ $csvFile = base_path() . DIRECTORY_SEPARATOR . "imports" . DIRECTORY_SEPARATOR .
 $query = sprintf("LOAD DATA INFILE '%s' INTO TABLE $tempTable FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\n' IGNORE 0 LINES ($fields)", addslashes($csvFile));
 $db->query($query);
 
-$query = 'UPDATE leads_import_data_from_csv_temp SET co_buyer_mobile_phone = REPLACE(co_buyer_mobile_phone, "-", "")'; //reeemplazando el - por nada
+$query = "UPDATE $tempTable SET co_buyer_mobile_phone = REPLACE(co_buyer_mobile_phone, '-', '')"; //reeemplazando el - por nada
 $db->query($query);
-$query = 'delete from leads_import_data_from_csv_temp where id=1'; //eliminar primer campo porque inserta nombre de campos NO BORRAR
+$query = "delete from $tempTable where id=1"; //eliminar primer campo porque inserta nombre de campos [NO BORRAR]
 $db->query($query);
 
 /* * *********insertando datos nuevos desde tabla temporal  a la tabla maestra******************** */
-$masterTable='leads_import_data_from_csv';
+$masterTable = 'leads_import_data_from_csv';
 $query = "INSERT INTO $masterTable $fields (SELECT $fields FROM $tempTable where customerid not in (select customerid from $masterTable))";
 $db->query($query);
 
