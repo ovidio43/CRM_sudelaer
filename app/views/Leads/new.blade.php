@@ -23,41 +23,27 @@ NEW LEADS
     <li class="disabled"><a href="#">Car Type</a></li>    
 </ul> 
 {{ Form::open(array('url' => $mod.'/new/save','class'=>'form-horizontal')) }}
-{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}
+<br>
+{{ Form::submit('Save',['class'=>'btn btn-primary '])}}
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
             <div class="col-sm-4"> 
                 <?php
-                $salutation = [
-                    'Mr.' => 'Mr.',
-                    'Ms.' => 'Ms.',
-                    'Mrs.' => 'Mrs.',
-                    'Dr.' => 'Dr.',
-                    'Prof.' => 'Prof.'
-                ];
-
-                $leadSource = [
-                    '' => '',
-                    'Univision Washington' => 'Univision Washington',
-                    'DContigo Tv Show' => 'DContigo Tv Show',
-                    'Telemundo Washington' => 'Telemundo Washington',
-                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
-                    'Variedades de Washington' => 'Variedades de Washington',
-                    'Referido' => 'Referido',
-                    'Cliente actual' => 'Cliente actual',
-                    'Periodicos' => 'Periodicos',
-                    'Revistas' => 'Revistas',
-                    'Cliente Antiguo' => 'Cliente Antiguo',
-                    'Otros' => 'Otros'
-                ];
-
-                $leadType = [
-                    '' => '',
-                    'Phone in' => 'Phone in',
-                    'Walk in' => 'Walk in',
-                    'Web' => 'Web'
-                ];
+                $salutation = [ 'Mr.' => 'Mr.', 'Ms.' => 'Ms.', 'Mrs.' => 'Mrs.', 'Dr.' => 'Dr.', 'Prof.' => 'Prof.'];
+                $leadSource = [ '' => '', 'Univision Washington' => 'Univision Washington', 'DContigo Tv Show' => 'DContigo Tv Show', 'Telemundo Washington' => 'Telemundo Washington',
+                    'Radio Lanueva87.7' => 'Radio Lanueva87.7', 'Variedades de Washington' => 'Variedades de Washington', 'Referido' => 'Referido', 'Cliente actual' => 'Cliente actual',
+                    'Periodicos' => 'Periodicos', 'Revistas' => 'Revistas', 'Cliente Antiguo' => 'Cliente Antiguo', 'Otros' => 'Otros'];
+                $leadType = [ '' => '', 'Phone in' => 'Phone in', 'Walk in' => 'Walk in', 'Web' => 'Web'];
+                $selectState = [ '' => '', 'AL' => "Alabama", 'AK' => "Alaska", 'AZ' => "Arizona", 'AR' => "Arkansas", 'CA' => "California", 'CO' => "Colorado", 'CT' => "Connecticut",
+                    'DE' => "Delaware", 'DC' => "District Of Columbia", 'FL' => "Florida", 'GA' => "Georgia", 'HI' => "Hawaii", 'ID' => "Idaho", 'IL' => "Illinois", 'IN' => "Indiana", 'IA' => "Iowa",
+                    'KS' => "Kansas", 'KY' => "Kentucky", 'LA' => "Louisiana", 'ME' => "Maine", 'MD' => "Maryland", 'MA' => "Massachusetts", 'MI' => "Michigan", 'MN' => "Minnesota", 'MS' => "Mississippi", 'MO' => "Missouri", 'MT' => "Montana",
+                    'NE' => "Nebraska", 'NV' => "Nevada", 'NH' => "New Hampshire", 'NJ' => "New Jersey", 'NM' => "New Mexico", 'NY' => "New York", 'NC' => "North Carolina", 'ND' => "North Dakota",
+                    'OH' => "Ohio", 'OK' => "Oklahoma", 'OR' => "Oregon", 'PA' => "Pennsylvania", 'RI' => "Rhode Island", 'SC' => "South Carolina", 'SD' => "South Dakota", 'TN' => "Tennessee", 'TX' => "Texas", 'UT' => "Utah",
+                    'VT' => "Vermont", 'VA' => "Virginia", 'WA' => "Washington", 'WV' => "West Virginia", 'WI' => "Wisconsin", 'WY' => "Wyoming"];
+                $selectProof_of_work = ['' => '', 'Boleta de pago' => 'Boleta de pago', 'carta de empleador' => 'carta de empleador', 'taxes' => 'taxes', 'trabaja por su cuenta' => 'trabaja por su cuenta', 'ninguno' => 'ninguno'];
+                $selectI_have = ['' => '', 'Seguro Social' => 'Seguro Social', 'Tax Id' => 'Tax Id'];
+                $selectMy_credit_is = ['' => '', 'Exelente' => 'Exelente', 'Bueno' => 'Bueno', 'regular' => 'regular', 'Malo' => 'Malo', 'No tengo' => 'No tengo'];
                 ?>  
 
                 {{Form::label('mobile', 'Mobile')}}<span class="required-field">*</span> 
@@ -72,7 +58,12 @@ NEW LEADS
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name','',['class'=>'form-control'])}}              
 
-
+                {{Form::label('date_of_birth', 'Date of birth')}} 
+                {{ Form::text('date_of_birth','',['class'=>'form-control default-dtp'])}}  
+                {{Form::label('i_have', 'I have')}} 
+                {{ Form::select('i_have',$selectI_have, null,['class'=>'form-control']) }}                
+                {{Form::label('social_security_number', 'Social security number')}} 
+                {{ Form::text('social_security_number','',['class'=>'form-control'])}}  
                 <!--{{Form::label('account_name', 'Account Name')}}-->
                 <!--{{ Form::text('account_name','',['class'=>'form-control'])}}-->
             </div>  
@@ -93,6 +84,12 @@ NEW LEADS
 
                 <!--{{Form::label('fax', 'Fax')}}-->
                 <!--{{ Form::text('fax','',['class'=>'form-control'])}}-->
+                {{Form::label('license_emitted_at', 'License emitted at')}} 
+                {{ Form::select('license_emitted_at', $selectState, null,['class'=>'form-control']) }} 
+                {{Form::label('proof_of_work', 'Proof of work')}}
+                {{ Form::select('proof_of_work',$selectProof_of_work, null,['class'=>'form-control']) }}                
+                {{Form::label('my_credit_is', 'My credit is')}} 
+                {{ Form::select('my_credit_is', $selectMy_credit_is, null,['class'=>'form-control']) }} 
             </div>  
             <div class="col-sm-4">
                 {{Form::label('note', 'Note')}}
@@ -103,61 +100,7 @@ NEW LEADS
     <div class="tab-pane " id="AI">
         <div class="form-group">
             <div class="col-sm-6">
-                <?php
-                $selectState = [
-                    'AL' => "Alabama",
-                    'AK' => "Alaska",
-                    'AZ' => "Arizona",
-                    'AR' => "Arkansas",
-                    'CA' => "California",
-                    'CO' => "Colorado",
-                    'CT' => "Connecticut",
-                    'DE' => "Delaware",
-                    'DC' => "District Of Columbia",
-                    'FL' => "Florida",
-                    'GA' => "Georgia",
-                    'HI' => "Hawaii",
-                    'ID' => "Idaho",
-                    'IL' => "Illinois",
-                    'IN' => "Indiana",
-                    'IA' => "Iowa",
-                    'KS' => "Kansas",
-                    'KY' => "Kentucky",
-                    'LA' => "Louisiana",
-                    'ME' => "Maine",
-                    'MD' => "Maryland",
-                    'MA' => "Massachusetts",
-                    'MI' => "Michigan",
-                    'MN' => "Minnesota",
-                    'MS' => "Mississippi",
-                    'MO' => "Missouri",
-                    'MT' => "Montana",
-                    'NE' => "Nebraska",
-                    'NV' => "Nevada",
-                    'NH' => "New Hampshire",
-                    'NJ' => "New Jersey",
-                    'NM' => "New Mexico",
-                    'NY' => "New York",
-                    'NC' => "North Carolina",
-                    'ND' => "North Dakota",
-                    'OH' => "Ohio",
-                    'OK' => "Oklahoma",
-                    'OR' => "Oregon",
-                    'PA' => "Pennsylvania",
-                    'RI' => "Rhode Island",
-                    'SC' => "South Carolina",
-                    'SD' => "South Dakota",
-                    'TN' => "Tennessee",
-                    'TX' => "Texas",
-                    'UT' => "Utah",
-                    'VT' => "Vermont",
-                    'VA' => "Virginia",
-                    'WA' => "Washington",
-                    'WV' => "West Virginia",
-                    'WI' => "Wisconsin",
-                    'WY' => "Wyoming"
-                ];
-                ?>
+
                 {{Form::label('primary_address_street', 'Primary Address Street')}}
                 {{ Form::textarea('primary_address_street','',['class'=>'form-control'])}}
                 {{Form::label('primary_address_city', 'Primary Address City')}}
@@ -186,12 +129,7 @@ NEW LEADS
         <div class="form-group">
             <div class="col-sm-6">                 
                 <?php
-                $status = ['New' => 'New',
-                    'Assigned' => 'Assigned',
-                    'In Process' => 'In Process',
-                    'Converted' => 'Converted',
-                    'Recycled' => 'Recycled',
-                    'Dead' => 'Dead'];
+                $status = ['New' => 'New', 'Assigned' => 'Assigned', 'In Process' => 'In Process', 'Converted' => 'Converted', 'Recycled' => 'Recycled', 'Dead' => 'Dead'];
                 ?>
                 {{Form::label('status', 'Status')}}
                 {{ Form::select('status', $status, null,['class'=>'form-control']) }}                 
@@ -215,17 +153,9 @@ NEW LEADS
     <div class="tab-pane " id="O">
         <div class="form-group">
             <div class="col-sm-4">
-                <?php
-                $opportunity = [
-                    'Caliente' => 'Caliente',
-                    'Tibio' => 'Tibio',
-                    'Frio' => 'Frio'];
-                ?>
+                <?php $opportunity = [ 'Caliente' => 'Caliente', 'Tibio' => 'Tibio', 'Frio' => 'Frio']; ?>
                 {{Form::label('opportunity', 'Opportunity')}}
-                {{ Form::select('opportunity',['no-asigned'=>'']+ $opportunity, null,['class'=>'form-control']) }}  
-
-
-
+                {{ Form::select('opportunity',['no-asigned'=>'']+ $opportunity, null,['class'=>'form-control']) }} 
                 <?php
                 if (Auth::user()->typeUser->name === 'Admin') {
                     $selectEmployee = Employee::select(DB::raw('id'), DB::raw('concat (first_name," ",last_name) as name'))->where('active', '=', '1')->lists('name', 'id');

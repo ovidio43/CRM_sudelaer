@@ -109,6 +109,12 @@ class LeadsController extends BaseController {
         $ObjLeads->do_not_call = isset($input['do_not_call']) ? $input['do_not_call'] : 'F';
         $ObjLeads->id_employee = $input['id_employee'];
         $ObjLeads->opportunity = $input['opportunity'];
+        $ObjLeads->date_of_birth = $input['date_of_birth'];
+        $ObjLeads->i_have = $input['i_have'];
+        $ObjLeads->social_security_number = $input['social_security_number'];
+        $ObjLeads->license_emitted_at = $input['license_emitted_at'];
+        $ObjLeads->proof_of_work = $input['proof_of_work'];
+        $ObjLeads->my_credit_is = $input['my_credit_is'];
         $ObjLeads->type = 'leads';
     }
 
@@ -177,7 +183,7 @@ class LeadsController extends BaseController {
     public function migrate_to_contact($id_leads) {
         $exception = DB::transaction(function() use ($id_leads) {
                     $ObjLeads = Leads::find($id_leads);
-                    $ObjLeads->type = 'contacts';//Nota: Cuando se pone el type contacts se refiere a la tabla importada desde csv
+                    $ObjLeads->type = 'contacts'; //Nota: Cuando se pone el type contacts se refiere a la tabla importada desde csv
                     $ObjLeads->save();
 //                    $objContact = new Contacts();
 //                    $objContact->id_leads = $id_leads;

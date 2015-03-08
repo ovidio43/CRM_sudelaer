@@ -40,42 +40,27 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
     <li><a href="{{URL::to($mod.'/car-type/edit/'.$objLeads->id)}}" class="force-redirect">Car Type</a></li>   
 </ul> 
 {{ Form::open(array('url' => 'leads/edit-save/'.$objLeads->id,'class'=>'form-horizontal')) }}
-
-{{ Form::submit('Save',['class'=>'btn btn-primary custom-save-button'])}}    
+<br>
+{{ Form::submit('Save',['class'=>'btn btn-primary '])}}    
 <div class="tab-content">
     <div class="tab-pane active" id="LA">
         <div class="form-group">            
             <div class="col-sm-4"> 
                 <?php
-                $salutation = [
-                    'Mr.' => 'Mr.',
-                    'Ms.' => 'Ms.',
-                    'Mrs.' => 'Mrs.',
-                    'Dr.' => 'Dr.',
-                    'Prof.' => 'Prof.'
-                ];
-
-                $leadSource = [
-                    '' => '',
-                    'Univision Washington' => 'Univision Washington',
-                    'DContigo Tv Show' => 'DContigo Tv Show',
-                    'Telemundo Washington' => 'Telemundo Washington',
-                    'Radio Lanueva87.7' => 'Radio Lanueva87.7',
-                    'Variedades de Washington' => 'Variedades de Washington',
-                    'Referido' => 'Referido',
-                    'Cliente actual' => 'Cliente actual',
-                    'Periodicos' => 'Periodicos',
-                    'Revistas' => 'Revistas',
-                    'Cliente Antiguo' => 'Cliente Antiguo',
-                    'Otros' => 'Otros'
-                ];
-
-                $leadType = [
-                    '' => '',
-                    'Phone in' => 'Phone in',
-                    'Walk in' => 'Walk in',
-                    'Web' => 'Web'
-                ];
+                $salutation = [ 'Mr.' => 'Mr.', 'Ms.' => 'Ms.', 'Mrs.' => 'Mrs.', 'Dr.' => 'Dr.', 'Prof.' => 'Prof.'];
+                $leadSource = [ '' => '', 'Univision Washington' => 'Univision Washington', 'DContigo Tv Show' => 'DContigo Tv Show', 'Telemundo Washington' => 'Telemundo Washington',
+                    'Radio Lanueva87.7' => 'Radio Lanueva87.7', 'Variedades de Washington' => 'Variedades de Washington', 'Referido' => 'Referido', 'Cliente actual' => 'Cliente actual',
+                    'Periodicos' => 'Periodicos', 'Revistas' => 'Revistas', 'Cliente Antiguo' => 'Cliente Antiguo', 'Otros' => 'Otros'];
+                $leadType = [ '' => '', 'Phone in' => 'Phone in', 'Walk in' => 'Walk in', 'Web' => 'Web'];
+                $selectState = [ '' => '', 'AL' => "Alabama", 'AK' => "Alaska", 'AZ' => "Arizona", 'AR' => "Arkansas", 'CA' => "California", 'CO' => "Colorado", 'CT' => "Connecticut",
+                    'DE' => "Delaware", 'DC' => "District Of Columbia", 'FL' => "Florida", 'GA' => "Georgia", 'HI' => "Hawaii", 'ID' => "Idaho", 'IL' => "Illinois", 'IN' => "Indiana", 'IA' => "Iowa",
+                    'KS' => "Kansas", 'KY' => "Kentucky", 'LA' => "Louisiana", 'ME' => "Maine", 'MD' => "Maryland", 'MA' => "Massachusetts", 'MI' => "Michigan", 'MN' => "Minnesota", 'MS' => "Mississippi", 'MO' => "Missouri", 'MT' => "Montana",
+                    'NE' => "Nebraska", 'NV' => "Nevada", 'NH' => "New Hampshire", 'NJ' => "New Jersey", 'NM' => "New Mexico", 'NY' => "New York", 'NC' => "North Carolina", 'ND' => "North Dakota",
+                    'OH' => "Ohio", 'OK' => "Oklahoma", 'OR' => "Oregon", 'PA' => "Pennsylvania", 'RI' => "Rhode Island", 'SC' => "South Carolina", 'SD' => "South Dakota", 'TN' => "Tennessee", 'TX' => "Texas", 'UT' => "Utah",
+                    'VT' => "Vermont", 'VA' => "Virginia", 'WA' => "Washington", 'WV' => "West Virginia", 'WI' => "Wisconsin", 'WY' => "Wyoming"];
+                $selectProof_of_work = ['' => '', 'Boleta de pago' => 'Boleta de pago', 'carta de empleador' => 'carta de empleador', 'taxes' => 'taxes', 'trabaja por su cuenta' => 'trabaja por su cuenta', 'ninguno' => 'ninguno'];
+                $selectI_have = ['' => '', 'Seguro Social' => 'Seguro Social', 'Tax Id' => 'Tax Id'];
+                $selectMy_credit_is = ['' => '', 'Exelente' => 'Exelente', 'Bueno' => 'Bueno', 'regular' => 'regular', 'Malo' => 'Malo', 'No tengo' => 'No tengo'];
                 ?>
                 {{Form::label('mobile', 'Mobile')}} <span class="required-field">*</span> 
                 <a href="#" onclick="capturarValorPhone()"  id="myPhoneLink" class="thickbox">
@@ -89,8 +74,13 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                 {{ Form::text('first_name',$objLeads->first_name,['class'=>'form-control'])}}
                 {{Form::label('last_name', 'Last Name')}} <span class="required-field">*</span>
                 {{ Form::text('last_name',$objLeads->last_name,['class'=>'form-control'])}}                
-                <!--{{Form::label('account_name', 'Account Name')}}-->
-                <!--{{ Form::text('account_name',$objLeads->account_name,['class'=>'form-control'])}}-->
+
+                {{Form::label('date_of_birth', 'Date of birth')}} 
+                {{ Form::text('date_of_birth',$objLeads->date_of_birth,['class'=>'form-control default-dtp'])}}  
+                {{Form::label('i_have', 'I have')}} 
+                {{ Form::select('i_have',$selectI_have, $objLeads->i_have,['class'=>'form-control']) }}    
+                {{Form::label('social_security_number', 'Social security number')}} 
+                {{ Form::text('social_security_number',$objLeads->social_security_number,['class'=>'form-control'])}}  
 
             </div>  
             <div class="col-sm-4"> 
@@ -105,6 +95,13 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                 {{ Form::select('lead_source', $leadSource, $objLeads->lead_source,['class'=>'form-control']) }} 
                 {{Form::label('home_phone', 'Home Phone')}}
                 {{ Form::text('home_phone',$objLeads->home_phone,['class'=>'form-control'])}}
+                                
+                {{Form::label('license_emitted_at', 'License emitted at')}} 
+                {{ Form::select('license_emitted_at', $selectState, $objLeads->license_emitted_at,['class'=>'form-control']) }} 
+                {{Form::label('proof_of_work', 'Proof of work')}}
+                {{ Form::select('proof_of_work',$selectProof_of_work, $objLeads->proof_of_work,['class'=>'form-control']) }}                
+                {{Form::label('my_credit_is', 'My credit is')}} 
+                {{ Form::select('my_credit_is', $selectMy_credit_is, $objLeads->my_credit_is,['class'=>'form-control']) }} 
 
             </div>   
 
@@ -117,62 +114,6 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
     <div class="tab-pane " id="AI">
         <div class="form-group">
             <div class="col-sm-6">
-                <?php
-                $selectState = [
-                    'AL' => "Alabama",
-                    'AK' => "Alaska",
-                    'AZ' => "Arizona",
-                    'AR' => "Arkansas",
-                    'CA' => "California",
-                    'CO' => "Colorado",
-                    'CT' => "Connecticut",
-                    'DE' => "Delaware",
-                    'DC' => "District Of Columbia",
-                    'FL' => "Florida",
-                    'GA' => "Georgia",
-                    'HI' => "Hawaii",
-                    'ID' => "Idaho",
-                    'IL' => "Illinois",
-                    'IN' => "Indiana",
-                    'IA' => "Iowa",
-                    'KS' => "Kansas",
-                    'KY' => "Kentucky",
-                    'LA' => "Louisiana",
-                    'ME' => "Maine",
-                    'MD' => "Maryland",
-                    'MA' => "Massachusetts",
-                    'MI' => "Michigan",
-                    'MN' => "Minnesota",
-                    'MS' => "Mississippi",
-                    'MO' => "Missouri",
-                    'MT' => "Montana",
-                    'NE' => "Nebraska",
-                    'NV' => "Nevada",
-                    'NH' => "New Hampshire",
-                    'NJ' => "New Jersey",
-                    'NM' => "New Mexico",
-                    'NY' => "New York",
-                    'NC' => "North Carolina",
-                    'ND' => "North Dakota",
-                    'OH' => "Ohio",
-                    'OK' => "Oklahoma",
-                    'OR' => "Oregon",
-                    'PA' => "Pennsylvania",
-                    'RI' => "Rhode Island",
-                    'SC' => "South Carolina",
-                    'SD' => "South Dakota",
-                    'TN' => "Tennessee",
-                    'TX' => "Texas",
-                    'UT' => "Utah",
-                    'VT' => "Vermont",
-                    'VA' => "Virginia",
-                    'WA' => "Washington",
-                    'WV' => "West Virginia",
-                    'WI' => "Wisconsin",
-                    'WY' => "Wyoming"
-                ];
-                ?>
-
                 {{Form::label('primary_address_street', 'Primary Address Street')}}
                 {{ Form::textarea('primary_address_street',$objLeads->primary_address_street,['class'=>'form-control'])}}
                 {{Form::label('primary_address_city', 'Primary Address City')}}
@@ -201,14 +142,7 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
     <div class="tab-pane " id="MI">
         <div class="form-group">
             <div class="col-sm-6">                 
-                <?php
-                $status = ['New' => 'New',
-                    'Assigned' => 'Assigned',
-                    'In Process' => 'In Process',
-                    'Converted' => 'Converted',
-                    'Recycled' => 'Recycled',
-                    'Dead' => 'Dead'];
-                ?>
+                <?php $status = ['New' => 'New', 'Assigned' => 'Assigned', 'In Process' => 'In Process', 'Converted' => 'Converted', 'Recycled' => 'Recycled', 'Dead' => 'Dead']; ?>
                 {{Form::label('status', 'Status')}}
                 {{ Form::select('status', $status, $objLeads->status,['class'=>'form-control']) }}                 
                 {{Form::label('status_description', 'Status Description')}}
@@ -238,9 +172,7 @@ if ($objLeads->read_by_employee != $objLeads->id_employee) {
                     {{ Form::hidden('id_allocation',$objLeads->allocation->id)}}  
                     <?php
                 }
-                $opportunity = ['Caliente' => 'Caliente',
-                    'Tibio' => 'Tibio',
-                    'Frio' => 'Frio'];
+                $opportunity = ['Caliente' => 'Caliente', 'Tibio' => 'Tibio', 'Frio' => 'Frio'];
                 ?>
                 {{Form::label('opportunity', 'Opportunity')}}
                 {{ Form::select('opportunity',['no-oportunity'=>'']+ $opportunity, $objLeads->opportunity,['class'=>'form-control']) }}  
