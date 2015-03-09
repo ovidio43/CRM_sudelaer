@@ -114,7 +114,7 @@ Route::group(array('prefix' => 'leads', 'before' => 'auth|hasMod'), function() {
         Route::post('memo-edit/{id}', 'LeadsController@edit_memo');
     }
     if (Session::has('list')) {
-        Route::post('find', function() use($mod) {
+        Route::any('find', function() use($mod) {
             return View::make('Leads.search')->with('s', Input::get('wildcard'))->with('filter', Input::get('filter'))->with('mod', $mod);
         });
         Route::get('list', function() use($mod) {

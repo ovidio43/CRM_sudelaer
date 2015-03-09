@@ -40,8 +40,9 @@
                 <td>{{$row->co_buyer_mobile_phone}}</td>
                 <td>{{$row->primary_buyer_email_address}}</td>
                 <td>{{$row->primary_buyer_address_line_1}}</td>                
-                <td>                  
-                    <a href="{{URL::to('leads/find?s='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
+                <td>        
+                    
+                    <a href="{{URL::to('leads/find?wildcard='.$row->co_buyer_mobile_phone.'&filter=mobile')}}" title="VIEW LEADS " target="_blank"><span class="glyphicon glyphicon-folder-open"></span></a>                    
                 </td>    
                 <td>                  
                     <a href="{{URL::to($mod.'/contact-detail/'.$row->id)}}" title="VIEW DETAIL "><span class="glyphicon glyphicon-list-alt"></span></a>                    
